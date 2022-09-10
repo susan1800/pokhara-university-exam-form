@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\BaseController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Program;
 use App\Models\Level;
@@ -15,6 +16,7 @@ use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Support\Facades\Storage;
 use App\Models\FormDataSubject;
 use App\Models\FormDataBackSubject;
+use App\Models\Subject;
 use App\Models\Notification;
 use App\Models\NotificationCount;
 use Illuminate\Support\Facades\Crypt;
@@ -34,6 +36,7 @@ class FormFillupController extends BaseController
 
     public function store(request $request)
     {
+       
         $this->validate($request, [
             'name'      =>  'required',
             'year'      =>  'required',
@@ -45,7 +48,13 @@ class FormFillupController extends BaseController
             
         ]);
         
+        
     try {
+
+
+
+
+    
     if($request->signature == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS4AAACYCAYAAABapASfAAAAAXNSR0IArs4c6QAABHBJREFUeF7t1AEJAAAMAsHZv/RyPNwSyDncOQIECMQEFssrLgECBM5weQICBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMg8F2bAJlDULv5AAAAAElFTkSuQmCC"){
 
         return $this->responseRedirectBack('Please fill all the details .', 'error', true, true)->withInput($request->input());
@@ -53,6 +62,7 @@ class FormFillupController extends BaseController
     $user_id = $request->session()->get('sessionuseridcosmos');
 
     $formId = FormData::where('user_id' , $user_id)->first();
+    
     // if($formId){
     // //     $this->setFlashMessage("You Already submitted Your Form Please contact to administrator for any query !", 'error');
     //     return $this->responseRedirectBack('You Already submitted Your Form Please contact to administrator for any query !', 'error', true, true)->withInput($request->input());
@@ -71,32 +81,23 @@ if($signature == 0){
             $filename
         );
     
-       
-
+        DB::beginTransaction();
         if($this->createFormData($request , $user_id , $filename , $signature)==0){
             return $this->responseRedirectBack('Error occurred while creating form. Please tyy again.', 'error', true, true)->withInput($request->input());
         }
 
-        $formId = FormData::where('exam_roll_no' , $request->examrollno)->first();
+        $formId = FormData::where('user_id' , $user_id)->first();
         
         
        if($this->createRegularSubject($request , $formId['id'])==0){
         
-        $form = FormData::find($formId);
-        $form->delete();
         return $this->responseRedirectBack('Error occurred while creating form. Please tyy again.', 'error', true, true)->withInput($request->input());
        }
+       
      
        $backSubject = $this->createBackSubject($request , $formId['id']);
        if($backSubject==0){
-        $subjects = FormDataSubject::where('form_id' , $formId['id']);
-        foreach($subjects as $subject){
-            
-            $sub = FormDataSubject::find($subject->id);
-            $sub->delete();
-        }
-        $form = FormData::find($formId['id']);
-        $form->delete();
+       
         return $this->responseRedirectBack('Error occurred while creating form. Please tyy again.', 'error', true, true)->withInput($request->input());
        }
       
@@ -106,10 +107,11 @@ if($signature == 0){
        if($this->incrementNotificationCount()==0){
 
        }
+    
+       DB::commit();
 
 
-
-       $totalfee = 2500 + $backSubject*300;
+       $totalfee = 2500 + ($backSubject-1)*300;
        $totalfee = $hashcode =Crypt::encryptString($totalfee);
       
        return redirect()->route('payment.showpaymentmethod' , compact('totalfee'));
@@ -202,7 +204,7 @@ if($signature == 0){
     }
     private function createBackSubject($request , $formId){
         try{
-            $j=0;
+            $j=1;
         for($i=150;$i<250;$i++){
             if($request[$i] != null){
                 $backSubject = new FormDataBackSubject;
@@ -238,4 +240,58 @@ if($signature == 0){
         return 0;
     }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function checkCredit(Request $request){
+        
+        $level = Level::find($request->level);
+        if(($level->level=="first semester") || ($level->level=="second semester") || ($level->level=="third semester") || ($level->level=="fourth semester") || ($level->level=="fifth semester") || ($level->level=="sixth semester")){
+            if($request->tablerow <=4){
+                return 1;
+            }
+            else{
+                return "youn can add only 3 back subject for (1-6) semester";
+            }
+        }
+        elseif(($level->level=="seventh semester") || ($level->level=="eighth semester") || ($level->level=="ninth semester") || ($level->level=="tenth semester")){
+            if($request->tablerow <=5){
+                return 1;
+            }
+            else{
+                return "youn can add only 4 back subject for 6 semester or above";
+            }
+        }
+        else{
+            $backs = explode(',',$request->backsub);
+        
+        $totalcredit = 0;
+        foreach($backs as $back){
+            if(!empty($back)){
+                $subject = Subject::find($back);
+                $totalcredit = $totalcredit+$subject->credit_hours;
+            }
+        }
+        if($totalcredit<=24){
+            return 1;
+
+        }
+        else{
+            return "please select subject less than 24 credit !";
+        }
+        }
+
+    }
+    
 }

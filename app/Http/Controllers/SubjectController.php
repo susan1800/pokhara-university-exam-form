@@ -9,8 +9,6 @@ class SubjectController extends Controller
 {
     public function getSubject(Request $request){
 
-
-
         $levels = Level::get();
         foreach($levels as $level){
             if($level->level == "first semester"){
@@ -38,10 +36,6 @@ class SubjectController extends Controller
                 $eighth = $level->id;
             }
         }
-
-
-
-
 
         $level = Level::find($request->levelid);
         if($level->level == "first semester"){

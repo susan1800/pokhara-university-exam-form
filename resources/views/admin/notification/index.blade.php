@@ -36,8 +36,8 @@
    
         <a href="#">
             <div class="notification" style="@if($notification->seen == 0)  background: #bfbfbf; @endif">
-                <h3 class="notification-icon">&#9758;</h3> </th>
-                <p>{{$notification->form->name}} fill the form </p>
+                <h3 class="notification-icon"><img src="{{url('frontend/image/icon.jpg')}}" width="40" height="10" style="border-radius: 50%; margin-right:40px;"></h3> </th>
+                <p style="margin-left:20px;">{{$notification->form->name}} filled up the form. </p>
             </div>
             <hr color="red" style="margin: 0px; height:1px;">
         </a>

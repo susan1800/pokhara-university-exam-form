@@ -8,6 +8,8 @@ use App\Http\Controllers\User\LogoutController;
 use App\Http\Controllers\FormFillupController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\User\ForgotPasswordController;
+use App\Http\Controllers\BarrierConcurrentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,12 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/{email}/sendotp', [VerificationController::class, 'sendotp'])->name('sendotp');
+Route::get('/{email}/sendotpforgotpassword', [VerificationController::class, 'sendotpforgotpassword'])->name('sendotp.forgotpassword');
+
+
+
+
+
 Route::post('/checkotp', [VerificationController::class, 'checkotp'])->name('checkotp');
 
 Route::get('/{email}/resendotp', [VerificationController::class, 'resendotp'])->name('resendotp');
@@ -47,6 +55,11 @@ Route::get('/userlogout', [LogoutController::class, 'userlogout'])->name('userlo
 Route::get('/adminlogout', [LogoutController::class, 'adminlogout'])->name('adminlogout');
 
 
+Route::get('/forgotpassword/email', [ForgotPasswordController::class, 'forgotPasswordEmail'])->name('forgotpassword.email');
+Route::post('/password/email', [ForgotPasswordController::class, 'getEmail'])->name('password.email');
+
+
+Route::post('/password/send/otp', [ForgotPasswordController::class, 'forgotPasswordSendOtp'])->name('forgotpassword.send.otp');
 
 Route::middleware(['userlogin'])->group(function () {
     // Route:: view('/' , 'form.fillupform')->name('user');
@@ -55,7 +68,13 @@ Route::middleware(['userlogin'])->group(function () {
     // Route::post('/store', [FormFillupController::class, 'store'])->name('store');
     Route::post('/store', [FormFillupController::class, 'store'])->name('store');
     Route::get('/paymentmethod', [PaymentController::class, 'showPaymentMethod'])->name('payment.showpaymentmethod');
-   
+    Route::post('/selectConcurrentAndBackSubject', [BarrierConcurrentController::class, 'checkBarrierAndConcurrent'])->name('selectConcurrentAndBackSubject');
+    Route::post('/removebacksubject', [BarrierConcurrentController::class, 'removeBackSubject'])->name('removebacksubject');
+    Route::post('/checksubmitcredit', [FormFillupController::class, 'checkCredit'])->name('checksubmitcredit');
+
+
+
+    // removebacksubject
 });
 
 

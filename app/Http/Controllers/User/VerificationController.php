@@ -22,6 +22,10 @@ class VerificationController extends BaseController
 
 
         try{
+            $user = User::where('email' , $email)->first();
+            if(!$user){
+                return $this->responseRedirectBack('Account not found. Please try with valid email.', 'error', true, true);
+            }
 
         $otp=mt_rand(100000, 999999);
         $details = [
@@ -40,11 +44,16 @@ class VerificationController extends BaseController
     }
 
 
-    public function resendotp($email){
 
+    public function sendotpforgotpassword($email){
+     
 
         try{
-            $email = Crypt::decryptString($email);
+            $user = User::where('email' , $email)->first();
+            if(!$user){
+                return $this->responseRedirectBack('Account not found. Please try with valid email.', 'error', true, true);
+            }
+
         $otp=mt_rand(100000, 999999);
         $details = [
             'title' => 'Cosmos College of Management and Technology ',
@@ -54,7 +63,38 @@ class VerificationController extends BaseController
         \Mail::to($email)->send(new \App\Mail\mailotp($details));
         $hashcode =Crypt::encryptString($otp);
         $hashmail = Crypt::encryptString($email);
-        return redirect()->route('verifyotp',['makeotp' => $hashcode , 'email'=> $hashmail]);
+        return redirect()->route('forgotpassword.verifyotp',['makeotp' => $hashcode , 'email'=> $hashmail]);
+    }catch (ModelNotFoundException $e) {
+
+        return $this->responseRedirectBack('Error occurred while send otp.', 'error', true, true);
+    }
+    }
+
+
+    public function resendotp($email){
+
+
+        try{
+
+
+
+            $email = Crypt::decryptString($email);
+
+            $user = User::where('email' , $email)->first();
+            if(!$user){
+                return $this->responseRedirectBack('Account not found. Please try with valid email.', 'error', true, true);
+            }
+
+        $otp=mt_rand(100000, 999999);
+        $details = [
+            'title' => 'Cosmos College of Management and Technology ',
+            'body' => "your otp-code is",
+            'head'=>$otp
+        ];
+        \Mail::to($email)->send(new \App\Mail\mailotp($details));
+        $hashcode =Crypt::encryptString($otp);
+        $hashmail = Crypt::encryptString($email);
+        return redirect()->route('verifyotpforgotpassword',['makeotp' => $hashcode , 'email'=> $hashmail]);
     }catch (ModelNotFoundException $e) {
 
         return $this->responseRedirectBack('Error occurred while send otp.', 'error', true, true);
@@ -103,6 +143,30 @@ class VerificationController extends BaseController
         }
         else{
             return redirect()->route('verifyotp',['makeotp' => $request->otp , 'email'=> $request->email]);
+        }
+    }catch (ModelNotFoundException $e) {
+
+        return $this->responseRedirectBack('Error occurred in OTP.', 'error', true, true);
+    }
+    }
+
+
+
+
+    public function checkotpforgotpassord(Request $request){
+        $this->validate($request, [
+            'email'    =>  'required',
+            'otp' =>  'required',
+            'inputotp' =>  'required',
+        ]);
+        try{
+        if($request->inputotp == Crypt::decryptString($request->otp)){
+              
+        return $this->responseRedirect('changepasword' , $email);
+                
+        }
+        else{
+            return redirect()->route('verifyotpforgotpassword',['makeotp' => $request->otp , 'email'=> $request->email , 'error' => 'Otp not matched !']);
         }
     }catch (ModelNotFoundException $e) {
 

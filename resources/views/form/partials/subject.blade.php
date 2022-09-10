@@ -84,7 +84,7 @@
         
     </div>
 
-            <div class="card-body">  
+            <div class="card-body" id="backsubjectbody">  
                 <table border="1" style="width:100%;" id="backtable">
                     <tr>
                        
@@ -115,17 +115,108 @@
                         <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
                         <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
                     </tr>
+                    
 
                    
+
+
+
+
+
+
+
+
+
+                    @if (!empty($concurrent->concurrent_id))
+                    <tr style="padding:5px;" id="{{$concurrent->id}}" name="{{$concurrent->id}}">
+                        <th>
+                            <input type="hidden" name="15{{$i}}" id="concurrent{{$i}}" value="{{$concurrent->concurrent_id}}">
+                               
+                            @php
+                                $concurrent = App\Models\Subject::where('id' , $concurrent->concurrent_id)->first();
+                                $i++;
+                            @endphp
+                                
+                           {{$concurrent->subject}} 
+                        </th>
+                        <th>{{$concurrent->subject_code}}
+                        </th>
+                        <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
+                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
+                    </tr>
+                    
+
+
+
+
+
+
+
+
+                    @if (!empty($concurrent->concurrent_id))
+                    <tr style="padding:5px;" id="{{$concurrent->id}}" name="{{$concurrent->id}}">
+                        <th>
+                            <input type="hidden" name="15{{$i}}" id="concurrent{{$i}}" value="{{$concurrent->concurrent_id}}">
+                               
+                            @php
+                                $concurrent = App\Models\Subject::where('id' , $concurrent->concurrent_id)->first();
+                                $i++;
+                            @endphp
+                                
+                           {{$concurrent->subject}} 
+                        </th>
+                        <th>{{$concurrent->subject_code}}
+                        </th>
+                        <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
+                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
+                    </tr>
+                    
+
+
+
+
+
+
+
+                    @if (!empty($concurrent->concurrent_id))
+                    <tr style="padding:5px;" id="{{$concurrent->id}}" name="{{$concurrent->id}}">
+                        <th>
+                            <input type="hidden" name="15{{$i}}" id="concurrent{{$i}}" value="{{$concurrent->concurrent_id}}">
+                               
+                            @php
+                                $concurrent = App\Models\Subject::where('id' , $concurrent->concurrent_id)->first();
+                                $i++;
+                            @endphp
+                                
+                           {{$concurrent->subject}} 
+                        </th>
+                        <th>{{$concurrent->subject_code}}
+                        </th>
+                        <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
+                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
+                    </tr>
+                    
+
+                   
+                    @endif
+
+                    @endif
+
+                    @endif
+
                     @endif
                    
                     
                     @endforeach
+                    <input type="hidden" id="rowvalue" value="{{$i}}">
                     </table>
             </div>
 </div>
 
+<link rel="stylesheet" href="sweetalert2.min.css">
+@include('sweetalert::alert')
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
 
@@ -134,16 +225,79 @@ function selectbarrier(){
         var code = document.getElementById('getregularorbarrier').value;
         var subjectid = document.getElementById(code).value;
         var id = document.getElementById('barrierid').value;
-        alert("This is Barrier subject , are you sure to change it ?")
+        alert("This is Barrier subject , are you sure to change it ?");
+
         document.getElementById('regularorbarriercode').innerHTML=code;
         document.getElementById(id).value = subjectid;
+        var subjectid = document.getElementById(code).value;
+
+        var backsub = "";
+        var addbacksub = "";
+        var j = parseInt(document.getElementById('rowvalue').value);
+     
+       
+        for(k=1;k < j;k++){
+           backsub = backsub+","+document.getElementById('concurrent'+k).value;
+        }
+
+        $.post('{{ route('selectConcurrentAndBackSubject') }}', {_token:'{{ csrf_token() }}',  subjectid:subjectid , backsub:backsub , addbacksub:addbacksub}, function(data)
+                {
+                  console.log(data);
+                  
+                    document.getElementById("backsubjectbody").innerHTML = data;
+                
+              });
+
         
+        
+
+
+
+
+
+
+
+
+
     }
 
-    function removeconcurrent(rowid){
+
+    function selectbackbarrier(i){
+      
+        var code = document.getElementById('getregularorbarrier'+i).value;
+        var subjectid = document.getElementById(code).value;
+        var id = document.getElementById('barrierid'+i).value;
+        alert("This is Barrier subject , are you sure to change it ?");
+
+        document.getElementById('regularorbarriercode'+i).innerHTML=code;
+        document.getElementById(id).value = subjectid;
+        var subjectid = document.getElementById(code).value;
+    }
+
+    function removeconcurrent(subjectid){
         if(confirm("This is concurrent subject , are you sure to remove ?")){
+
+
+            var j = parseInt(document.getElementById('rowvalue').value);
+     
+       var backsub = "";
+       try {
+     for(k=1;k < j;k++){
+        backsub = backsub+","+document.getElementById('concurrent'+k).value;
+     }
+    }catch(err){
+        location.reload();
+    }
+
+     $.post('{{ route('removebacksubject') }}', {_token:'{{ csrf_token() }}',  subjectid:subjectid , backsub:backsub}, function(data)
+             {
+               console.log(data);
+               
+                 document.getElementById("backsubjectbody").innerHTML = data;
+             
+           });
  
-        var table = document.getElementById('backtable');
+        // var table = document.getElementById('backtable');
 	// var rowCount = table.rows.length;
     // var row = $(this).closest("tr"); 
     // alert(row);
@@ -151,9 +305,9 @@ function selectbarrier(){
 	// 	var row = table.deleteRow(row);
 	// 	rowCount--;
 	// }
-    var td = event.target.parentNode; 
-      var tr = td.parentNode; // the row to be removed
-      tr.parentNode.removeChild(tr);
+    // var td = event.target.parentNode; 
+    //   var tr = td.parentNode; // the row to be removed
+    //   tr.parentNode.removeChild(tr);
 	
 }  
         } 
@@ -178,44 +332,89 @@ function selectbarrier(){
 } 
         
 
+
+
+
+
+
     function addbackrow(){
+
+
         var table = document.getElementById('backtable');
         var level = document.getElementById('level').value;
         var code=document.getElementById('addbacksubject').value;
-        var subjectid=document.getElementById(code+'id').value;
+        var addbacksub=document.getElementById(code+'id').value;
         var subject=document.getElementById(code).value;
-        if(code!= ''){
-        var row = table.insertRow();
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        
-        cell1.innerHTML = "<br>"+subject+"</br>";
-        cell2.innerHTML = "<br>"+code+"</br>";
-        cell3.innerHTML = "retake";
+
+
+
+        var backsub = "";
+        var subjectid = "";
+        var j = parseInt(document.getElementById('rowvalue').value);
+     
        
-        var cell5 = row.insertCell(4); 
-        var rowCount = table.rows.length;  
-        var row = table.insertRow(rowCount);  
-        
-        
-        
-        cell4.type = "button";  
-        var btnName = "button" + (rowCount + 1);  
-        cell4.name = btnName;  
-        cell4.setAttribute('value', 'Delete'); // or cell4.value = "button";  
-        cell4.onclick = function() {  
-            removeRow(btnName);  
-        }  
-        cell4.innerHTML = '<p style="color:red;text-align:center;">&#10008;</p>'
-        var rowcount1 = rowCount;
-        cell5.innerHTML = "<input type='hidden' name='15"+rowcount1+"' value='"+subjectid+"'>"
-        
-        
+        for(k=1;k < j;k++){
+           backsub = backsub+","+document.getElementById('concurrent'+k).value;
         }
+
+        $.post('{{ route('selectConcurrentAndBackSubject') }}', {_token:'{{ csrf_token() }}',  subjectid:subjectid , backsub:backsub , addbacksub:addbacksub}, function(data)
+                {
+                  console.log(data);
+                  
+                    document.getElementById("backsubjectbody").innerHTML = data;
+                
+              });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // if(code!= ''){
+        // var row = table.insertRow();
+        // var cell1 = row.insertCell(0);
+        // var cell2 = row.insertCell(1);
+        // var cell3 = row.insertCell(2);
+        // var cell4 = row.insertCell(3);
+        
+        // cell1.innerHTML = "<br>"+subject+"</br>";
+        // cell2.innerHTML = "<br>"+code+"</br>";
+        // cell3.innerHTML = "retake";
+       
+        // var cell5 = row.insertCell(4); 
+        // var rowCount = table.rows.length;  
+        // var row = table.insertRow(rowCount);  
+        
+        
+        
+        // cell4.type = "button";  
+        // var btnName = "button" + (rowCount + 1);  
+        // cell4.name = btnName;  
+        // cell4.setAttribute('value', 'Delete'); // or cell4.value = "button";  
+        // cell4.onclick = function() {  
+        //     removeRow(btnName);  
+        // }  
+        // cell4.innerHTML = '<p style="color:red;text-align:center;">&#10008;</p>'
+        // var rowcount1 = rowCount;
+        // cell5.innerHTML = "<input type='hidden' name='15"+rowcount1+"' value='"+subjectid+"'>"
+        
+        
+        // }
     
     }
+
+
+
+   
 
 
 

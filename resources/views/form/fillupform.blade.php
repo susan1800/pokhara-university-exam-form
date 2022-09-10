@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
 <div style="padding: 10px;">
 <div class="aiz-titlebar text-left mt-2 mb-3 text-center">
     <h5 class="mb-0 h6 btn btn-primary action-btn ">Exam registration form</h5>
@@ -148,6 +149,8 @@
 
                 
                             <div class="card-body">  
+                                <h6 class="alert alert-success alert-dismissible">you can fill the barrier subject as a regular subject (if you are failed in that subject) <br>
+                                if you are passover student you can add the back subject of 24 credit ! </h6>
                             </div>
                 </div>
                 <div class="card">
@@ -159,6 +162,10 @@
 
                 
                             <div class="card-body">  
+                                <h6 class="alert alert-success alert-dismissible">You must check concurrent subject and add it ( if you are failed in that subject),<br>
+                                you can add 3 back subject for semester (1-6), <br>
+                                you can add 4 back subject for(7-8)Semester and<br>
+                                you can add 24 credit subject for passout student !</h6>
                                 @include('partials.flash')
                             </div>
                 </div>
@@ -169,7 +176,7 @@
             <div class="col-12">
                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group" role="group" aria-label="Second group">
-                        <button type="submit" name="button" value="publish" class="btn btn-success action-btn" onclick="showsignature(); return showsubmitalert();">Submit</button>
+                        <button type="submit" name="button" value="publish" class="btn btn-success action-btn" onclick=" showsignature(); return showsubmitalert();">Submit</button>
                     </div>
                 </div>
             </div>
@@ -242,10 +249,31 @@ function showimage(event){
     
 
  }
+}
 
  function showsubmitalert(){
-if(confirm('are you sure to confirm ? Please check again to make sure !')){
-    return true;
+if(confirm('are you sure to confirm ? Please check again to make sure. you cannot edit after submit the form !')){
+
+
+    var level = document.getElementById("level").value;
+    var table = document.getElementById('backtable').rows.length;
+	// var rowCount = table.rows.length;
+    var backsub = "";
+     for(k=1;k < table;k++){
+        backsub = backsub+","+document.getElementById('concurrent'+k).value;
+     }
+     $.post('{{ route('checksubmitcredit') }}', {_token:'{{ csrf_token() }}',  level:level , backsub:backsub , tablerow:table}, function(data)
+             {
+               if(data == '1'){
+                return true;
+               }
+               else{
+                alert(data);
+                return false;
+               }
+             
+           });
+
 }
 else{
     return false;
@@ -254,7 +282,7 @@ else{
 
 
 
-}
+
 </script>
 
 
