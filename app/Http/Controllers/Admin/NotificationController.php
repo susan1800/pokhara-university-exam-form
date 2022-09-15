@@ -42,4 +42,13 @@ class NotificationController extends BaseController
             $seen->save();
         }
     }
+
+
+
+
+
+
+
+
+    
 }

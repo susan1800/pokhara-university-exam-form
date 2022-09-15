@@ -129,7 +129,34 @@
         "eventHandler": {
             onSuccess (payload) {
                 // hit merchant api for initiating verfication
-                console.log(payload);
+                 // hit merchant api for initiating verfication
+                 console.log(payload);
+                if(payload.idx){
+                    $.ajax({
+                            type : 'POST',
+                            url : "{{ route('khalti.payment.check')}}",
+                            //  routekhalti.verifyPayment 
+                            data: {
+                                token : payload.token,
+                                amount : payload.amount,
+                                product_identity : payload.product_identity,
+                                "_token" : "{{ csrf_token() }}"
+                            },
+                            success : function(res){
+                               
+                                        if(res == 1){
+                                            window.location.href = "{{route('submit.complete')}}";
+                                        }else{
+                                            Swal.fire('Something Wrong Please try again !')
+                                        }
+                                        
+                                    
+                            },
+                                    error: function (res) {  Swal.fire('Something Wrong Please try again !') }
+                        });
+                }
+
+
             },
             onError (error) {
                 console.log(error);

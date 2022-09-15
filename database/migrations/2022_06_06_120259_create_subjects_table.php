@@ -18,6 +18,7 @@ class CreateSubjectsTable extends Migration
             $table->string('subject');
             $table->string('subject_code');
             $table->bigInteger('barrier_id')->nullable();
+            $table->bigInteger('hasbarrier')->nullable();
             $table->bigInteger('concurrent_id')->nullable();
             $table->integer('credit_hours');
             $table->unsignedBigInteger('level_id');

@@ -33,29 +33,37 @@
 
                             <label for="changeprofilepic" class="custom-file-upload">
                                 <div class="form-group row">
+                                    <img src="" id="target" style="width:200px;height:auto;display:none; border-radius:10px; margin-buttom:10px;"><br>
                                     <div class="input-group" data-toggle="aizuploader">
+                                        
                                         <div class="input-group-prepend">
-                                            <div for="imageselect" class="input-group-text bg-soft-secondary font-weight-medium" >Browse</div>
+                                            <br>
+                                            <div for="imageselect" class="input-group-text bg-soft-secondary font-weight-medium " >Browse</div>
                                         </div>
-                                        <div id="showimagename" for="imageselect" class="form-control ">Choose File</div>
+                                        <div id="showimagename" for="imageselect" class="form-control ">Choose File  </div>
+                                        
                                     </div>
                                 </div>
                             </label>
-                            <input id="changeprofilepic" name="formimage" type="file" style="display:none;" onchange="showimage(this)" required/>
+                            <input id="changeprofilepic" name="formimage" type="file" value="{{old('formimage')}}" style="display:none;" onchange="showimage()" />
+                            <p style="color: red; margin-top:0px;">@error('formimage') {{ $message }} @enderror  </p>
                            
+                         
                         </div>                
                     <div class="card-body">
                         <div class="form-group mb-3">
                             <label for="name">
                                 Name
                             </label>
-                            <input type="text" name="name" class="form-control" placeholder="Full Name" autofocus value="{{old('name')}}" required>
+                            <input type="text" name="name" class="form-control" placeholder="Full Name" autofocus value="{{old('name')}}" >
+                            <p style="color: red; margin-top:0px;">@error('name') {{ $message }} @enderror</p>
                         </div>
                         <div class="form-group mb-3">
                             <label for="registration number">
                                 University Registration number
                             </label>
-                            <input type="text" name="registration_no" class="form-control" placeholder="Eg: 2019-1-10-0123" value="{{old('registration_no')}}" required>
+                            <input type="text" name="registration_no" class="form-control" placeholder="Eg: 2019-1-10-0123" value="{{old('registration_no')}}" >
+                            <p style="color: red; margin-top:0px;">@error('registration_no') {{ $message }} @enderror</p>
                         </div>
                    
 
@@ -63,12 +71,13 @@
                             <label for="program">
                                 Program
                             </label>
-                            <select name="program" id="program" class="form-control aiz-selectpicker" data-selected-text-format="count" data-live-search="true" data-placeholder="Choose Attributes" onchange="getSubject()" required>
-                                <option> Select Program</option>
+                            <select name="program" id="program" class="form-control aiz-selectpicker" data-selected-text-format="count" data-live-search="true" data-placeholder="Choose Attributes" onchange="getSubject()" >
+                                <option value=""> Select Program</option>
                                 @foreach ($programs as $program)
-                                <option value="{{$program->id}}"> {{$program->program}}</option>
+                                <option value="{{$program->id}}" @if(old('program')==$program->id) selected @endif > {{$program->program}}</option>
                                 @endforeach
                             </select>
+                            <p style="color: red; margin-top:0px;">@error('program') {{ $message }} @enderror</p>
                             
                         </div>
 
@@ -76,13 +85,14 @@
                             <label for="level">
                                 Level
                             </label>
-                            <select id="level" name="level" class="form-control form-control aiz-selectpicker" onchange="selectexamrollno(); getSubject()" data-live-search="true" required>
+                            <select id="level" name="level" class="form-control form-control aiz-selectpicker" onchange="selectexamrollno(); getSubject()" data-live-search="true" >
                                 <option value=""> Select level</option>
                                 @foreach ($levels as $level)
-                                <option value="{{$level->id}}"> {{$level->level}}</option>
+                                <option value="{{$level->id}}" @if(old('level')==$level->id) selected @endif> {{$level->level}}</option>
                                
                                 @endforeach
                             </select>
+                            <p style="color: red; margin-top:0px;">@error('level') {{ $message }} @enderror</p>
 
 
                             @foreach ($levels as $level)
@@ -103,31 +113,34 @@
                                 Exam Roll Number
                             </label>
                             <input type="text" name="examrollno" class="form-control" placeholder="Eg: 18120050" value="{{old('examrollno')}}">
+                            <p style="color: red; margin-top:0px;">@error('examrollno') {{ $message }} @enderror</p>
                         </div>
 
                         <div class="form-group mb-3" >
                             <label for="year">
                                Year
                             </label>
-                            <select class="form-control" name="year" required>
-                                <option>Select Year</option>
+                            <select class="form-control" name="year" >
+                                <option value="">Select Year</option>
                                 @foreach ($times as $time)
-                                    <option value="{{$time}}">{{$time}}</option>
+                                    <option value="{{$time}}" @if(old('year')==$time) selected @endif>{{$time}}</option>
                                 @endforeach
                             </select>
+                            <p style="color: red; margin-top:0px;">@error('year') {{ $message }} @enderror</p>
                         </div>
 
 
                         <!-- signature -->
                         <div class="form-group mb-3" >
-                        <a class="button-text" id="clear_button">CLEAR</a>
-                        <div class="signature-pad-container">
+                            <a class="button-text" id="clear_button">CLEAR</a>
+                            <div class="signature-pad-container">
+                                
+                                <canvas id="signature_pad" ></canvas>
+                            </div>
+                            <input type="hidden" id="signature" name="signature">
                             
-                            <canvas id="signature_pad" ></canvas>
-                        </div>
-                        <input type="hidden" id="signature" name="signature">
-                        
-                    </div>
+                         </div>
+                         <p style="color: red; margin-top:0px;">@error('signature') {{ $message }} @enderror</p>
 
                     </div>
                 </div>
@@ -137,7 +150,7 @@
             <div class="col-lg-8">
                 
                 
-                
+                @include('partials.flash')
               <div id="subject-content">
                 <div class="card">
                     <div class="card-header">
@@ -165,7 +178,7 @@
                                 <h6 class="alert alert-success alert-dismissible">You must check concurrent subject and add it ( if you are failed in that subject),<br>
                                 you can add 3 back subject for semester (1-6), <br>
                                 you can add 4 back subject for(7-8)Semester and<br>
-                                you can add 24 credit subject for passout student !</h6>
+                                you can add 24 credit subject for passover student !</h6>
                                 @include('partials.flash')
                             </div>
                 </div>
@@ -176,7 +189,7 @@
             <div class="col-12">
                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group" role="group" aria-label="Second group">
-                        <button type="submit" name="button" value="publish" class="btn btn-success action-btn" onclick=" showsignature(); return showsubmitalert();">Submit</button>
+                        <button type="submit" name="button" value="publish" class="btn btn-success action-btn" onclick="  return showsubmitalert();">Submit</button>
                     </div>
                 </div>
             </div>
@@ -185,7 +198,9 @@
 </div>
 
 </div>
+
 <script
+
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
@@ -196,7 +211,7 @@
 <script src="{{ url('js/sign.js')}}"></script>
 
 <script>
-
+   
   function selectexamrollno(){
     var levelid = document.getElementById('firestsemid').value;
     
@@ -209,7 +224,7 @@
         document.getElementById('examrollno').style.display="none";
     }
   }
-
+  selectexamrollno();
 
 
   function getSubject(){
@@ -234,46 +249,62 @@
             });
     }
   }
+  getSubject();
 
 
 
 
 
 
-function showimage(event){
+function showimage(){
+    var src = document.getElementById("changeprofilepic");
+    var target = document.getElementById("target");
+    if(src.value != ""){
+        target.style.display = "block";
+    }
     
-    var image = event.files[0].name; 
+    var fr=new FileReader();
+  // when image is loaded, set the src of the image where you want to display it
+  fr.onload = function(e) { target.src = this.result; };
    
- if(image){
-    var showimage = document.getElementById('showimagename').innerHTML = image;
-    
-
- }
+    fr.readAsDataURL(src.files[0]);
+  
 }
+showimage();
 
  function showsubmitalert(){
 if(confirm('are you sure to confirm ? Please check again to make sure. you cannot edit after submit the form !')){
 
-
+    showsignature();
     var level = document.getElementById("level").value;
     var table = document.getElementById('backtable').rows.length;
 	// var rowCount = table.rows.length;
     var backsub = "";
+    
      for(k=1;k < table;k++){
         backsub = backsub+","+document.getElementById('concurrent'+k).value;
      }
-     $.post('{{ route('checksubmitcredit') }}', {_token:'{{ csrf_token() }}',  level:level , backsub:backsub , tablerow:table}, function(data)
+     var result = $.post('{{ route('checksubmitcredit') }}', {_token:'{{ csrf_token() }}',  level:level , backsub:backsub , tablerow:table}, function(data)
              {
-               if(data == '1'){
+              
+             result = data;
+            //  alert(result);
+            if(result == '1'){
                 return true;
                }
                else{
-                alert(data);
+                alert(result+"sf");
                 return false;
                }
-             
            });
-
+          
+        //    if(result == true){
+        //         return true;
+        //        }
+        //        else{
+        //         alert(result);
+        //         return false;
+        //        }
 }
 else{
     return false;

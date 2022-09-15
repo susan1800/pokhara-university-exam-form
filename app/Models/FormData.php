@@ -31,10 +31,10 @@ class FormData extends Model
 
 
     public function subject(){
-    	return $this->hasOne(FormDataSubject::class);
+    	return $this->hasMany(FormDataSubject::class);
     }
     public function backSubject(){
-    	return $this->hasOne(FormDataBackSubject::class);
+    	return $this->hasMany(FormDataBackSubject::class);
     }
     public function level(){
     	return $this->belongsTo(Level::class , 'level_id');

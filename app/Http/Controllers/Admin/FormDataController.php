@@ -59,6 +59,29 @@ class FormDataController extends BaseController
         else{
             return 0;
         }
+
+
+
+
+
+
+
+        
+    }
+    public function viewstudentdata($id){
+        
+        $formdata = FormData::find($id);
+        // dd($formdata);
+        return view('admin.viewformdatas.view' , compact('formdata'));
+    }
+
+
+
+    public function seenForm(Request $request){
+        $formdata = FormData::find($request->formid);
+        $formdata['seen'] = '1';
+        $formdata->save();
+        return 1;
     }
     
 }

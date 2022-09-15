@@ -10,6 +10,9 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\ForgotPasswordController;
 use App\Http\Controllers\BarrierConcurrentController;
+use App\Http\Controllers\KhaltiController;
+use App\Http\Controllers\CashOnDeliveryController;
+use App\Http\Controllers\EsewaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,7 +77,22 @@ Route::middleware(['userlogin'])->group(function () {
 
 
 
-    // removebacksubject
+    //khalti
+Route::post('/khalti/payment/check', [KhaltiController::class ,'verifyPayment'])->name('khalti.payment.check');
+//end khalti
+
+//cash on delivery
+Route::get('/update/payment/cashondelivety', [CashOnDeliveryController::class , 'paymentMethod'])->name('cashondelivery.payment');
+//end cash on delivery
+//esewa
+
+Route::get('/esewa/payment/check/{order_code}/{q}', [EsewaController::class , 'verifyPayment'])->name('esewa.payment.check');
+//end esewa
+
+Route::get('form/submit/complete', [FormFillupController::class, 'submitComplete'])->name('submit.complete');
+
+
+
 });
 
 

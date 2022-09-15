@@ -12,4 +12,5 @@ class ViewFormDataController extends Controller
          $this->setPageTitle('dashboard', 'dashboard');
         return view('/admin/dashboard/index' , 'notification');
     }
+    
 }

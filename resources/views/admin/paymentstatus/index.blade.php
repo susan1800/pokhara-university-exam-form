@@ -76,6 +76,11 @@ input:checked + .slider:before {
                         <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
                             <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
                                 Full Table
+                                <div style="padding-left:10px; display:inline-flex">
+                                  <button id="filebutton" onclick="selectexcel()" class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">Import Excel</button>
+                                  <input type="file" name="file" id="file" style="display:none;" onchange="submitexcel();">
+                                 
+                              </div>
                                 <div style="float: right; display:inline-flex">
                                     <input type="text" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ..." onkeyup="search()" onkeydown="search()" onclick="search()" onchange="search()">
                                     
@@ -153,8 +158,50 @@ input:checked + .slider:before {
 
  @endsection
  <script>
-  
+ 
+
+
+ function selectexcel(){
+    $('#file').click();
+
+};
+function submitexcel(){
+  var uploadFile = document.getElementById("file");
+            if( ""==uploadFile.value){
+
+
+            }
+            else{
+                var fd = new FormData();
+
+                fd.append( "fileInput", $("#file")[0].files[0]);
+                // fd.append('file',files[0]);
+
+                $.ajax({
+                  
+                    url: "{{ route('upload.paymentstatus')}}",
+                    data: fd,
+                    headers: {
+                      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    }, 
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function(data){
+                        if(data.uploaded==true){
+                            alert(data.url);
+                        }
+                    },
+                    error: function(err){
+                        alert(err);
+                    }
+                });
+
+            }
+}
+
    $(document).ready(function() {
+
 
       
 $('#search').on('keyup', function(){

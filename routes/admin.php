@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FormDataController;
 use App\Http\Controllers\Admin\PaymentStatusController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\PaymentController;
 
 
 use App\Http\Controllers;
@@ -36,6 +37,18 @@ Route::middleware(['adminlogin'])->group(function () {
     Route::get('/notificationcount', [NotificationController::class, 'getNotificationCount'])->name('notificationcount');
     Route::get('/notificationcountsetzero', [NotificationController::class, 'NotificationCountSetZero'])->name('notificationcountsetzero');
 
+
+    Route::post('/upload/paymentstatus', [PaymentController::class, 'uploadPaymentStatus'])->name('upload.paymentstatus');
+    Route::post('/seenform', [FormDataController::class, 'seenForm'])->name('seenform');
+    Route::get('/form/{id}/view', [FormDataController::class, 'viewstudentdata'])->name('view.studentdata');
+
+    Route::get('export', 'ImportExportController@export')->name('export');
+    Route::get('importExportView', 'ImportExportController@importExportView');
+    Route::post('import', 'ImportExportController@import')->name('import');
 });
 Route::get('/clear-cache', [DashboardController::class , 'clearCache'])->name('cache.clear');
+
+
+
+
 

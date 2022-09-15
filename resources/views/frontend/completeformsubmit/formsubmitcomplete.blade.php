@@ -94,7 +94,6 @@
 
                 </div>
             </div>
-            <input type="hidden" id="formid" value="{{$formdata->id}}">
             <div class="name">
                 <p>P.U Registration No. : {{$formdata->registration_no}}</p>
             </div>
@@ -286,24 +285,7 @@
         </form>
     </div>
 </body>
-
-<script src="http://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous">
-</script>
 <script>
-    alert('Press ctrl+p to print or download the admitcard');
-    function seen(){
-
-
-    var id = document.getElementById('formid').value;
-
-    $.post('{{route('seenform') }}', {_token:'{{ csrf_token() }}',  formid:id}, function(data)
-                {
-                 
-              });
-}
-seen();
-
+    alert('Form submitted successfully.');
 </script>
 </html>

@@ -20,6 +20,8 @@ use App\Models\Subject;
 use App\Models\Notification;
 use App\Models\NotificationCount;
 use Illuminate\Support\Facades\Crypt;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\OffersNotification;
 
 class FormFillupController extends BaseController
 {
@@ -43,6 +45,7 @@ class FormFillupController extends BaseController
             'registration_no'      =>  'required',
             'program'      =>  'required',
             'level' =>'required',
+            'year' =>'required',
             'formimage' =>  'required|mimes:jpg,jpeg,png',
             'signature'  => 'required',
             
@@ -56,17 +59,17 @@ class FormFillupController extends BaseController
 
     
     if($request->signature == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS4AAACYCAYAAABapASfAAAAAXNSR0IArs4c6QAABHBJREFUeF7t1AEJAAAMAsHZv/RyPNwSyDncOQIECMQEFssrLgECBM5weQICBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMg8F2bAJlDULv5AAAAAElFTkSuQmCC"){
-
-        return $this->responseRedirectBack('Please fill all the details .', 'error', true, true)->withInput($request->input());
+        Alert::warning('Congrats', 'Please fill the signature');
+        return $this->responseRedirectBack('Please fill all the details including signature .', 'error', true, true)->withInput($request->input());
     }
     $user_id = $request->session()->get('sessionuseridcosmos');
 
     $formId = FormData::where('user_id' , $user_id)->first();
     
-    // if($formId){
-    // //     $this->setFlashMessage("You Already submitted Your Form Please contact to administrator for any query !", 'error');
-    //     return $this->responseRedirectBack('You Already submitted Your Form Please contact to administrator for any query !', 'error', true, true)->withInput($request->input());
-    // }
+    if($formId){
+    //     $this->setFlashMessage("You Already submitted Your Form Please contact to administrator for any query !", 'error');
+        return $this->responseRedirectBack('You Already submitted Your Form Please contact to administrator for any query !', 'error', true, true)->withInput($request->input());
+    }
     
     $signature = $this->uploadsignature($request->signature);
 if($signature == 0){
@@ -107,6 +110,20 @@ if($signature == 0){
        if($this->incrementNotificationCount()==0){
 
        }
+       $userdetails = User::find($user_id);
+
+
+       $offerData = [
+        'name' => $userdetails->name,
+        'body' => $userdetails->name.'fill the form',
+        'thanks' => '',
+        'offerText' => '',
+        'offerUrl' => url('http://127.0.0.1:8000/form/'.$user_id.'/view'),
+        'offer_id' => $userdetails->roll_no,
+    ];
+
+    Notification::send($userSchema, new OffersNotification($offerData));
+       
     
        DB::commit();
 
@@ -292,6 +309,23 @@ if($signature == 0){
         }
         }
 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function submitComplete(){
+        $formdata = FormData::where('user_id' , session()->get('sessionuseridcosmos'))->first();
+        return view('frontend.completeformsubmit.formsubmitcomplete' , compact('formdata'));
     }
     
 }
