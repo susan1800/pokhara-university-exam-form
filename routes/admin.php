@@ -42,9 +42,15 @@ Route::middleware(['adminlogin'])->group(function () {
     Route::post('/seenform', [FormDataController::class, 'seenForm'])->name('seenform');
     Route::get('/form/{id}/view', [FormDataController::class, 'viewstudentdata'])->name('view.studentdata');
 
-    Route::get('export', 'ImportExportController@export')->name('export');
-    Route::get('importExportView', 'ImportExportController@importExportView');
+    Route::get('export', [FormDataController::class ,'export'])->name('export');
     Route::post('import', 'ImportExportController@import')->name('import');
+
+
+
+    Route::get('/paymentstatus/updatepaymentstatus', [PaymentController::class, 'updatePaymentStatus'])->name('updatepaymentstatus');
+
+    
+    
 });
 Route::get('/clear-cache', [DashboardController::class , 'clearCache'])->name('cache.clear');
 

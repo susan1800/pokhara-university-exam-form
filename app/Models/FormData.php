@@ -30,7 +30,7 @@ class FormData extends Model
     ];
 
 
-    public function subject(){
+    public function regularsubject(){
     	return $this->hasMany(FormDataSubject::class);
     }
     public function backSubject(){

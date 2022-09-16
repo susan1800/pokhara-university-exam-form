@@ -122,7 +122,7 @@ if($signature == 0){
         'offer_id' => $userdetails->roll_no,
     ];
 
-    Notification::send($userSchema, new OffersNotification($offerData));
+    
        
     
        DB::commit();

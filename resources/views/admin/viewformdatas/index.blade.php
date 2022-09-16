@@ -73,7 +73,7 @@ input:checked + .slider:before {
                                 Full Table
                                 
                                 <div style="padding-left:10px; display:inline-flex">
-                                  <button class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">Export Excel</button>
+                                  <a class="btn btn-warning" href="{{ route('export') }}">Export Data</a>
                               </div>
                                 <div style="float: right; display:inline-flex">
                                     <input type="search" onclick="search()" onkeyup="search()" onkeydown="search()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">
@@ -313,3 +313,5 @@ $('#search').on('keyup', function(){
 
 
 @endsection
+
+

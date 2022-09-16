@@ -8,6 +8,10 @@ use App\Models\FormData;
 use Mail;
 use App\Models\NotificationCount;
 use App\Models\Notification;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 class FormDataController extends BaseController
 {
     public function index(){
@@ -83,5 +87,76 @@ class FormDataController extends BaseController
         $formdata->save();
         return 1;
     }
+
+
+    public function export() 
+    {
+        return Excel::download(new UsersExport, 'bulkData.xlsx');
+        // $code[0] = 'cvnvhbv';
+        // $name[0] = 'dfgcf';
+        // $user[0] = 'dfgcf';
+        // $number[0] = 'dfgcf';
+
+        // $users = array();
+        // array_push($users, array('Code', 'Name', 'User', 'Number'));
+        // for ($i=0; $i<count($code); $i++){
+        //     array_push($users, array($code[$i], $name[$i], $user[$i], $number[$i]));
+        // }
+        
+        // Excel::raw($users, Excel::XLSX);
+        
+        // // Excel::download/Excel::store($users);
+
+
+        // // Excel::create('Filename', function($excel) use ($users) {
+
+        // //     $excel->sheet('Sheetname', function($sheet) use ($users) {
+
+        // //         $sheet->fromArray($users);
+
+        // //     });
+
+        // // })->export('xls');
+        // return true;
+
+
+
+
+
+
+
+
+
+
+// $formdata = FormData::all();
+
+//         // Array that will be used to generate the sheet
+// $sheetArray = array();
+// $levels=Level::all();
+// $i=0;
+// foreach($levels as $level){
+//     $levelheader[$i] = $level->level;
+//     $levelid[$level] = $level->id;
+//     $i++;
+// }
+// foreach($levelheader as $level){
+//     $subjects = Subject::where(['level_id' , $levelid[$level]] , ['program_id' , $formdata[0]->program_id])->get();
+// }
+// // Add the headers
+// $sheetArray[] = array('name','Registration number','roll number',$levelheader,'ACTUAL VAT');
+
+// // Add the results
+// foreach($formdata  as $row){
+   
+//     $sheetArray[] = array($row->name,$row->registration_no,$row->exam_roll_no,number_format(($row->amount)*15/115,2,'.',','));
+// }
+
+// // Generating the sheet from the array
+// $sheet->fromArray($sheetArray);
+
+    }
+
+
+    
     
 }
