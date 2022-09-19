@@ -253,11 +253,31 @@
                 type: 'POST',
                 success: function(data) {
                     if (data == 1) {
-                        alert("success");
+
+                        Swal.fire({
+                    title: 'File import successfully',
+                    confirmButtonText: 'ok',
+                    icon:'warning',
+                    }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
                     }
                 },
                 error: function(err) {
-                    alert(err);
+                    Swal.fire({
+                    title: 'Faild to import file, Please try again !',
+                    confirmButtonText: 'ok',
+                    icon:'warning',
+                    }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        document.getElementById("file").value ="";
+                        
+                    }
+                });
                 }
             });
         }
