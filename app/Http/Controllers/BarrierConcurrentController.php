@@ -40,11 +40,12 @@ class BarrierConcurrentController extends Controller
 
 
             
-
-            if($back==$addbacksub->id){
-                $addbacksub=[];
-                break;
-            }
+                if($addbacksub){
+                    if($back==$addbacksub->id){
+                        $addbacksub=[];
+                        break;
+                    }
+                }
         }
 
 
