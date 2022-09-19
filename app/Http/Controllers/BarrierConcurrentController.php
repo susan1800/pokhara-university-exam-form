@@ -63,9 +63,10 @@ class BarrierConcurrentController extends Controller
         foreach($backs as $back){
             if($back == $removeid){
                 $backs[$i]="";
-                break;
+                
             }
             $i++;
+            
         }
         $backconcurrent = "";
         $addbacksub = "";

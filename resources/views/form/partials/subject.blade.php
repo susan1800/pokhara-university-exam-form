@@ -39,7 +39,7 @@
                                 <option value="{{$barrier->subject_code}}">{{$barrier->subject}}</option>
                                 
                             </select>
-                            
+
                             <input type="hidden" id="{{$barrier->subject_code}}" value="{{$barrier->id}}">
                             <input type="hidden" id="{{$subject->subject_code}}" value="{{$subject->id}}">
                             <input type="hidden" id="barrierid" value="{{$i}}">
@@ -114,7 +114,7 @@
                         <th>{{$concurrent->subject_code}}
                         </th>
                         <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
-                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
+                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$concurrent->id}}')">&#10008;</p></th>
                     </tr>
                     
 
@@ -143,7 +143,7 @@
                         <th>{{$concurrent->subject_code}}
                         </th>
                         <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
-                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
+                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$concurrent->id}}')">&#10008;</p></th>
                     </tr>
                     
 
@@ -169,7 +169,7 @@
                         <th>{{$concurrent->subject_code}}
                         </th>
                         <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
-                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
+                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$concurrent->id}}')">&#10008;</p></th>
                     </tr>
                     
 
@@ -194,7 +194,7 @@
                         <th>{{$concurrent->subject_code}}
                         </th>
                         <td>Concurrent Subject (Remove if you dont have back in this subject)</td>
-                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$subject->id}}')">&#10008;</p></th>
+                        <th style="text-align: cemter; color:red"><p style="text-align: center" onclick="removeconcurrent('{{$concurrent->id}}')">&#10008;</p></th>
                     </tr>
                     
 
@@ -285,7 +285,12 @@ function selectbarrier(){
         var subjectid = document.getElementById(code).value;
     }
 
+
+
+
+
     function removeconcurrent(subjectid){
+
         Swal.fire({
   title: 'This is Back/concurrent subject , are you sure to remove ?',
   icon:'question',
@@ -304,6 +309,7 @@ function selectbarrier(){
     }catch(err){
         location.reload();
     }
+    
 
      $.post('{{ route('removebacksubject') }}', {_token:'{{ csrf_token() }}',  subjectid:subjectid , backsub:backsub}, function(data)
              {
