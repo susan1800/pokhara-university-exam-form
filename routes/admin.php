@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\PaymentStatusController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\ChangePasswordController;
 
 use App\Http\Controllers;
 
@@ -24,6 +24,9 @@ Route::middleware(['adminlogin'])->group(function () {
 
             Route::get('/', [PaymentStatusController::class, 'index'])->name('admin.paymentstatus.index');
        });
+
+       Route::get('/changepassword',[ChangePasswordController::class , 'index'])->name('changepassword.view');
+       Route::post('/changepassword',[ChangePasswordController::class , 'changePassword'])->name('changepassword');
     });
 
     Route::post('searchajaxform', [SearchController::class, 'formSearch'])->name('searchajaxform');
@@ -48,7 +51,9 @@ Route::middleware(['adminlogin'])->group(function () {
 
 
     Route::get('/paymentstatus/updatepaymentstatus', [PaymentController::class, 'updatePaymentStatus'])->name('updatepaymentstatus');
+    Route::get('/formdata/delete', [FormDataController::class, 'deleteAllData'])->name('deletefoemdata');
 
+    
     
     
 });

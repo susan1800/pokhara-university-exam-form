@@ -11,8 +11,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\ForgotPasswordController;
 use App\Http\Controllers\BarrierConcurrentController;
 use App\Http\Controllers\KhaltiController;
-use App\Http\Controllers\CashOnDeliveryController;
+use App\Http\Controllers\CashOnDeskController;
 use App\Http\Controllers\EsewaController;
+use App\Http\Controllers\ChangePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,9 @@ Route::post('/password/email', [ForgotPasswordController::class, 'getEmail'])->n
 
 
 Route::post('/password/send/otp', [ForgotPasswordController::class, 'forgotPasswordSendOtp'])->name('forgotpassword.send.otp');
+Route::get('/password/verify/otp', [ForgotPasswordController::class, 'forgotPasswordVerifyOtp'])->name('forgotpassword.verifyotp');
+Route::post('change/forgotpassword', [ForgotPasswordController::class, 'forgotPasswordChange'])->name('forgotpassword.change');
+Route::post('/password/verify/otp', [VerificationController::class, 'checkotpforgotpassord'])->name('forgotpassword.verify.otp');
 
 Route::middleware(['userlogin'])->group(function () {
     // Route:: view('/' , 'form.fillupform')->name('user');
@@ -82,7 +86,7 @@ Route::post('/khalti/payment/check', [KhaltiController::class ,'verifyPayment'])
 //end khalti
 
 //cash on delivery
-Route::get('/update/payment/cashondelivety', [CashOnDeliveryController::class , 'paymentMethod'])->name('cashondelivery.payment');
+Route::get('/update/payment/cashondesk', [CashOnDeskController::class , 'updatepaymentmethod'])->name('cashondesk.payment');
 //end cash on delivery
 //esewa
 
@@ -91,7 +95,8 @@ Route::get('/esewa/payment/check/{order_code}/{q}', [EsewaController::class , 'v
 
 Route::get('form/submit/complete', [FormFillupController::class, 'submitComplete'])->name('submit.complete');
 
-
+Route::get('/changepassword',[ChangePasswordController::class , 'userindex'])->name('user.changepassword.view');
+Route::post('/changepassword',[ChangePasswordController::class , 'userchangePassword'])->name('user.changepassword');
 
 });
 

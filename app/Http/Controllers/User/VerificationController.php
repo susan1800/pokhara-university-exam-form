@@ -161,12 +161,12 @@ class VerificationController extends BaseController
         ]);
         try{
         if($request->inputotp == Crypt::decryptString($request->otp)){
-              
-        return $this->responseRedirect('changepasword' , $email);
+              $email = $request->email;
+        return view('login.forgotpassword.changepassword' , compact('email'));
                 
         }
         else{
-            return redirect()->route('verifyotpforgotpassword',['makeotp' => $request->otp , 'email'=> $request->email , 'error' => 'Otp not matched !']);
+            return $this->responseRedirectBack('Otp not matched. please enter valid otp.', 'error', true, true);
         }
     }catch (ModelNotFoundException $e) {
 

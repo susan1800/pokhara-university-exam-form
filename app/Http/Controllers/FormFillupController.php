@@ -42,7 +42,7 @@ class FormFillupController extends BaseController
         $this->validate($request, [
             'name'      =>  'required',
             'year'      =>  'required',
-            'registration_no'      =>  'required',
+            'registration_no' =>  'required',
             'program'      =>  'required',
             'level' =>'required',
             'year' =>'required',
@@ -121,17 +121,48 @@ if($signature == 0){
         'offerUrl' => url('http://127.0.0.1:8000/form/'.$user_id.'/view'),
         'offer_id' => $userdetails->roll_no,
     ];
+    $split = str_split($userdetails->roll_no);
+    $year="";
+    for($i=0;$i<2;$i++){
+        $year = $year.$split[$i];
+    }
+    
 
     
-       
+    if($year > 16){
+        $level = Level::where('id' , $formId['level_id'])->first();
+        if($level->level == "Passover"){
+            if($backSubject > 5){
+                $totalfee = 2500 + ($backSubject-6)*300;
+            }
+            else{
+                $totalfee = 2500;
+            }
+        }else{
+            $totalfee = 2500 + ($backSubject-1)*300;
+        }
+    }else{
+        $level = Level::where('id' , $formId['level_id'])->first();
+        if($level->level == "Passover"){
+            if($backSubject > 5){
+                $totalfee = 1500 + ($backSubject-6)*300;
+            }
+            else{
+                $totalfee = 1500;
+            }
+        }else{
+            $totalfee = 1500 + ($backSubject-1)*300;
+        }
+    }
     
        DB::commit();
 
 
-       $totalfee = 2500 + ($backSubject-1)*300;
+       
+
        $totalfee = $hashcode =Crypt::encryptString($totalfee);
       
-       return redirect()->route('payment.showpaymentmethod' , compact('totalfee'));
+       return redirect()->route('payment.showpaymentmethod' , compact('totalfee' , 'backSubject'));
 
        
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\NotificationCount;
+use App\Models\FormData;
+use App\Models\PaymentStatus;
 use Artisan;
 use Cache;
 
@@ -19,7 +21,17 @@ class DashboardController extends BaseController
     //     $reviews=feedback::all();
         $notification = NotificationCount::first();
     $this->setPageTitle('dashboard', 'dashboard');
-        return view('/admin/dashboard/index' , compact('notification'));
+    $formfilled = count(FormData::get());
+    $formapproved = count(FormData::where('approve' , 1)->get());
+    $formapprovedremaining = count(FormData::where('approve',0)->get());
+    $newform = count(FormData::where('seen',0)->get());
+
+
+    $totalstudent = count(PaymentStatus::get());
+    $paymentclear = count(PaymentStatus::where('status' , 1)->get());
+    $paymentremaining = count(PaymentStatus::where('status' , 0)->get());
+    $approvelogin = count(PaymentStatus::where('approve_form' , 1)->get());
+        return view('/admin/dashboard/index' , compact('approvelogin','totalstudent', 'paymentclear' , 'paymentremaining' ,'notification' , 'formfilled' , 'formapproved' , 'formapprovedremaining' , 'newform'));
         }
 
 

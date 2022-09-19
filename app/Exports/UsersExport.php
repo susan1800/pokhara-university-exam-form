@@ -25,9 +25,10 @@ class UsersExport implements FromCollection ,WithHeadings
     {
         // TODO: Implement headings() method.
         $header = [
+            'Student name',
+            'Registration number',
             'exam_roll_no',
-            'exam_roll_no',
-            'exam_roll_no',
+            'program',
             'exam_roll_no',
             'student_levels' => Array
                 (
@@ -48,7 +49,7 @@ class UsersExport implements FromCollection ,WithHeadings
     */
     public function collection()
     {
-        $formdata =  select('name' , 'registration_no' , 'exam_roll_no' , 'program_id')->with('regularsubject' , 'backSubject')->all();
+        $formdata =  FormData::where('id' , '>' , '0')->with('subject' , 'backSubject' , 'level' , 'program')->get();
         $i=0;
         foreach($formdata as $data){
             $returndata[$i]['exam_roll_no'] = $data->exam_roll_no ;
@@ -60,7 +61,7 @@ class UsersExport implements FromCollection ,WithHeadings
         }
         // dd($returndata);
        
-        return $returndata;
+        return $formdata;
 
     }
 

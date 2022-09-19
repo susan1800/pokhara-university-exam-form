@@ -49,7 +49,7 @@ model box
             <div class="flex justify-between">
                 <div class="p-1 mx-3 inline-flex items-center">
                     <i class="fas fa-bars pr-2 text-white" onclick="sidebarToggle()"></i>
-                    <h1 class="text-white p-2">Logo</h1>
+                    <img class="text-white p-2" src="{{url('/logo/cosmos.png')}}" width="180">
                 </div>
                 <div class="p-1 flex flex-row items-center">
 
@@ -62,7 +62,7 @@ model box
                           
                           <li></li>
                           <li><a href="{{route('adminlogout')}}" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">Logout</a></li>
-                          <li><a href="" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">Change Password</a></li>
+                          <li><a href="{{route('changepassword.view')}}" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">Change Password</a></li>
                         </ul>
                     </div>
                 </div>

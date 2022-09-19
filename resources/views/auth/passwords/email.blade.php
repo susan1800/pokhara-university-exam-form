@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
-
+                @include('partials.flash');
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
+
                     <form method="POST" action="{{ route('password.email') }}">
+                        
                         @csrf
 
                         <div class="row mb-3">

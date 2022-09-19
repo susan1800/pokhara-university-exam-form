@@ -19,9 +19,13 @@ class PaymentController extends Controller
     {
         // dd($request->fileInput);
             // Excel::import(new UsersPaymentImport, $request->fileInput);
-            Excel::import(new UsersPaymentImport,request()->file('fileInput'));
-
-            return redirect()->route('admin.paymentstatus.index')->with('success', 'User Imported Successfully');
+           $result = Excel::import(new UsersPaymentImport,request()->file('fileInput'));
+            
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
 
 
 

@@ -9,10 +9,11 @@
 <body>
 
 @php
-     $totalfee = $_GET['totalfee'];
+     $totalfees = $_GET['totalfee'];
+     $totalfee = \Crypt::decryptString($totalfees);
+     $backsubject = $_GET['backSubject']-1;
  @endphp
 
- {{ \Crypt::decryptString($totalfee) }}
  <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
  <style>
@@ -59,7 +60,7 @@
     background-image: url("/frontend/image/khalti.jpg");
 }
 .cashondesk{
-    background-image: url("/frontend/image/cashondesk.jpg");
+    background-image: url("/frontend/image/cashondesk.png");
 }
 .esewa{
     background-image: url("/frontend/image/esewa.png");
@@ -84,6 +85,11 @@
                          <div class="headingWrap">
                                  <h3 class="headingTop text-center">Select Your Payment Method</h3>	
                          </div>
+                         <div style="padding:10px; box-shadow: 2px 2px 2px 5px #888888;">
+                            Total form fee : {{$totalfee}} <br>
+                            Back Subject :{{$backsubject}}
+                         </div>
+                         <input type="hidden" id="totalfee" value="{{$totalfee*100}}">
                          <div class="paymentWrap">
                              <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
                                  
@@ -91,11 +97,15 @@
                                      <div class="method khalti"></div>
                                      <input type="radio" name="options"> 
                                  </label>
+                                 
                                  <label class="btn paymentMethod">
+                                    <a href="{{route('cashondesk.payment')}}">
                                      <div class="method cashondesk"></div>
                                      <input type="radio" name="options">
+                                    </a>
                                  </label>
-                                 <label class="btn paymentMethod">
+                                 
+                                 <label class="btn paymentMethod" onclick="clickeshewa()">
                                     <div class="method esewa"></div>
                                     <input type="radio" name="options">
                                 </label>
@@ -110,7 +120,25 @@
      </div>
  </div>
 
-
+ <form id="paymentForm" action="https://uat.esewa.com.np/epay/main" method="POST">
+    <input value="100" name="tAmt" type="hidden">
+    <input value="90" name="amt" type="hidden">
+    <input value="5" name="txAmt" type="hidden">
+    <input value="2" name="psc" type="hidden">
+    <input value="3" name="pdc" type="hidden">
+    <input value="EPAYTEST" name="scd" type="hidden">
+    <input value="ee2c3ca1-696b-4cc5-a6be-2c40d929d453" name="pid" type="hidden">
+    <input value="http://merchant.com.np/page/esewa_payment_success?q=su" type="hidden" name="su">
+    <input value="http://127.0.0.1:8000/paymentmethod?totalfee={{$totalfees}}&backSubject={{$backsubject+1}}&q=fu" type="hidden" name="fu">
+    <input style="display: none;" value="Submit" type="submit">
+</form>
+<script>
+    function clickeshewa(){
+    
+        document.getElementById('paymentForm').submit();
+   
+}
+</script>
 
  <script>
     var config = {
@@ -170,6 +198,7 @@
     var checkout = new KhaltiCheckout(config);
     var btn = document.getElementById("payment-button");
     btn.onclick = function () {
+        var amount = document.getElementById('totalfee').value;
         // minimum transaction amount must be 10, i.e 1000 in paisa.
         checkout.show({amount: 1000});
     }

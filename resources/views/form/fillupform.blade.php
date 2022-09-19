@@ -1,20 +1,29 @@
 
-
+<html>
+    <head>
+        <title>Exam Form</title>
+    
 <link rel="stylesheet" href="{{ url('frontend/style.css') }}">
 <link rel="stylesheet" href="{{ url('frontend/core.css') }}">
 <link rel="stylesheet" href="{{ url('css/sign.css') }}">
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
+</head>
+<body>
 <div style="padding: 10px;">
 <div class="aiz-titlebar text-left mt-2 mb-3 text-center">
+    <a href="{{route('user.changepassword.view')}}"><h5 class="btn btn-primary action-btn " style="float: left;">Change Password</h5></a>
     <h5 class="mb-0 h6 btn btn-primary action-btn ">Exam registration form</h5>
    <a href="{{route('userlogout')}}"><h5 class="btn btn-primary action-btn " style="float: right;">Logout</h5></a>
 </div>
 
-    <form class="form form-horizontal mar-top" action="{{route('store')}}" method="POST" enctype="multipart/form-data" id="choice_form">
+    <form class="form form-horizontal mar-top" action="{{route('store')}}" method="POST" enctype="multipart/form-data" id="choice_form" >
         @csrf
         <div class="row gutters-5">
             <div class="col-lg-4">
@@ -189,26 +198,29 @@
             <div class="col-12">
                 <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group" role="group" aria-label="Second group">
-                        <button type="submit" name="button" value="publish" class="btn btn-success action-btn" onclick="  return showsubmitalert();">Submit</button>
+                        <button type="submit" id="formsubmitbutton" name="button" value="publish" class="btn btn-success action-btn"  style="display:none;">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    
+</div>
+<div class="col-12">
+    <div class="btn-toolbar float-right mb-3"  style="padding-right: 20px; padding-bottom:30px; margin-top:-30px;">
+        <button class="btn btn-success " onclick="showsubmitalert()">Submit</button>
+    </div>
+</div>
 </div>
 
-</div>
 
-<script
-
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js" integrity="sha256-W+ivNvVjmQX6FTlF0S+SCDMjAuTVNKzH16+kQvRWcTg=" crossorigin="anonymous"></script>
 <script src="{{url('frontend/js/vendors.js')}}"></script>
 <script src="{{ url('frontend/js/core.js')}}"></script>
 <script src="{{ url('js/sign.js')}}"></script>
+
+
+
 
 <script>
    
@@ -270,45 +282,63 @@ function showimage(){
     fr.readAsDataURL(src.files[0]);
   
 }
+
 showimage();
 
  function showsubmitalert(){
-if(confirm('are you sure to confirm ? Please check again to make sure. you cannot edit after submit the form !')){
 
+Swal.fire({
+  title: 'are you sure to confirm ? Please check again to make sure. you cannot edit after submit the form !',
+  showCancelButton: true,
+  confirmButtonText: 'Yes submit',
+  cancelButtonText: `No cancel`,
+  icon:'question',
+}).then((result) => {
+  
+  if (result.isConfirmed) {
+  
     showsignature();
+    
     var level = document.getElementById("level").value;
     var table = document.getElementById('backtable').rows.length;
 	// var rowCount = table.rows.length;
     var backsub = "";
     
+    
      for(k=1;k < table;k++){
         backsub = backsub+","+document.getElementById('concurrent'+k).value;
      }
-     var result = $.post('{{ route('checksubmitcredit') }}', {_token:'{{ csrf_token() }}',  level:level , backsub:backsub , tablerow:table}, function(data)
+    
+     $.post('{{ route('checksubmitcredit') }}', {_token:'{{ csrf_token() }}',  level:level , backsub:backsub , tablerow:table}, function(data)
              {
               
-             result = data;
-            //  alert(result);
-            if(result == '1'){
-                return true;
+             
+            
+            if(data == '1'){
+                document.getElementById("formsubmitbutton").click();
                }
                else{
-                alert(result+"sf");
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: data,
+                footer: ''
+                });
+                
                 return false;
                }
            });
-          
-        //    if(result == true){
-        //         return true;
-        //        }
-        //        else{
-        //         alert(result);
-        //         return false;
-        //        }
-}
-else{
-    return false;
-}
+        }
+        else{
+            return false;
+        }
+        });
+        // return false;
+        
+
+
+
+
  }
 
 
@@ -321,4 +351,5 @@ else{
 
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>

@@ -187,24 +187,32 @@
         <div class="screen">
             
             <div class="screen__content">
-                <form class="login" method="post" action="{{route('forgotpassword.send.otp')}}">
+                <form class="login" method="post" action="{{route('user.changepassword')}}">
                     @csrf
                     <div class="login__field">
-                        
+                      <p style="color: red; font-size:0.8em;"> 
+                      @include('partials.flash')
+                      </p>
+                        <br>
                         <i class="login__icon fas fa-user"></i>
-                        <input type="email" class="login__input" name="email" value="{{old('$email')}}" placeholder="Email" autofocus required>
+                        <input type="password" class="login__input" name="oldpassword" id="oldpassword" placeholder="Old password" autofocus required>
+                        <p id="oldpasswordresult" style="color:red; font-size:0.8em;"></p><br>
+                        <input type="password" class="login__input" name="password" id="password" placeholder="New password" onkeyup="checkpassword()" autofocus required>
+                        <p id="passwordresult" style="color:red; font-size:0.8em;"></p><br>
+                        <input type="password" class="login__input" name="confirmpassword" id="confirmpassword" placeholder="Confirm password" onkeyup="checkpassword()" required>
+                        <p id="confirmpasswordresult" style="color:red; font-size:0.8em;"></p>
                     </div>
                     <div style="color: red">
-                        @include('partials.flash')
+                        
                     </div>
                     
                     
-                    <button class="button login__submit">
-                        <span class="button__text">send otp code</span>
+                    <button class="button login__submit" onclick="return checkpassword();">
+                        <span class="button__text">Change Password</span>
                         <i class="button__icon fas fa-chevron-right"></i>
                     </button>				
                 </form>
-                <p><a href="{{route('signin')}}">Back to login</a>
+                <p><a href="{{route('user')}}">Back to Home</a>
                     
                     
             </div>
@@ -216,3 +224,23 @@
             </div>		
         </div>
     </div>
+    <script>
+        function checkpassword(){
+            var password = document.getElementById('password').value;
+            var confirmpassword = document.getElementById('confirmpassword').value;
+            if(password.length >=6){
+                if(password == confirmpassword){
+                    document.getElementById('confirmpasswordresult').innerHTML = "";
+                    document.getElementById('passwordresult').innerHTML = "";
+                    return true;
+                }else{
+                    document.getElementById('confirmpasswordresult').innerHTML = "confirm password not matched";
+                    document.getElementById('passwordresult').innerHTML = "";
+                    return false;
+                }
+            }else{
+                document.getElementById('passwordresult').innerHTML = "password must contain 6 character";
+                return false;
+            }
+        }
+    </script>

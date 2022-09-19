@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\FormData;
+use Illuminate\Support\Facades\DB;
+use App\Models\FormDataBackSubject;
+use App\Models\FormDataSubject;
 use Mail;
 use App\Models\NotificationCount;
 use App\Models\Notification;
@@ -75,7 +78,19 @@ class FormDataController extends BaseController
     public function viewstudentdata($id){
         
         $formdata = FormData::find($id);
-        // dd($formdata);
+        if($formdata->subject == "[]"){
+            $formdata->subject->empty = "empty";
+        }
+        else{
+            $formdata->subject->empty = "notempty";
+        }
+        if($formdata->backsubject =="[]"){
+            $formdata->backsubject->empty = "empty";
+        }else{
+            $formdata->backsubject->empty = "empty";
+        }
+        
+        
         return view('admin.viewformdatas.view' , compact('formdata'));
     }
 
@@ -154,6 +169,31 @@ class FormDataController extends BaseController
 // // Generating the sheet from the array
 // $sheet->fromArray($sheetArray);
 
+    }
+
+
+
+
+    public function deleteAllData(){
+        $resultdata ="";
+        $resultregularsubject="";
+        $resultbacksubject="";
+        DB::beginTransaction();
+        
+        // $resultdata = FormData::whereIn('id', '>','0')->get()->delete();
+        $resultdata =  FormData::getQuery()->delete();
+        
+        $resultbacksubject = FormDataBackSubject::getQuery()->delete();
+        $resultregularsubject = FormDataSubject::getQuery()->delete();
+        $resultnotification = Notification::getQuery()->delete();
+
+        DB::commit();
+        if($resultdata && $resultbacksubject && $resultregularsubject){
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
 
 

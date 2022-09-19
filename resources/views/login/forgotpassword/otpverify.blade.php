@@ -187,12 +187,14 @@
         <div class="screen">
             
             <div class="screen__content">
-                <form class="login" method="post" action="{{route('forgotpassword.send.otp')}}">
+                <form class="login" method="post" action="{{route('forgotpassword.verify.otp')}}">
                     @csrf
                     <div class="login__field">
                         
                         <i class="login__icon fas fa-user"></i>
-                        <input type="email" class="login__input" name="email" value="{{old('$email')}}" placeholder="Email" autofocus required>
+                        <input type="number" class="login__input" name="inputotp"  placeholder="6 digit otp code" autofocus required>
+                        <input type="hidden" class="login__input" name="otp"  value="{{$_GET['makeotp']}}" required>
+                        <input type="hidden" class="login__input" name="email"  value="{{$_GET['email']}}" required>
                     </div>
                     <div style="color: red">
                         @include('partials.flash')
@@ -200,7 +202,7 @@
                     
                     
                     <button class="button login__submit">
-                        <span class="button__text">send otp code</span>
+                        <span class="button__text">Check Otp</span>
                         <i class="button__icon fas fa-chevron-right"></i>
                     </button>				
                 </form>

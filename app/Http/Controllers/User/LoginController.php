@@ -49,7 +49,9 @@ class LoginController extends BaseController
 
                if($returncheckrole == true){
                 $request->session()->put('testadminlogin','yes');
+                $request->session()->put('sessionadminidcosmos',$user[0]->id);
                 return redirect()->route('admin.dashboard');
+                
 
                }
                else{

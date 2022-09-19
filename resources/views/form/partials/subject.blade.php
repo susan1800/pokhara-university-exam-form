@@ -213,10 +213,7 @@
             </div>
 </div>
 
-<link rel="stylesheet" href="sweetalert2.min.css">
-@include('sweetalert::alert')
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
 
@@ -225,7 +222,13 @@ function selectbarrier(){
         var code = document.getElementById('getregularorbarrier').value;
         var subjectid = document.getElementById(code).value;
         var id = document.getElementById('barrierid').value;
-        alert("This is Barrier subject , are you sure to change it ?");
+        // alert("This is Barrier subject , are you sure to change it ?");
+        Swal.fire({
+        icon: 'info',
+        title: '',
+        text: 'This is Barrier subject , are you sure to change it ?',
+        footer: '',
+        });
 
         document.getElementById('regularorbarriercode').innerHTML=code;
         document.getElementById(id).value = subjectid;
@@ -267,7 +270,14 @@ function selectbarrier(){
         var code = document.getElementById('getregularorbarrier'+i).value;
         var subjectid = document.getElementById(code).value;
         var id = document.getElementById('barrierid'+i).value;
-        alert("This is Barrier subject , are you sure to change it ?");
+        // alert("This is Barrier subject , are you sure to change it ?");
+        Swal.fire({
+        icon: 'info',
+        title: '',
+        text: 'This is Barrier subject , are you sure to change it ?',
+        footer: '',
+        });
+        
 
         document.getElementById('regularorbarriercode'+i).innerHTML=code;
         document.getElementById(id).value = subjectid;
@@ -275,9 +285,14 @@ function selectbarrier(){
     }
 
     function removeconcurrent(subjectid){
-        if(confirm("This is concurrent subject , are you sure to remove ?")){
-
-
+        Swal.fire({
+  title: 'This is Back/concurrent subject , are you sure to remove ?',
+  icon:'question',
+  showCancelButton: true,
+  confirmButtonText: 'yes remove it',
+  cancelButtonText: `cancel it`,
+}).then((result) => {
+  if (result.isConfirmed) {
             var j = parseInt(document.getElementById('rowvalue').value);
      
        var backsub = "";
@@ -310,6 +325,7 @@ function selectbarrier(){
     //   tr.parentNode.removeChild(tr);
 	
 }  
+});
         } 
 
 

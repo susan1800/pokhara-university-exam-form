@@ -134,6 +134,7 @@
                     @php
                          $i=1;
                     @endphp
+                     
                     @foreach ($formdata->subject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
@@ -153,8 +154,9 @@
                     @endforeach
                     
                     
+                    
                     @if($i==1)
-                    @for ($j=1;$j++;$j<7)
+                    @for ($j=1;$j<7;$j++)
                     <tr>
                         <td>{{$j}}</td>
                         <td> </td>
@@ -191,6 +193,7 @@
                     @php
                          $i=1;
                     @endphp
+                    
                     @foreach ($formdata->backsubject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
@@ -208,10 +211,11 @@
                             
                         @endphp
                     @endforeach
+                  
                     
                     
                     @if($i==1)
-                    @for ($j=1;$j++;$j<7)
+                    @for ($j=1;$j<7;$j++)
                     <tr>
                         <td>{{$j}}</td>
                         <td> </td>
@@ -285,7 +289,15 @@
         </form>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    alert('Form submitted successfully.');
+    // alert('Form submitted successfully.');
+    Swal.fire({
+                icon: 'success',
+                title: 'success',
+                text: 'Form submitted successfully.',
+                footer: ''
+                })
 </script>
 </html>

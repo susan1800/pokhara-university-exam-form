@@ -73,7 +73,8 @@ input:checked + .slider:before {
                                 Full Table
                                 
                                 <div style="padding-left:10px; display:inline-flex">
-                                  <a class="btn btn-warning" href="{{ route('export') }}">Export Data</a>
+                                  {{-- <a class="btn btn-warning" href="{{ route('export') }}">Export Data</a> --}}
+                                  <button class="btn btn-warning" style="margin-left: 8px;" onclick="deletealldata()">Delete all</button>
                               </div>
                                 <div style="float: right; display:inline-flex">
                                     <input type="search" onclick="search()" onkeyup="search()" onkeydown="search()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">
@@ -301,10 +302,72 @@ $('#search').on('keyup', function(){
                    }
                });
   }
+
+
+
+
+
+  function deletealldata(){
+    Swal.fire({
+  title: 'Do you want to delete all data?',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Delete all',
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    // Swal.fire('Saved!', '', 'success');
+    $.get('{{ route('deletefoemdata') }}', {_token:'{{ csrf_token() }}'}, function(data)
+                 {
+                   console.log(data);
+                   if(data == 1){
+                    
+                     swal.fire({
+                       position: 'bottom-left',
+                       title: '  Data delete successfully !',
+                       icon: 'success',
+                     });
+                     location.reload();
+                     
+                   }
+                   else{
+                     swal.fire({
+                       position: 'bottom-left',
+                       title: 'Something wrong please try again  !',
+                       icon: 'error',
+                     });
+                     location.reload();
+                     
+                   }
+               });
+   
+  } 
+}) 
+  }
   
   </script>
 
 
+
+
+
+
+
+{{-- 
+Swal.fire({
+  title: 'Do you want to save the changes?',
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: 'Save',
+  denyButtonText: `Don't save`,
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire('Saved!', '', 'success')
+  } else if (result.isDenied) {
+    Swal.fire('Changes are not saved', '', 'info')
+  }
+}) --}}
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

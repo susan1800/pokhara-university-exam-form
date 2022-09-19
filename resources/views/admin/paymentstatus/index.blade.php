@@ -66,7 +66,7 @@
 @endsection
 
 @section('content')
-    @include('admin.partials.flash')
+    {{-- @include('admin.partials.flash') --}}
 
     <!--Grid Form-->
 
@@ -165,23 +165,53 @@
 
 
     function bulkupdate() {
-        if (confirm('are you sure to update ?')) {
+
+        Swal.fire({
+    title: 'are you sure to update ?',
+    icon:'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, update ',
+    cancelButtonText: `No, cancel`,
+    }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+        // Swal.fire('Saved!', '', 'success')
+    
+
+
+
+        // if (confirm('are you sure to update ?')) {
             $.get('{{ route('updatepaymentstatus') }}', {
                 _token: '{{ csrf_token() }}',
             }, function(data) {
                 console.log(data);
                 if (data == 1) {
-                    if(confirm('update successfully !')){
+
+                    Swal.fire({
+                    title: 'update successfully !',
+                    
+                    confirmButtonText: 'Ok',
+                    }).then((result) => {
+                   
+                    if (result.isConfirmed) {
+                    
                       location.reload();
                     }
-                    else{
-                      location.reload();
-                    }
+                   
+                    });
                 } else {
-                    alert('somrthing wrong please try again');
+                    // alert('somrthing wrong please try again');
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'somrthing wrong please try again !',
+                    
+                    })
                 }
             });
         }
+    
+    })
     }
 
     function submitexcel() {
@@ -190,13 +220,29 @@
 
 
         } else {
+
+            Swal.fire({
+    title: 'are you sure to update ?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, update ',
+    cancelButtonText: `No, cancel`,
+    icon:'warning',
+    }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+        // Swal.fire('Saved!', '', 'success')
+    
+
+
             var fd = new FormData();
 
             fd.append("fileInput", $("#file")[0].files[0]);
+
+
+            
             // fd.append('file',files[0]);
 
             $.ajax({
-
                 url: "{{ route('upload.paymentstatus') }}",
                 data: fd,
                 headers: {
@@ -206,17 +252,22 @@
                 contentType: false,
                 type: 'POST',
                 success: function(data) {
-                    if (data.uploaded == true) {
-                        alert(data.url);
+                    if (data == 1) {
+                        alert("success");
                     }
                 },
                 error: function(err) {
                     alert(err);
                 }
             });
+        }
+    });
 
         }
     }
+
+
+
 
     $(document).ready(function() {
 

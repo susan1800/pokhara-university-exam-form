@@ -99,7 +99,7 @@
                 <p>P.U Registration No. : {{$formdata->registration_no}}</p>
             </div>
             <div class="name" style="margin-bottom: -15px; margin-top:0px;">
-                <p>Name of the Student : {{$formdata->user->name}}</p>
+                <p>Name of the Student : {{$formdata->name}}</p>
             </div>
             <div class="col1" style="float: left;width: 50%; margin-bottom: -15px;">
                 <p>Level : Bachelor</p>
@@ -110,7 +110,7 @@
 
             </div>
             <div class="year" style="display: inlineflex; margin-bottom: -30px; margin-top:-15px;">
-                <div class="col1" style="float: left;width: 50%; clear: both; margin-bottom: -15px;">
+                <div class="col1" style="float: left;width: 60%; clear: both; margin-bottom: -15px;">
                     <p>Semester/Trimester/Year : {{$formdata->level->level}}</p>
 
                 </div>
@@ -135,6 +135,7 @@
                     @php
                          $i=1;
                     @endphp
+                     
                     @foreach ($formdata->subject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
@@ -152,10 +153,11 @@
                             
                         @endphp
                     @endforeach
+                   
                     
                     
                     @if($i==1)
-                    @for ($j=1;$j++;$j<7)
+                    @for ($j=1;$j<7;$j++)
                     <tr>
                         <td>{{$j}}</td>
                         <td> </td>
@@ -192,6 +194,7 @@
                     @php
                          $i=1;
                     @endphp
+                     
                     @foreach ($formdata->backsubject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
@@ -209,10 +212,11 @@
                             
                         @endphp
                     @endforeach
+                   
                     
                     
                     @if($i==1)
-                    @for ($j=1;$j++;$j<7)
+                    @for ($j=1;$j<7;$j++)
                     <tr>
                         <td>{{$j}}</td>
                         <td> </td>
@@ -286,13 +290,20 @@
         </form>
     </div>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous">
 </script>
 <script>
-    alert('Press ctrl+p to print or download the admitcard');
+    // alert('Press ctrl+p to print or download the admitcard');
+    Swal.fire({
+  icon: 'info',
+  title:'print admitcard',
+  text: 'Press ctrl+p to print or download the admitcard !',
+  footer: ''
+});
     function seen(){
 
 
@@ -306,4 +317,5 @@
 seen();
 
 </script>
+
 </html>
