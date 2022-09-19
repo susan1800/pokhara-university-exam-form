@@ -187,7 +187,7 @@
       <div class="screen">
           
           <div class="screen__content">
-              <form class="login" method="post" action="{{route('user.changepassword')}}">
+              <form class="login" method="post" action="{{route('changepassword')}}">
                   @csrf
                   <div class="login__field">
                     <p style="color: red; font-size:0.8em;"> 
