@@ -39,6 +39,7 @@
                                 <option value="{{$barrier->subject_code}}">{{$barrier->subject}}</option>
                                 
                             </select>
+                            
                             <input type="hidden" id="{{$barrier->subject_code}}" value="{{$barrier->id}}">
                             <input type="hidden" id="{{$subject->subject_code}}" value="{{$subject->id}}">
                             <input type="hidden" id="barrierid" value="{{$i}}">

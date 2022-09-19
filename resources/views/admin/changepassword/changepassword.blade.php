@@ -212,7 +212,7 @@
                       <i class="button__icon fas fa-chevron-right"></i>
                   </button>				
               </form>
-              <p><a href="{{route('signin')}}">Back to login</a>
+              <p><a href="{{route('admin.dashboard')}}">Back to dashboard</a>
                   
                   
           </div>

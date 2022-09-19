@@ -233,9 +233,10 @@
                     document.getElementById('confirmpasswordresult').innerHTML = "";
                     document.getElementById('passwordresult').innerHTML = "";
                     return true;
-                }else{
-                    document.getElementById('confirmpasswordresult').innerHTML = "confirm password not matched";
+                }
+                else{
                     document.getElementById('passwordresult').innerHTML = "";
+                    document.getElementById('confirmpasswordresult').innerHTML = "confirm password not matched";
                     return false;
                 }
             }else{

@@ -24,10 +24,11 @@ class LoginController extends BaseController
         ]);
         try {
         $user =User::where('email' , '=' , $request->email)->get();
-
+        
         if(sizeof($user) < 1){
             return $this->responseRedirectBack('Email not found Please refister first.', 'error', true, true);
         }
+        
 
         else{
 

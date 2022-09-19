@@ -220,9 +220,23 @@
 <script src="{{ url('js/sign.js')}}"></script>
 
 
+      
+    </body>
+</html>
+
+
+
+
 
 
 <script>
+     var signaturePad;
+            jQuery(document).ready(function () {
+                var signaturePadCanvas = document.querySelector('#signature_pad');
+                
+                signaturePadCanvas.setAttribute("width", 'auto');
+                signaturePad = new SignaturePad(signaturePadCanvas);
+            });
    
   function selectexamrollno(){
     var levelid = document.getElementById('firestsemid').value;
@@ -296,9 +310,18 @@ Swal.fire({
 }).then((result) => {
   
   if (result.isConfirmed) {
-  
+ 
     showsignature();
-    
+    if (signaturePad.isEmpty()) {
+        Swal.fire({
+                icon: 'warning',
+                title: 'empty field',
+                text: 'Please enter signature field !',
+                footer: ''
+                });
+                return false;
+                } 
+
     var level = document.getElementById("level").value;
     var table = document.getElementById('backtable').rows.length;
 	// var rowCount = table.rows.length;

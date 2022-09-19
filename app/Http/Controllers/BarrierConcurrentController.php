@@ -26,6 +26,32 @@ class BarrierConcurrentController extends Controller
         else{
             $backconcurrent = "";
         }
+        // dd($backs, $backconcurrent , $addbacksub);
+
+
+        foreach($backs as $back){
+          
+                if($back == $backconcurrent){
+                    if(!empty($backconcurrent)){
+                        dd($backconcurrent);
+                    }
+                    
+                }
+
+
+            
+
+            if($back==$addbacksub->id){
+                $addbacksub=[];
+                break;
+            }
+        }
+
+
+
+
+
+
         return view('form.partials.addbacksubject' , compact('backs' , 'backconcurrent' , 'addbacksub'));
     }
 
