@@ -94,7 +94,7 @@ class VerificationController extends BaseController
         \Mail::to($email)->send(new \App\Mail\mailotp($details));
         $hashcode =Crypt::encryptString($otp);
         $hashmail = Crypt::encryptString($email);
-        return redirect()->route('forgotpassword.verifyotp',['makeotp' => $hashcode , 'email'=> $hashmail]);
+        return redirect()->route('verifyotp',['makeotp' => $hashcode , 'email'=> $hashmail]);
     }catch (ModelNotFoundException $e) {
 
         return $this->responseRedirectBack('Error occurred while send otp.', 'error', true, true);
