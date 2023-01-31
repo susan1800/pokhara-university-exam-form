@@ -18,6 +18,7 @@ use App\Models\FormDataSubject;
 use App\Models\FormDataBackSubject;
 use App\Models\Subject;
 use App\Models\Notification;
+use App\Models\PaymentStatus;
 use App\Models\NotificationCount;
 use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -26,19 +27,42 @@ use App\Notifications\OffersNotification;
 class FormFillupController extends BaseController
 {
     public function index(){
-    //    dd('');
-        $currentyear = $date = Carbon::now()->format('Y');
-        for($i=0;$i<10;$i++){
-            $times[$i]= $currentyear - $i;
-        }
+
         $levels = Level::get();
+        $user_id=session()->get('sessionuseridcosmos');
+        $user = User::find($user_id);
+        $data = PaymentStatus::where('roll_no',$user->roll_no)->first();
+        // if($data->roll_no)
+        $roll=str_split("$data->roll_no");
+
+        // dd($roll[3]);
+        if($roll[3]==1){
+            $myprogram="Information Technology";
+        }
+        if($roll[3]==2){
+            $myprogram="Electronics";
+        }
+        if($roll[3]==3){
+            $myprogram="Computer";
+        }
+        if($roll[3]==5 || $roll[3]==6){
+            $myprogram="Civil";
+        }
+        if($roll[3]==7){
+            $myprogram="Architecture";
+        }
+        if($roll[3]==4){
+            $myprogram="BBA";
+        }
+
+
         $programs = Program::get();
-        return view('form.fillupform' , compact('levels' , 'programs' , 'times'));
+        return view('form.fillupform' , compact('levels' , 'programs' ,'data','myprogram'));
     }
 
     public function store(request $request)
     {
-       
+
         $this->validate($request, [
             'name'      =>  'required',
             'year'      =>  'required',
@@ -47,16 +71,16 @@ class FormFillupController extends BaseController
             'level' =>'required',
             'formimage' =>  'required|mimes:jpg,jpeg,png',
             'signature'  => 'required',
-            
+
         ]);
-        
-        
+
+
     try {
 
 
 
 
-    
+
     if($request->signature == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS4AAACYCAYAAABapASfAAAAAXNSR0IArs4c6QAABHBJREFUeF7t1AEJAAAMAsHZv/RyPNwSyDncOQIECMQEFssrLgECBM5weQICBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMg8F2bAJlDULv5AAAAAElFTkSuQmCC"){
         Alert::warning('Congrats', 'Please fill the signature');
         return $this->responseRedirectBack('Please fill all the details including signature .', 'error', true, true)->withInput($request->input());
@@ -65,12 +89,12 @@ class FormFillupController extends BaseController
     $user = User::find($user_id);
 
     $formId = FormData::where('user_id' , $user_id)->first();
-    
+
     if($formId){
     //     $this->setFlashMessage("You Already submitted Your Form Please contact to administrator for any query !", 'error');
         return $this->responseRedirectBack('You Already submitted Your Form Please contact to administrator for any query !', 'error', true, true)->withInput($request->input());
     }
-    
+
     $signature = $this->uploadsignature($request->signature);
 if($signature == 0){
     return $this->responseRedirectBack('Error occurred while creating form. Please try again .', 'error', true, true)->withInput($request->input());
@@ -83,27 +107,27 @@ if($signature == 0){
             $uploadedFile,
             $filename
         );
-    
+
         DB::beginTransaction();
         if($this->createFormData($request , $user_id , $filename , $signature)==0){
             return $this->responseRedirectBack('Error occurred while submiting the form. Please try again with fill all the field.', 'error', true, true)->withInput($request->input());
         }
 
         $formId = FormData::where('user_id' , $user_id)->first();
-        
-        
+
+
        if($this->createRegularSubject($request , $formId['id'])==0){
-        
+
         return $this->responseRedirectBack('Error occurred while creating Regular subject. Please try again. regular subject', 'error', true, true)->withInput($request->input());
        }
-       
-     
+
+
        $backSubject = $this->createBackSubject($request , $formId['id']);
        if($backSubject==0){
-       
+
         return $this->responseRedirectBack('Error occurred while creating Back subject. Please try again.', 'error', true, true)->withInput($request->input());
        }
-      
+
        if($this->createNotification($formId['id'])==0){
 
        }
@@ -126,9 +150,9 @@ if($signature == 0){
     for($i=0;$i<2;$i++){
         $year = $year.$split[$i];
     }
-    
 
-    
+
+
     if($year > 16){
         $level = Level::where('id' , $formId['level_id'])->first();
         if($level->level == "Passover"){
@@ -154,18 +178,18 @@ if($signature == 0){
             $totalfee = 1500 + ($backSubject-1)*300;
         }
     }
-    
+
        DB::commit();
 
          $date =Carbon::now();
-       
+
        $totalfee = $hashcode =Crypt::encryptString($totalfee);
        $userrollno = $user->roll_no.'_'.time();
-       
-      
+
+
        return redirect()->route('payment.showpaymentmethod' , compact('totalfee' , 'backSubject','userrollno'));
 
-       
+
 
 
 
@@ -187,17 +211,17 @@ if($signature == 0){
         try{
 
     $folderPath = public_path('upload/');
-       
+
     $image_parts = explode(";base64,", $signature);
-         
+
     $image_type_aux = explode("image/", $image_parts[0]);
-       
+
     $image_type = $image_type_aux[1];
-       
+
     $image_base64 = base64_decode($image_parts[1]);
 
     $signature = uniqid() . '.'.$image_type;
-       
+
     $file = $folderPath . $signature;
 
     file_put_contents($file, $image_base64);
@@ -210,7 +234,7 @@ if($signature == 0){
     private function createFormData($request , $user_id , $filename , $signature){
         try{
         $user = User::find($user_id);
-        
+
         $student= new FormData;
         $student->name=$request->name;
         $student->year=$request->year;
@@ -221,7 +245,7 @@ if($signature == 0){
         $student-> program_id= $request->program;
         $student-> level_id= $request->level;
         $student->image = 'formimage/'.$filename;
-        $student->date = Carbon::now()->format('Y-m-d'); 
+        $student->date = Carbon::now()->format('Y-m-d');
         $student->signature = $signature;
         $student->credit_hours = 0;
         $student->payment_remarks = " ";
@@ -239,11 +263,11 @@ if($signature == 0){
         try{
                 for($i=1;$i<9;$i++){
             if($request[$i] != null){
-                
+
                 $regularSubject = new FormDataSubject;
                 $regularSubject->form_data_id = $formId;
                 $regularSubject->subject_id = $request[$i];
-                
+
                 $regularSubject->save();
             }
         }
@@ -262,7 +286,7 @@ if($signature == 0){
                 $backSubject->subject_id = $request[$i];
                 $backSubject->save();
                 $j++;
-               
+
             }
         }
         return $j;
@@ -305,7 +329,7 @@ if($signature == 0){
 
 
     public function checkCredit(Request $request){
-        
+
         $level = Level::find($request->level);
         if(($level->level=="first semester") || ($level->level=="second semester") || ($level->level=="third semester") || ($level->level=="fourth semester") || ($level->level=="fifth semester") || ($level->level=="sixth semester")){
             if($request->tablerow <=4){
@@ -325,7 +349,7 @@ if($signature == 0){
         }
         else{
             $backs = explode(',',$request->backsub);
-        
+
         $totalcredit = 0;
         foreach($backs as $back){
             if(!empty($back)){
@@ -360,5 +384,5 @@ if($signature == 0){
         $formdata = FormData::where('user_id' , session()->get('sessionuseridcosmos'))->first();
         return view('frontend.completeformsubmit.formsubmitcomplete' , compact('formdata'));
     }
-    
+
 }

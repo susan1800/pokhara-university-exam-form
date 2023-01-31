@@ -127,8 +127,8 @@ input:checked + .slider:before {
                                             <td class="border px-4 py-2">
                                                 <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                                         <i class="fas fa-eye"></i></a>
-                                                {{-- <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
-                                                        <i class="fas fa-edit"></i></a> --}}
+                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                                        <i class="fas fa-edit"></i></a>
 
                                             </td>
                                         </tr>

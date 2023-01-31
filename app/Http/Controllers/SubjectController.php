@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Level;
+use App\Models\User;
 class SubjectController extends Controller
 {
     public function getSubject(Request $request){
+
+
+        $user_id = session()->get('sessionuseridcosmos');
+        $user = User::find($user_id);
+        if($user->roll_no >= 220000){
+            $newbatch = 1;
+        }
+        else{
+            $newbatch = 0;
+        }
 
         $levels = Level::get();
         foreach($levels as $level){
@@ -42,32 +53,96 @@ class SubjectController extends Controller
             $allsubjects = [];
         }
         elseif($level->level == "second semester"){
-            $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , $first)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , $first)->where('newbatch' , $newbatch)->get();
         }
         elseif($level->level == "third semester"){
-            $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , '<' , $third)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , '<' , $third)->where('newbatch' , $newbatch)->get();
         }
         elseif($level->level == "fourth semester"){
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fourth)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fourth)->where('newbatch' , $newbatch)->get();
         }
         elseif($level->level == "fifth semester"){
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fifth)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fifth)->where('newbatch' , $newbatch)->get();
         }
         elseif($level->level == "sixth semester"){
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $sixth)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $sixth)->where('newbatch' , $newbatch)->get();
         }
         elseif($level->level == "seventh semester"){
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $seventh)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $seventh)->where('newbatch' , $newbatch)->get();
         }
         elseif($level->level == "eighth semester"){
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $eighth)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $eighth)->where('newbatch' , $newbatch)->get();
         }
        else{
-        $allsubjects = Subject::where('program_id' , $request->programid)->get();
+        $allsubjects = Subject::where('program_id' , $request->programid)->where('newbatch' , $newbatch)->get();
         }
-        $subjects = Subject::where('program_id' , $request->programid)->where('level_id' , $request->levelid)->get();
-        
-        
-        return view('form.partials.subject' , compact('subjects' , 'allsubjects'));
+        if(!empty(session()->get('regulardata')) && !empty(session()->get('backdata'))){
+            $regulardatas = session()->get('regulardata');
+        $backdatas = session()->get('backdata');
+        return view('form.partials.subject' , compact('regulardatas' , 'backdatas','allsubjects'));
+        }
+
+
+        $subjects = Subject::where('program_id' , $request->programid)->where('level_id' , $request->levelid)->where('newbatch' , $newbatch)->get();
+        $backdatas = [];
+        $regulardatas = [];
+        foreach($subjects as $subject){
+            if(count($regulardatas)){
+
+                array_push($regulardatas,$subject->id);
+            }
+            else{
+                $regulardatas = [$subject->id];
+            }
+
+            if($subject->concurrent_id ){
+                $data = Subject::find($subject->concurrent_id);
+                if($data->id != $subject->barrier_id){
+
+
+                if(count($backdatas)){
+
+                    array_push($backdatas,$data->id);
+                }
+                else{
+                    $backdatas = [$data->id];
+                }
+
+
+                if($data->concurrent_id){
+                    $data1 = Subject::find($data->concurrent_id);
+                    if($data1->id != $subject->barrier_id){
+                    array_push($backdatas,$data1->id);
+
+
+                        if($data1->concurrent_id){
+
+                            $data2 = Subject::find($data1->concurrent_id);
+                            if($data2->id != $subject->barrier_id){
+                            array_push($backdatas,$data2->id);
+
+
+                                if($data2->concurrent_id){
+                                    $data3 = Subject::find($data2->concurrent_id);
+                                    if($data3->id != $subject->barrier_id){
+                                    array_push($backdatas,$data3->id);
+                                    }
+
+                                }
+                            }
+                        }
+                        }
+
+                }
+            }
+
+            }
+
+        }
+        $backdatas = array_unique($backdatas);
+        session()->put('regulardata', $regulardatas);
+
+
+        return view('form.partials.subject' , compact('backdatas' , 'regulardatas','allsubjects'));
     }
 }
