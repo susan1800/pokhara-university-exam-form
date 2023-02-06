@@ -133,7 +133,7 @@
                             <label for="name">
                                 Name
                             </label>
-                            <input type="text" name="name" class="form-control" placeholder="Full Name" autofocus value="{{$data->name}}" readonly>
+                            <input type="text" name="name" class="form-control" placeholder="Full Name"  value="{{$data->name}}" readonly>
                             <p style="color: red; margin-top:0px;">@error('name') {{ $message }} @enderror</p>
                         </div>
                         <div class="form-group mb-3">
@@ -162,18 +162,30 @@
 
                         </div>
 
+
                         <div class="form-group mb-3">
-                            <label for="level">
+                            <label for="program">
                                 Level
                             </label>
-                            <select id="level" name="level" class="form-control form-control aiz-selectpicker" onchange="selectexamrollno(); getSubject()" data-live-search="true" >
-                                <option value=""> Select level</option>
-                                @foreach ($levels as $level)
-                                <option value="{{$level->id}}" @if(old('level')==$level->id) selected @endif> {{$level->level}}</option>
+                            <input type="text" value="{{$semester}}" class="form-control"  readonly>
+                            <div style="display: none;">
+                                <select id="level" name="level" class="form-control form-control aiz-selectpicker" onchange="selectexamrollno(); getSubject()" data-live-search="true" >
 
-                                @endforeach
-                            </select>
+                                    @foreach ($levels as $level)
+                                    <option value="{{$level->id}}" @if($level->level==$semester) selected @endif> {{$level->level}}</option>
+
+                                    @endforeach
+                                </select>
+
+
+                            </div>
                             <p style="color: red; margin-top:0px;">@error('level') {{ $message }} @enderror</p>
+
+                        </div>
+
+
+                        <div class="form-group mb-3">
+
 
 
                             @foreach ($levels as $level)
@@ -193,7 +205,7 @@
                             <label for="examrollno">
                                 Exam Roll Number
                             </label>
-                            <input type="text" name="examrollno" class="form-control" placeholder="Eg: 18120050" value="{{old('examrollno')}}">
+                            <input type="text" name="examrollno" class="form-control" placeholder="Eg: 18120050" value="{{old('examrollno')}}" autofocus>
                             <p style="color: red; margin-top:0px;">@error('examrollno') {{ $message }} @enderror</p>
                         </div>
 
@@ -201,13 +213,15 @@
                             <label for="year">
                                Year
                             </label>
-
+                            <input type="text" value="{{$spring_fall->value}}" class="form-control" readonly>
+                            <div style="display:none">
                             <select class="form-control" name="year" >
 
-                                    <option value="Spring" @if(old('year')=="Spring") selected @endif>Spring</option>
-                                    <option value="Fall" @if(old('year')=="Fall") selected @endif>Fall</option>
+                                    <option value="Spring" @if($spring_fall->value=="spring") selected @endif>Spring</option>
+                                    <option value="Fall" @if($spring_fall->value=="fall") selected @endif>Fall</option>
 
                             </select>
+                            </div>
                             <p style="color: red; margin-top:0px;">@error('year') {{ $message }} @enderror</p>
                         </div>
 

@@ -6,14 +6,14 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\PaymentStatus;
 use App\Models\User;
-use App\Models\NotificationCount;
+use App\Models\KeyValue;
 class PaymentStatusController extends BaseController
 {
     public function index(){
         $payments = PaymentStatus::latest()->paginate(50);
         $this->setPageTitle('payment status', 'payment status');
         $this->setFlashMessage('update sucessfully', 'success');
-        $notification = NotificationCount::first();
+        $notification = KeyValue::where('key','notification_count')->first();
         return view('/admin/paymentstatus/index' , compact('payments' , 'notification'));
     }
     public function changeFormStatus(Request $request){

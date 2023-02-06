@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\FormDataBackSubject;
 use App\Models\FormDataSubject;
 use Mail;
-use App\Models\NotificationCount;
+use App\Models\KeyValue;
 use App\Models\Notification;
 use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,9 +18,9 @@ use Maatwebsite\Excel\Facades\Excel;
 class FormDataController extends BaseController
 {
     public function index(){
-        $formDatas = FormData::latest()->paginate(30);
+        $formDatas = FormData::latest()->where('past_semester','0')->paginate(30);
         $this->setPageTitle('view form', 'view form');
-        $notification = NotificationCount::first();
+        $notification = KeyValue::where('key','notification_count')->first();
         return view('/admin/viewformdatas/index' , compact('formDatas' , 'notification'));
     }
     public function changeFormStatus(Request $request){
@@ -182,18 +182,19 @@ class FormDataController extends BaseController
         try {
 
         // $resultdata = FormData::whereIn('id', '>','0')->get()->delete();
-        $resultdata =  FormData::getQuery()->delete();
+        // $resultdata =  FormData::getQuery()->delete();
+        FormData::where("past_semester", "0")
+                ->update(["past_semester" => "1"]);
 
-        $resultbacksubject = FormDataBackSubject::getQuery()->delete();
-        $resultregularsubject = FormDataSubject::getQuery()->delete();
-        $resultnotification = Notification::getQuery()->delete();
+        // $resultbacksubject = FormDataBackSubject::getQuery()->delete();
+        // $resultregularsubject = FormDataSubject::getQuery()->delete();
+        // $resultnotification = Notification::getQuery()->delete();
 
         DB::commit();
         return 1;
         }catch (\Throwable $e) {
             DB::rollback();
              return 0;
-
         }
     }
 

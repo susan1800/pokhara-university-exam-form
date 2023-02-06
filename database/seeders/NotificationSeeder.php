@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\NotificationCount;
+use App\Models\KeyValue;
 class NotificationSeeder extends Seeder
 {
     /**
@@ -14,7 +14,8 @@ class NotificationSeeder extends Seeder
 
      protected $payments = [
         [
-            'count'                       =>  '0',
+            'key'                       =>  'notification_count',
+            'value'                     =>'0',
 
 
         ],
@@ -25,7 +26,7 @@ class NotificationSeeder extends Seeder
     {
         foreach ($this->payments as $index => $auth)
         {
-            $result = NotificationCount::create($auth);
+            $result = KeyValue::create($auth);
             if (!$result) {
                 $this->command->info("Insert failed at record $index.");
                 return;

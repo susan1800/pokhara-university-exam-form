@@ -54,7 +54,7 @@ model box
                 <div class="p-1 flex flex-row items-center">
 
 
-                  <a href="{{route('notification')}}" class="text-white p-2 no-underline hidden md:block lg:block"> <div style="margin-bottom:-30px; background:red; width:30px; border-radius:50%; padding:2px; text-align:center; position:fixed;" id="shownotification"><b>{{$notification->count}}</b></div><img src="{{asset('/backend/image/notification.png')}}" style="border-radius:50%; width:40px;height:40px; margin-left:20px;"></a>
+                  <a href="{{route('notification')}}" class="text-white p-2 no-underline hidden md:block lg:block"> <div style="margin-bottom:-30px; background:red; width:30px; border-radius:50%; padding:2px; text-align:center; position:fixed;" id="shownotification"><b>{{$notification->value}}</b></div><img src="{{asset('/backend/image/notification.png')}}" style="border-radius:50%; width:40px;height:40px; margin-left:20px;"></a>
                     <a    class="text-white p-2 no-underline hidden md:block lg:block"><img src="{{asset('/backend/image/profile.jpeg')}}" onclick="profileToggle()" style="border-radius:50%; width:40px;height:40px; margin-left:20px; cursor:pointer"></a>
                     <a   class="text-white p-2 no-underline hidden md:block lg:block" style="margin-right:50px; "></a>
                     <div id="ProfileDropDown" class="rounded hidden shadow-md bg-white absolute pin-t mt-12 mr-1 pin-r" style="margin-top:200px; margin-right: 150px; cursor:pointer ">
@@ -81,18 +81,18 @@ model box
           </div>
         <!--/Header-->
 <script>
-setInterval(function () {
-  $.get('{{ route('notificationcount') }}',  function(data)
-    {
-      // console.log(data);
-      if(data == '00'){
-      }
-      else{
-        document.getElementById('shownotification').innerHTML = data;
-      }
-    });
+// setInterval(function () {
+//   $.get('{{ route('notificationcount') }}',  function(data)
+//     {
+//       // console.log(data);
+//       if(data == '00'){
+//       }
+//       else{
+//         document.getElementById('shownotification').innerHTML = data;
+//       }
+//     });
 
-}, 5000);
+// }, 5000);
 
 
 function profileToggle() {

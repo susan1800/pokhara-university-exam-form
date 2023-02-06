@@ -13,7 +13,7 @@
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         }
         /* Create three equal columns that floats next to each other */
-        
+
         .column {
             float: left;
             /*width: 33.33%;
@@ -26,39 +26,39 @@
             /*background-color:#bbb; /* Should be removed. Only for demonstration */
         }
         /*Clear floats after the columns */
-        
+
         .row:after {
             content: "";
             display: table;
             clear: both;
             width: 100%
         }
-        
+
         .detail:after {
             content: "";
             display: table;
             clear: both;
         }
-        
+
         .year:after {
             content: "";
             display: table;
             clear: both;
         }
-        
+
         .signature:after {
             content: "";
             display: table;
             clear: both;
         }
-        
+
         table,
         th,
         td {
             border: 1px solid;
             border-collapse: collapse;
         }
-        
+
         .container {
             width: 70%;
             text-align: center;
@@ -96,10 +96,10 @@
             </div>
             <input type="hidden" id="formid" value="{{$formdata->id}}">
             <div class="name">
-                <p>P.U Registration No. : {{$formdata->registration_no}}</p>
+                <p>P.U Registration No. : {{$formdata->userdetail->registration_number}}</p>
             </div>
             <div class="name" style="margin-bottom: -15px; margin-top:0px;">
-                <p>Name of the Student : {{$formdata->name}}</p>
+                <p>Name of the Student : {{$formdata->userdetail->name}}</p>
             </div>
             <div class="col1" style="float: left;width: 50%; margin-bottom: -15px;">
                 <p>Level : Bachelor</p>
@@ -135,11 +135,11 @@
                     @php
                          $i=1;
                     @endphp
-                     
+
                     @foreach ($formdata->subject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
-                       
+
                     @endphp
                     <tr>
                         <td>{{$i}}</td>
@@ -150,12 +150,12 @@
                     </tr>
                         @php
                             $i++;
-                            
+
                         @endphp
                     @endforeach
-                   
-                    
-                    
+
+
+
                     @if($i==1)
                     @for ($j=1;$j<7;$j++)
                     <tr>
@@ -175,7 +175,7 @@
                         <td> </td>
                     </tr>
                     @endif
-                   
+
 
 
                 </table>
@@ -194,11 +194,11 @@
                     @php
                          $i=1;
                     @endphp
-                     
+
                     @foreach ($formdata->backsubject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
-                       
+
                     @endphp
                     <tr>
                         <td>{{$i}}</td>
@@ -209,12 +209,12 @@
                     </tr>
                         @php
                             $i++;
-                            
+
                         @endphp
                     @endforeach
-                   
-                    
-                    
+
+
+
                     @if($i==1)
                     @for ($j=1;$j<7;$j++)
                     <tr>
@@ -268,9 +268,9 @@
                         <td> </td>
                         <td> </td>
                         <td> </td>
-                    </tr> 
+                    </tr>
                     @endif
-                   
+
 
 
                 </table>
@@ -298,12 +298,12 @@
 </script>
 <script>
     // alert('Press ctrl+p to print or download the admitcard');
-    Swal.fire({
-  icon: 'info',
-  title:'print admitcard',
-  text: 'Press ctrl+p to print or download the admitcard !',
-  footer: ''
-});
+//     Swal.fire({
+//   icon: 'info',
+//   title:'print admitcard',
+//   text: 'Press ctrl+p to print or download the admitcard !',
+//   footer: ''
+// });
     function seen(){
 
 
@@ -311,7 +311,7 @@
 
     $.post('{{route('seenform') }}', {_token:'{{ csrf_token() }}',  formid:id}, function(data)
                 {
-                 
+
               });
 }
 seen();

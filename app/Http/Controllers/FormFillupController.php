@@ -19,10 +19,11 @@ use App\Models\FormDataBackSubject;
 use App\Models\Subject;
 use App\Models\Notification;
 use App\Models\PaymentStatus;
-use App\Models\NotificationCount;
+use App\Models\KeyValue;
 use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Notifications\OffersNotification;
+
 
 class FormFillupController extends BaseController
 {
@@ -32,10 +33,9 @@ class FormFillupController extends BaseController
         $user_id=session()->get('sessionuseridcosmos');
         $user = User::find($user_id);
         $data = PaymentStatus::where('roll_no',$user->roll_no)->first();
-        // if($data->roll_no)
+
         $roll=str_split("$data->roll_no");
 
-        // dd($roll[3]);
         if($roll[3]==1){
             $myprogram="Information Technology";
         }
@@ -56,8 +56,66 @@ class FormFillupController extends BaseController
         }
 
 
+        $current_year = KeyValue::where('key','current_year')->first();
+        $spring_fall = KeyValue::where('key','spring_fall')->first();
+        $year=str_split("$current_year->value");
+        $student_year = $year[0].$year[1].$roll[0].$roll[1];
+
+        if((int)$current_year->value-(int)$student_year == 1){
+            if($spring_fall->value == 'spring'){
+                $semester = 'first semester';
+            }
+            if($spring_fall->value == 'fall'){
+                $semester = 'second semester';
+            }
+        }
+        elseif((int)$current_year->value-(int)$student_year == 2){
+            if($spring_fall->value == 'spring'){
+                $semester = 'third semester';
+            }
+            if($spring_fall->value == 'fall'){
+                $semester = 'forth semester';
+            }
+        }
+        elseif((int)$current_year->value-(int)$student_year == 3){
+            if($spring_fall->value == 'spting'){
+                $semester = 'fifth semester';
+            }
+            if($spring_fall->value == 'fall'){
+                $semester = 'sixth semester';
+            }
+        }
+        elseif((int)$current_year->value-(int)$student_year == 4){
+            if($spring_fall->value == 'spring'){
+                $semester = 'seventh semester';
+            }
+            if($spring_fall->value == 'fall'){
+                $semester = 'eighth semester';
+            }
+        }
+
+        elseif((int)$current_year->value-(int)$student_year == 5){
+            if($myprogram == "Architecture"){
+                if($spring_fall->value == 'spring'){
+                    $semester = 'ninth semester';
+                }
+                if($spring_fall->value == 'fall'){
+                    $semester = 'tenth semester';
+                }
+            }
+            else{
+                $semester = 'Passover';
+            }
+        }
+        else{
+
+                $semester = 'Passover';
+
+        }
+
+
         $programs = Program::get();
-        return view('form.fillupform' , compact('levels' , 'programs' ,'data','myprogram'));
+        return view('form.fillupform' , compact('levels' , 'programs' ,'data','spring_fall','semester','myprogram'));
     }
 
     public function store(request $request)
@@ -76,8 +134,6 @@ class FormFillupController extends BaseController
 
 
     try {
-
-
 
 
 
@@ -136,15 +192,6 @@ if($signature == 0){
        }
        $userdetails = User::find($user_id);
 
-
-       $offerData = [
-        'name' => $userdetails->name,
-        'body' => $userdetails->name.'fill the form',
-        'thanks' => '',
-        'offerText' => '',
-        'offerUrl' => url('http://127.0.0.1:8000/form/'.$user_id.'/view'),
-        'offer_id' => $userdetails->roll_no,
-    ];
     $split = str_split($userdetails->roll_no);
     $year="";
     for($i=0;$i<2;$i++){
@@ -180,6 +227,11 @@ if($signature == 0){
     }
 
        DB::commit();
+       $auth = Auth::where('title','admin')->first();
+       $users = User::where('auth_id',$auth->id)->get();
+       Notification::send($users, new InvoicePaid($invoice));
+
+
 
          $date =Carbon::now();
 
@@ -233,14 +285,15 @@ if($signature == 0){
 
     private function createFormData($request , $user_id , $filename , $signature){
         try{
+            $detail = PaymentStatus::where('roll_no',$user->roll_no)->first();
         $user = User::find($user_id);
 
         $student= new FormData;
-        $student->name=$request->name;
+
         $student->year=$request->year;
-        $student-> registration_no= $request->registration_no;
+
         $student-> exam_roll_no= $request->examrollno;
-        $student-> college_roll_no= $user->roll_no;
+        $student-> student_details= $detail->id;
         $student-> user_id= $user_id;
         $student-> program_id= $request->program;
         $student-> level_id= $request->level;
@@ -248,8 +301,8 @@ if($signature == 0){
         $student->date = Carbon::now()->format('Y-m-d');
         $student->signature = $signature;
         $student->credit_hours = 0;
-        $student->payment_remarks = " ";
-        $student->payment_image = " ";
+        $student->college_roll_no = $user->roll_no;
+
         // dd($student);
         $student-> save();
         return 1;
@@ -306,7 +359,8 @@ if($signature == 0){
     }
     private function incrementNotificationCount(){
         try{
-        $notificationcount = NotificationCount::first();
+        $notificationcount = KeyValue::where('key','notification_count')->first();
+        $notificationcount = KeyValue::find($notificationcount);
         $notificationcount->count += 1;
         $notificationcount->save();
         return 1;

@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NotificationCount extends Model
+class KeyValue extends Model
 {
     use HasFactory;
-    protected $table = "notification_counts";
+    protected $table = "key_value";
     protected $fillable = [
-        'count',
+        'key',
+        'value',
     ];
 }

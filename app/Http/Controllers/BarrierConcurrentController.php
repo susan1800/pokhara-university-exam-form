@@ -28,29 +28,28 @@ class BarrierConcurrentController extends Controller
             if($addbarrier->concurrent_id){
 
                     $data1 = Subject::find($addbarrier->concurrent_id);
-                    if(!$data1->is_barrier){
-                        array_push($backsubjects,$data1->id);
 
+                        array_push($backsubjects,$data1->id);
 
                         if($data1->concurrent_id){
 
                             $data2 = Subject::find($data1->concurrent_id);
-                            if(!$data2->is_barrier){
+
                                 array_push($backsubjects,$data2->id);
 
 
                                 if($data2->concurrent_id){
                                     $data3 = Subject::find($data2->concurrent_id);
-                                    if(!$data->is_barrier){
+
                                     array_push($backsubjects,$data3->id);
-                                    }
+
 
 
                                 }
-                            }
+
 
                         }
-                    }
+
 
 
                 }
@@ -68,25 +67,23 @@ class BarrierConcurrentController extends Controller
                 if($addbacksub->concurrent_id){
                     $data1 = Subject::find($addbacksub->concurrent_id);
 
-                    if(!$data1->is_barrier){
+                    if($addbacksub->id != $data1->is_barrier){
                         array_push($backsubjects,$data1->id);
 
 
                         if($data1->concurrent_id){
 
                             $data2 = Subject::find($data1->concurrent_id);
-                            dd($data2->is_barrier);
-                            if(!$data2->is_barrier){
+                            if($addbacksub->id != $data2->is_barrier){
+
                                 array_push($backsubjects,$data2->id);
 
 
                                 if($data2->concurrent_id){
                                     $data3 = Subject::find($data2->concurrent_id);
-                                    if(!$data->is_barrier){
+                                    if($addbacksub->id != $data2->is_barrier){
                                     array_push($backsubjects,$data3->id);
                                     }
-
-
                                 }
                             }
 
@@ -116,21 +113,25 @@ class BarrierConcurrentController extends Controller
             }
 
         }
-        foreach($backsubjects as $regular){
+        foreach($backsubjects as $backdata){
 
             $i=0;
             foreach($backsubjects as $back){
 
                 $subject = Subject::find($back);
 
-                if($subject->is_barrier == $regular){
+                if($subject->is_barrier == $backdata){
+// dd($backdata);
                     unset($backsubjects[$i]);
+
+
                 }
                 $i++;
 
             }
 
         }
+
 
         $backsubjects = array_unique($backsubjects);
 

@@ -6,7 +6,7 @@
         width:100%;
         height: auto;
         display: flex;
-       
+
         padding: 5px;
     }
     .notification-icon{
@@ -22,7 +22,7 @@
     }
     a:hover{
         text-decoration: none;
-        
+
     }
 </style>
 @endsection
@@ -33,20 +33,20 @@
 
 <div class="container">
     @foreach ($notifications as $notification)
-   
+
     <a href="{{route('view.studentdata' , $notification->form_id)}}" target="blank" >
             <div class="notification" style="@if($notification->seen == 0)  background: #bfbfbf; @endif">
                 <h3 class="notification-icon"><img src="{{asset('frontend/image/icon.jpg')}}" width="40" height="10" style="border-radius: 50%; margin-right:40px;"></h3> </th>
                 <p style="margin-left:20px;">{{$notification->form->name}} filled up the form. <br>{{ $notification->created_at->format('d-M-Y')}}</p>
-                
+
             </div>
             <hr color="red" style="margin: 0px; height:1px;">
         </a>
     @endforeach
-    
+
 </div>
 
-  
+
 @endsection
 
 
@@ -62,12 +62,13 @@
 <script>
     setnotificationcountzero();
     function setnotificationcountzero(){
+
         $.get('{{ route('notificationcountsetzero') }}',  function(data)
     {
-        
-      
+
+
     });
-    
+
     }
 </script>
 @section('script')  @endsection

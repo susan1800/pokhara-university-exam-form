@@ -13,7 +13,7 @@ class CreateNotificationCountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notification_counts', function (Blueprint $table) {
+        Schema::create('key_value', function (Blueprint $table) {
             $table->id();
             $table->integer('count');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateNotificationCountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notification_counts');
+        Schema::dropIfExists('key_value');
     }
 }

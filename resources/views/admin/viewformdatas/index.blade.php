@@ -60,6 +60,135 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+
+  /* The Modal (background) */
+  .modal2 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal2 Content */
+.modal2-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal2-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal2-body {padding: 2px 16px;}
+
+.modal2-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+
+
+  /* The Modal (background) */
+  .modal3 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal3 Content */
+.modal3-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+
+.modal3-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal3-body {padding: 2px 16px;}
+
+.modal3-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
     </style>
 @endsection
 @section('content')
@@ -69,17 +198,46 @@ input:checked + .slider:before {
 
                      <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                         <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
-                            <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
-                                Full Table
-
-                                <div style="padding-left:10px; display:inline-flex">
-                                  {{-- <a class="btn btn-warning" href="{{ route('export') }}">Export Data</a> --}}
-                                  <button class="btn btn-warning" style="margin-left: 8px;" onclick="deletealldata()">Reset for new Semester</button>
-                              </div>
+                            <nav class="navbar navbar-dark bg-dark">
+                                <button class="navbar-toggler" type="button" onclick="openmenu()">
+                                  <span class="navbar-toggler-icon"></span>
+                                </button>
                                 <div style="float: right; display:inline-flex">
                                     <input type="search" onclick="search()" onkeyup="search()" onkeydown="search()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">
+
                                 </div>
-                            </div>
+
+                              </nav>
+                              <div id="myModal2" class="modal2">
+
+                                <!-- Modal1 content -->
+                                <div class="modal2-content">
+                                  <div class="modal2-header">
+                                    <span class="close close2">&times;</span>
+                                    <h2 >
+                                        <br>
+                                    </h2>
+                                  </div>
+
+                                  <div class="modal2-body">
+
+                                    <div style="padding:10px;">
+                                        <button class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded"  onclick="deletealldata()">Reset for new Semester</button>
+                                    </div>
+
+                                    <div style="padding:10px;">
+                                        <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="{{ route('export') }}">Export Data  <i class="fas fa-download"></i></a><br>
+                                    </div>
+                                    <div style="padding:10px;">
+                                        <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="">Print Admit card  <i class="fas fa-print"></i></a><br>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+
+                                    <br>
+
                             <div class="p-3">
                                 <table class="table-responsive w-full rounded">
                                     <thead>
@@ -97,8 +255,8 @@ input:checked + .slider:before {
                                       @foreach ($formDatas as $formdata)
 
                                         <tr>
-                                            <td class="border px-4 py-2" style=" ">{{$formdata->name}} @if($formdata->seen == 0)<p style="font-size:12px; padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px; margin-left:10px; color:white; background:#de7207; width:50px; border-radius:4px; display:inline-flex;">New</p>@endif</td>
-                                            <td class="border px-4 py-2">{{$formdata->college_roll_no}}</td>
+                                            <td class="border px-4 py-2" style=" ">{{$formdata->userdetail->name}} @if($formdata->seen == 0)<p style="font-size:12px; padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px; margin-left:10px; color:white; background:#de7207; width:50px; border-radius:4px; display:inline-flex;">New</p>@endif</td>
+                                            <td class="border px-4 py-2">{{$formdata->userdetail->roll_no}}</td>
                                             <td class="border px-4 py-2">
                                               @if ($formdata->payment == 1)
                                               <i class="fas fa-check text-green-500 mx-2"></i>
@@ -127,11 +285,40 @@ input:checked + .slider:before {
                                             <td class="border px-4 py-2">
                                                 <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                                         <i class="fas fa-eye"></i></a>
-                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" onclick="openedit()">
                                                         <i class="fas fa-edit"></i></a>
 
                                             </td>
                                         </tr>
+
+
+
+                                        <div id="myModal3" class="modal3">
+
+                                            <!-- Modal1 content -->
+                                            <div class="modal3-content">
+                                              <div class="modal3-header">
+                                                <span class="close close3">&times;</span>
+                                                <h2 >
+                                                    <br>
+                                                </h2>
+                                              </div>
+
+                                              <div class="modal3-body">
+
+                                                <div style="padding:10px;">
+                                                    <button class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded"  onclick="deletealldata()">Reset for new Semester</button>
+                                                </div>
+
+                                                <div style="padding:10px;">
+                                                    <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="{{ route('export') }}">Export Data  <i class="fas fa-download"></i></a><br>
+                                                </div>
+                                                <div style="padding:10px;">
+                                                    <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="">Print Admit card  <i class="fas fa-print"></i></a><br>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
                                         @endforeach
 
                                     </tbody>
@@ -353,6 +540,45 @@ $('#search').on('keyup', function(){
   }
 })
   }
+
+
+  function openmenu(){
+    // Get the modal
+    var modal = document.getElementById("myModal2");
+
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close2")[0];
+
+
+      modal.style.display = "block";
+
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+}
+
+function openedit(){
+    // Get the modal
+    var modal = document.getElementById("myModal3");
+
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close3")[0];
+
+
+      modal.style.display = "block";
+
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+}
+openedit();
+
 
   </script>
 

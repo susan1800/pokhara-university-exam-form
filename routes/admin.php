@@ -53,9 +53,9 @@ Route::middleware(['adminlogin'])->group(function () {
     Route::get('/paymentstatus/updatepaymentstatus', [PaymentController::class, 'updatePaymentStatus'])->name('updatepaymentstatus');
     Route::get('/formdata/delete', [FormDataController::class, 'deleteAllData'])->name('deletefoemdata');
 
-    
-    
-    
+
+
+
 });
 Route::get('/clear-cache', [DashboardController::class , 'clearCache'])->name('cache.clear');
 Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->name('send.notification');

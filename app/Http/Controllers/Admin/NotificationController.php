@@ -5,36 +5,38 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\Notification;
-use App\Models\NotificationCount;
+use App\Models\KeyValue;
 class NotificationController extends BaseController
 {
     public function index(){
         $notifications = Notification::latest()->get();
-        $notification = NotificationCount::first();
+        $notification = KeyValue::where('key','notification_count')->first();
         $this->setPageTitle('Notification', 'Notification');
         return view('/admin/notification/index' , compact('notifications' , 'notification'));
     }
     public function getNotificationCount(){
-        $notificationcount = NotificationCount::first();
+
+        $notificationcount = KeyValue::where('key','notification_count')->first();
         if($notificationcount == null){
             return '00';
         }
         else{
-            return $notificationcount->count;
+            return $notificationcount->value;
         }
     }
     public function NotificationCountSetZero(){
         // dd('fgh');
-        $notificationcount = NotificationCount::first();
-        $notificationcount = NotificationCount::find($notificationcount->id);
-        $notificationcount->count = '0';
+        $notificationcount = KeyValue::where('key','notification_count')->first();
+        $notificationcount = KeyValue::find($notificationcount->id);
+        $notificationcount->value = '0';
         $notificationcount->save();
 
         $this->seenNotification();
-        
-        
+
+
     }
     private function seenNotification(){
+
         $notifications = Notification::where('seen',0)->get();
         foreach($notifications as $notification){
             $seen = Notification::find($notification->id);
@@ -42,14 +44,12 @@ class NotificationController extends BaseController
             $seen->save();
         }
     }
-    
-    
-    
-    
-    
+
+
+
     public function sendNotification() {
         $userSchemas = User::where('auth_id',1)->get();
-  
+
         $offerData = [
             'name' => 'BOGO',
             'body' => 'You received an offer.',
@@ -59,10 +59,10 @@ class NotificationController extends BaseController
             'offer_id' => 007
         ];
         foreach($userSchemas as $$userSchema){
-  
+
         Notification::send($userSchema, new OffersNotification($offerData));
         }
-   
+
         dd('Task completed!');
     }
 
@@ -73,5 +73,5 @@ class NotificationController extends BaseController
 
 
 
-    
+
 }

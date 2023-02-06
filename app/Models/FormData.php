@@ -10,9 +10,9 @@ class FormData extends Model
     use HasFactory;
     protected $table = "form_data";
     protected $fillable = [
-        'registration_no',
+
         'exam_roll_no',
-        'college_roll_no',
+        'student_detail',
         'user_id',
         'program_id',
         'level_id',
@@ -32,6 +32,9 @@ class FormData extends Model
 
     public function subject(){
     	return $this->hasMany(FormDataSubject::class);
+    }
+    public function userdetail(){
+    	return $this->belongsTo(PaymentStatus::class , 'student_details');
     }
     public function backSubject(){
     	return $this->hasMany(FormDataBackSubject::class);
