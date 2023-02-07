@@ -27,6 +27,7 @@ class FormData extends Model
         'status',
         'approve',
         'payment_remarks',
+        'exam_year',
 
     ];
 
