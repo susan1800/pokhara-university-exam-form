@@ -237,55 +237,39 @@ input:checked + .slider:before {
                                                     <th class="border w-1/4 px-4 py-2">Action</th>
                                                   </tr>
                                                   <tr>
-                                                    <td class="border px-4 py-2">Print All Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    <td class="border px-4 py-2">Print All Admit card</td>
+                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','all')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
                                                   <tr>
-                                                    <td class="border px-4 py-2">Print First Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    <td class="border px-4 py-2">Print First year admit card</td>
+                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','first_year')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
                                                   <tr>
-                                                    <td class="border px-4 py-2">Print Second Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    <td class="border px-4 py-2">Print Second year admit card</td>
+                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','second_year')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
                                                   <tr>
-                                                    <td class="border px-4 py-2">Print Third Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    <td class="border px-4 py-2">Print Third year admit card</td>
+                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','third_year')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
                                                   <tr>
-                                                    <td class="border px-4 py-2">Print Forth Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    <td class="border px-4 py-2">Print Forth year admit card</td>
+                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','forth_year')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
                                                   <tr>
-                                                    <td class="border px-4 py-2">Print Fifth Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="border px-4 py-2">Print sixth Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="border px-4 py-2">Print eighth Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="border px-4 py-2">Print ninth Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td class="border px-4 py-2">Print tenth Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    <td class="border px-4 py-2">Print Fifth year admit card (Architecture)</td>
+                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','fifth_year')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
 
                                                   <tr>
-                                                    <td class="border px-4 py-2">Print passover Semester</td>
-                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    <td class="border px-4 py-2">Print passover student admit card</td>
+                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','passover')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
 
                                                 </thead>
                                             </table>
                                         </div>
-                                        <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="">Print Admit card  <i class="fas fa-print"></i></a><br>
+                                        {{-- <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="">Print Admit card  <i class="fas fa-print"></i></a><br> --}}
                                     </div>
                                   </div>
                                 </div>
@@ -341,7 +325,7 @@ input:checked + .slider:before {
                                             <td class="border px-4 py-2">
                                                 <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                                         <i class="fas fa-eye"></i></a>
-                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" onclick="openedit()">
+                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="{{route('editdata',$formdata->id)}}">
                                                         <i class="fas fa-edit"></i></a>
 
                                             </td>

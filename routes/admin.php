@@ -46,7 +46,9 @@ Route::middleware(['adminlogin'])->group(function () {
     Route::post('/seenform', [FormDataController::class, 'seenForm'])->name('seenform');
     Route::get('/form/{id}/view', [FormDataController::class, 'viewstudentdata'])->name('view.studentdata');
 
+    Route::get('{title}/printdata', [FormDataController::class ,'printdata'])->name('printdata');
     Route::get('export', [FormDataController::class ,'export'])->name('export');
+    Route::get('{id}/editdata', [FormDataController::class ,'editdata'])->name('editdata');
     Route::post('import', 'ImportExportController@import')->name('import');
 
 
