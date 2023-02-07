@@ -144,7 +144,7 @@ class FormFillupController extends BaseController
     $user_id = $request->session()->get('sessionuseridcosmos');
     $user = User::find($user_id);
 
-    $formId = FormData::where('user_id' , $user_id)->first();
+    $formId = FormData::where('user_id' , $user_id)->where('past_semester' , '0')->first();
 
     if($formId){
     //     $this->setFlashMessage("You Already submitted Your Form Please contact to administrator for any query !", 'error');
