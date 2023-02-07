@@ -195,7 +195,6 @@
 @endsection
 
 @section('content')
-    {{-- @include('admin.partials.flash') --}}
 
     <!--Grid Form-->
 
@@ -287,10 +286,7 @@
             </div>
 
             <div class="p-3">
-                <div>
-                @include('partials.flash')
-                @include('admin.partials.flash')
-                </div>
+
                 <table class="table-responsive w-full rounded">
                     <thead>
                         <tr>
