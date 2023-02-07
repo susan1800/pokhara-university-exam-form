@@ -12,6 +12,7 @@ class FormData extends Model
     protected $fillable = [
 
         'exam_roll_no',
+        'college_roll_no',
         'student_detail',
         'user_id',
         'program_id',

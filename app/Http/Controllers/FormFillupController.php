@@ -166,6 +166,7 @@ if($signature == 0){
 
         DB::beginTransaction();
         if($this->createFormData($request , $user_id , $filename , $signature)==0){
+
             return $this->responseRedirectBack('Error occurred while submiting the form. Please try again with fill all the field.', 'error', true, true)->withInput($request->input());
         }
 
@@ -227,26 +228,12 @@ if($signature == 0){
     }
 
        DB::commit();
-       $auth = Auth::where('title','admin')->first();
-       $users = User::where('auth_id',$auth->id)->get();
-       Notification::send($users, new InvoicePaid($invoice));
-
-
 
          $date =Carbon::now();
 
        $totalfee = $hashcode =Crypt::encryptString($totalfee);
        $userrollno = $user->roll_no.'_'.time();
-
-
        return redirect()->route('payment.showpaymentmethod' , compact('totalfee' , 'backSubject','userrollno'));
-
-
-
-
-
-
-
 
 
 
@@ -285,13 +272,16 @@ if($signature == 0){
 
     private function createFormData($request , $user_id , $filename , $signature){
         try{
+            $user = User::find($user_id);
+
             $detail = PaymentStatus::where('roll_no',$user->roll_no)->first();
-        $user = User::find($user_id);
+            $current_year = KeyValue::where('key', 'current_year')->first();
+
+
 
         $student= new FormData;
 
         $student->year=$request->year;
-
         $student-> exam_roll_no= $request->examrollno;
         $student-> student_details= $detail->id;
         $student-> user_id= $user_id;
@@ -302,11 +292,15 @@ if($signature == 0){
         $student->signature = $signature;
         $student->credit_hours = 0;
         $student->college_roll_no = $user->roll_no;
+        $student->exam_year = $current_year->value;
 
-        // dd($student);
+
         $student-> save();
+
+
         return 1;
     } catch (QueryException $exception) {
+
         return 0;
     }
     }
@@ -360,8 +354,8 @@ if($signature == 0){
     private function incrementNotificationCount(){
         try{
         $notificationcount = KeyValue::where('key','notification_count')->first();
-        $notificationcount = KeyValue::find($notificationcount);
-        $notificationcount->count += 1;
+        $notificationcount = KeyValue::find($notificationcount->id);
+        $notificationcount->value += 1;
         $notificationcount->save();
         return 1;
     } catch (QueryException $exception) {
