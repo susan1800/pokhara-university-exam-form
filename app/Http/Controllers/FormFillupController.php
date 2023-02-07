@@ -294,7 +294,7 @@ if($signature == 0){
         $student->college_roll_no = $user->roll_no;
         $student->exam_year = $current_year->value;
 
-
+            dd($student);
         $student-> save();
 
 
