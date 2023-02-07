@@ -20,7 +20,7 @@ class PaymentController extends Controller
         // dd($request->fileInput);
             // Excel::import(new UsersPaymentImport, $request->fileInput);
            $result = Excel::import(new UsersPaymentImport,request()->file('fileInput'));
-            
+
             if($result){
                 return true;
             }else{
@@ -47,13 +47,5 @@ class PaymentController extends Controller
 
 
 
-    public function updatePaymentStatus(){
-        $result = PaymentStatus::where('approve_form', '>=' ,0)->update(['approve_form' => 0]);
-        if($result){
-            return 1;
-        }
-        else{
-            return 0;
-        }
-    }
+
 }

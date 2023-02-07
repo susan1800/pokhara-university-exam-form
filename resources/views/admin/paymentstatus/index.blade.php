@@ -213,7 +213,32 @@
 
                     </div>
 
+
                   </nav>
+                  <div>
+                    @php
+                    $errors = Session::get('error');
+                    $messages = Session::get('success');
+
+                    @endphp
+                    @if ($errors)
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button class="close" type="button" data-dismiss="alert">×</button>
+                        <strong>Error!</strong> {{ $errors }}
+                    </div>
+                     @endif
+
+                    @if ($messages)
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button class="close" type="button" data-dismiss="alert">×</button>
+                        <strong>Success!</strong> {{ $messages }}
+                    </div>
+                     @endif
+
+
+
+
+                    </div>
                   <div id="myModal2" class="modal2">
 
                     <!-- Modal1 content -->
@@ -227,39 +252,28 @@
 
                       <div class="modal2-body">
 
-                        <div style="padding-left:10px; display:inline-flex">
-                            <button id="filebutton" onclick="selectexcel()"
+                        <div style="padding-left:10px;">
+                            <li>
+                            <button id="filebutton" onclick="selectexcel()" style="margin: 5px;"
                                 class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded">Import
-                                Excel</button>
-                            <input type="file" name="file" id="file" style="display:none;" onchange="submitexcel();">
-                            <button id="filebutton" onclick="bulkupdate()"
+                                Excel <i class="fas fa-upload"></i></button>
+                            </li>
+                            <li>
+
+                            <button id="filebutton" onclick="bulkupdate()" style="margin: 5px;"
                                 class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded"
-                                style="margin-left: 8px;">Reset for new semester</button>
+                                >Reset for new semester</button>
+                                <input type="file" name="file" id="file" style="display:none;" onchange="submitexcel();">
+                            </li>
+                            <li>
+                                <button id="filebutton" onclick="openclose()" style="margin: 5px;"
+                                class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded"
+                                >@if($open->value == "0") Open form for new semester @else Close form for this semester @endif </button>
+                            </li>
 
                         </div>
                         <br>
 
-                        <table>
-                            <table class="table-responsive w-full rounded">
-                                <thead>
-                                    <tr>
-                                        <th class="border w-1/4 px-4 py-2">Batch</th>
-                                        <th class="border w-1/7 px-4 py-2">Approve Form</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                        <tr>
-                                            <td  class="border px-4 py-2">
-                                                2018
-                                            </td>
-                                            <td  class="border px-4 py-2">
-                                               <button class="btn primary-btn"> <i class="fas fa-edit"></i></button>
-
-                                            </td>
-                                        <tr>
-
-                        </table>
                       </div>
                       <div class="modal1-footer">
                         <h3></h3>
@@ -271,7 +285,12 @@
 
 
             </div>
+
             <div class="p-3">
+                <div>
+                @include('partials.flash')
+                @include('admin.partials.flash')
+                </div>
                 <table class="table-responsive w-full rounded">
                     <thead>
                         <tr>
@@ -316,7 +335,7 @@
                       </div>
 
                       <div class="modal1-body">
-                        <form method="POST" action="">
+                        <form method="POST" action="{{route('admin.paymentstatus.update')}}">
                             @csrf
                         <input type="hidden" name="id" id="id">
                         <div class="form-row">
@@ -438,7 +457,7 @@
                     Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'somrthing wrong please try again !',
+                    text: 'something wrong please try again !',
 
                     })
                 }
@@ -447,6 +466,60 @@
 
     })
     }
+
+
+
+    function openclose() {
+
+Swal.fire({
+title: 'are you sure to update ?',
+icon:'question',
+showCancelButton: true,
+confirmButtonText: 'Yes, update ',
+cancelButtonText: `No, cancel`,
+}).then((result) => {
+/* Read more about isConfirmed, isDenied below */
+if (result.isConfirmed) {
+// Swal.fire('Saved!', '', 'success')
+
+
+
+
+// if (confirm('are you sure to update ?')) {
+    $.get('{{ route('open.close.form') }}', {
+        _token: '{{ csrf_token() }}',
+    }, function(data) {
+        console.log(data);
+        if (data == 1) {
+
+            Swal.fire({
+            title: 'update successfully !',
+
+            confirmButtonText: 'Ok',
+            }).then((result) => {
+
+            if (result.isConfirmed) {
+
+              location.reload();
+            }
+
+            });
+        } else {
+            // alert('somrthing wrong please try again');
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'something wrong please try again !',
+
+            })
+        }
+    });
+}
+
+})
+}
+
+
 
     function submitexcel() {
         var uploadFile = document.getElementById("file");

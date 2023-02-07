@@ -62,44 +62,44 @@ class FormFillupController extends BaseController
         $student_year = $year[0].$year[1].$roll[0].$roll[1];
 
         if((int)$current_year->value-(int)$student_year == 1){
-            if($spring_fall->value == 'spring'){
+            if($spring_fall->value == 'fall'){
                 $semester = 'first semester';
             }
-            if($spring_fall->value == 'fall'){
+            if($spring_fall->value == 'spring'){
                 $semester = 'second semester';
             }
         }
         elseif((int)$current_year->value-(int)$student_year == 2){
-            if($spring_fall->value == 'spring'){
+            if($spring_fall->value == 'fall'){
                 $semester = 'third semester';
             }
-            if($spring_fall->value == 'fall'){
+            if($spring_fall->value == 'spring'){
                 $semester = 'forth semester';
             }
         }
         elseif((int)$current_year->value-(int)$student_year == 3){
-            if($spring_fall->value == 'spting'){
+            if($spring_fall->value == 'fall'){
                 $semester = 'fifth semester';
             }
-            if($spring_fall->value == 'fall'){
+            if($spring_fall->value == 'spring'){
                 $semester = 'sixth semester';
             }
         }
         elseif((int)$current_year->value-(int)$student_year == 4){
-            if($spring_fall->value == 'spring'){
+            if($spring_fall->value == 'fall'){
                 $semester = 'seventh semester';
             }
-            if($spring_fall->value == 'fall'){
+            if($spring_fall->value == 'spring'){
                 $semester = 'eighth semester';
             }
         }
 
         elseif((int)$current_year->value-(int)$student_year == 5){
             if($myprogram == "Architecture"){
-                if($spring_fall->value == 'spring'){
+                if($spring_fall->value == 'fall'){
                     $semester = 'ninth semester';
                 }
-                if($spring_fall->value == 'fall'){
+                if($spring_fall->value == 'spring'){
                     $semester = 'tenth semester';
                 }
             }

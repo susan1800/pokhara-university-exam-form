@@ -222,13 +222,69 @@ input:checked + .slider:before {
                                   <div class="modal2-body">
 
                                     <div style="padding:10px;">
-                                        <button class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded"  onclick="deletealldata()">Reset for new Semester</button>
+                                        <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded"  onclick="deletealldata()">Reset for new Semester</a>
+                                        <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="{{ route('export') }}">Export triplicate  <i class="fas fa-download"></i></a>
                                     </div>
 
+
                                     <div style="padding:10px;">
-                                        <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="{{ route('export') }}">Export Data  <i class="fas fa-download"></i></a><br>
-                                    </div>
-                                    <div style="padding:10px;">
+                                        <p>Print Admit Card</p>
+                                        <div class="p-3">
+                                            <table class="table-responsive w-full rounded">
+                                                <thead>
+                                                  <tr>
+                                                    <th class="border w-1/4 px-4 py-2">Semester</th>
+                                                    <th class="border w-1/4 px-4 py-2">Action</th>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print All Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print First Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print Second Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print Third Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print Forth Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print Fifth Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print sixth Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print eighth Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print ninth Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print tenth Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+
+                                                  <tr>
+                                                    <td class="border px-4 py-2">Print passover Semester</td>
+                                                    <td class="border px-4 py-2"><a class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                  </tr>
+
+                                                </thead>
+                                            </table>
+                                        </div>
                                         <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="">Print Admit card  <i class="fas fa-print"></i></a><br>
                                     </div>
                                   </div>
@@ -431,6 +487,7 @@ $('#search').on('keyup', function(){
    $.post('{{ route('changeapproveformstatus') }}', {_token:'{{ csrf_token() }}',  rollno:rollno}, function(data)
                  {
                    console.log(data);
+
                    if(data == 1){
 
                      toastMixin.fire({

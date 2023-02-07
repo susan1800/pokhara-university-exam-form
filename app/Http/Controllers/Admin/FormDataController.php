@@ -28,13 +28,10 @@ class FormDataController extends BaseController
         if($status->approve != 1){
             $status->approve = 1;
             $status->save();
-            $mailStatus = $this->mail($status->user->email);
-            if($mailStatus == 1){
+            $this->mail($status->user->email);
+
                 return 1;
-            }
-            else{
-                return 0;
-            }
+
 
         }
         return 0;
@@ -60,19 +57,6 @@ class FormDataController extends BaseController
             'contact'=>'015550878 , 015151350',
         ];
         $mail = \Mail::to($email)->send(new \App\Mail\FormApproveMessage($details));
-        if($mail){
-            return 1;
-        }
-        else{
-            return 0;
-        }
-
-
-
-
-
-
-
 
     }
     public function viewstudentdata($id){
@@ -185,6 +169,22 @@ class FormDataController extends BaseController
         // $resultdata =  FormData::getQuery()->delete();
         FormData::where("past_semester", "0")
                 ->update(["past_semester" => "1"]);
+        $current_year = KeyValue::where('key','current_year')->first();
+        $spring_fall = KeyValue::where('key','spring_fall')->first();
+        $updateyear = KeyValue::find($current_year->id);
+        if($spring_fall->value == 'spring'){
+            $updateyear->value = $current_year->value+1;
+        }
+
+        $updateyear->save();
+
+        $updatespring_fall = KeyValue::find($spring_fall->id);
+        if($spring_fall->value == 'spring'){
+            $updatespring_fall->value = 'fall';
+        }else{
+            $updatespring_fall->value = 'spring';
+        }
+        $updatespring_fall->save();
 
         // $resultbacksubject = FormDataBackSubject::getQuery()->delete();
         // $resultregularsubject = FormDataSubject::getQuery()->delete();

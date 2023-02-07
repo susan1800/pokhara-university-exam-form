@@ -24,7 +24,7 @@
     </a>
     <a href="{{route('admin.paymentstatus.index')}}"
            class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-    <li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "payment status") bg-white @endif ">
+    <li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "Student Status") bg-white @endif ">
 
             <i class="fab fa-wpforms float-left mx-2"></i>
             All Student Status

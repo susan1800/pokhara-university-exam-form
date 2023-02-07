@@ -23,6 +23,7 @@ Route::middleware(['adminlogin'])->group(function () {
         Route::group(['prefix'  =>  'paymentstatus'], function () {
 
             Route::get('/', [PaymentStatusController::class, 'index'])->name('admin.paymentstatus.index');
+            Route::post('/update', [PaymentStatusController::class, 'editStudent'])->name('admin.paymentstatus.update');
        });
 
        Route::get('/changepassword',[ChangePasswordController::class , 'index'])->name('changepassword.view');
@@ -50,7 +51,8 @@ Route::middleware(['adminlogin'])->group(function () {
 
 
 
-    Route::get('/paymentstatus/updatepaymentstatus', [PaymentController::class, 'updatePaymentStatus'])->name('updatepaymentstatus');
+    Route::get('/paymentstatus/updatepaymentstatus', [PaymentStatusController::class, 'updatePaymentStatus'])->name('updatepaymentstatus');
+    Route::get('/openclose/form', [PaymentStatusController::class, 'opencloseform'])->name('open.close.form');
     Route::get('/formdata/delete', [FormDataController::class, 'deleteAllData'])->name('deletefoemdata');
 
 
