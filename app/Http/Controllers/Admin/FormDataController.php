@@ -271,30 +271,35 @@ class FormDataController extends BaseController
 
 
     public function editdata($id){
-        $user_id = session()->get('sessionuseridcosmos');
-        $user = User::find($user_id);
-        if($user->roll_no >= 220000){
-            $newbatch = 1;
-        }
-        else{
-            $newbatch = 0;
-        }
+
         $current_year = KeyValue::where('key','current_year')->first();
         $spring_fall = KeyValue::where('key','spring_fall')->first();
         $open = KeyValue::where('key','open')->first();
 
         $formdata = FormData::find($id);
+
+
+        $form_id = $formdata->id;
+
+        if($formdata->college_roll_no >= 220000){
+            $newbatch = 1;
+        }
+        else{
+            $newbatch = 0;
+        }
         $regulardatas=[];
         $backdatas = [];
         foreach($formdata->subject as $subject){
-            array_push($regulardatas,$subject->id);
+
+            array_push($regulardatas,$subject->subject_id);
 
         }
 
         foreach($formdata->backSubject as $subject){
-            array_push($backdatas,$subject->id);
+            array_push($backdatas,$subject->subject_id);
 
         }
+        // dd($regulardatas);
 
 
 
@@ -427,9 +432,62 @@ class FormDataController extends BaseController
 
 
 
+        $this->setPageTitle('Edit form', 'Edit form');
+        $notification = KeyValue::where('key','notification_count')->first();
+
+        return view('admin.viewformdatas.edit',compact('backdatas','regulardatas','allsubjects','newbatch','notification','form_id','formdata'));
+    }
 
 
-        return view('admin.viewformdatas.edit',compact('backdatas','regulardatas','allsubjects'));
+
+    public function changeBarrier(Request $request){
+
+        try{
+
+        $subject = Subject::where('subject_code',$request->subject)->first();
+
+        $data = FormDataSubject::where('form_data_id',$request->form_id)->where('subject_id',$subject->id)->first();
+
+        $changesubject =Subject::where('subject_code',$request->change_barrier)->first();
+        $update= FormDataSubject::find($data->id);
+
+        $update->subject_id = $changesubject->id;
+        $update->save();
+        return 1;
+        }catch (QueryException $exception) {
+            return 0;
+        }
+    }
+
+
+
+
+    public function removeBack(Request $request){
+        try{
+        $remove = FormDataBackSubject::where('form_data_id',$request->form_id)->where('subject_id',$request->id)->delete();
+        // dd($remove);
+        return 1;
+        // $remove->delete();
+    }catch (QueryException $exception) {
+        return 0;
+    }
+
+    }
+
+
+
+    public function addBack(Request $request){
+        try{
+            $insert = new FormDataBackSubject();
+            $insert->form_data_id = $request->form_id;
+            $insert->subject_id = $request->id;
+
+            $insert->save();
+            return 1;
+        }catch (QueryException $exception) {
+            return 0;
+        }
+
     }
 
 

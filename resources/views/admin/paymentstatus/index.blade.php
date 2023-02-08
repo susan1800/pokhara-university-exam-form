@@ -291,7 +291,7 @@
                     <thead>
                         <tr>
                             <th class="border w-1/4 px-4 py-2">Student Name</th>
-                            <th class="border w-1/7 px-4 py-2">Approve Form</th>
+                            <th class="border w-1/7 px-4 py-2">Payment Approvel</th>
                             <th class="border w-1/5 px-4 py-2">Actions</th>
                         </tr>
                     </thead>

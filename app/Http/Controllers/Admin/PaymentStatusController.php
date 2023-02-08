@@ -65,7 +65,25 @@ class PaymentStatusController extends BaseController
 
 
     public function updatePaymentStatus(){
+        try{
 
+        $current_year = KeyValue::where('key','current_year')->first();
+
+
+        $expand = str_split((int)$current_year->value-4);
+
+        $roll = "$expand[2]"."$expand[3]"."0000";
+        $expand1 = str_split((int)$current_year->value-5);
+        $rollarchitecture = "$expand1[2]"."$expand1[3]"."0800";
+
+        $roll1 = "$expand1[2]"."$expand1[3]"."0700";
+
+        // dd($roll);
+        // PaymentStatus::where('roll_no', '<', $roll)->update(['approve_form' => 1]);;
+
+        $students = PaymentStatus::where('roll_no', '>', $roll)->update(['approve_form' => 0]);
+        $students = PaymentStatus::where('roll_no', '>', $roll1)->where('roll_no', '<', $rollarchitecture)->update(['approve_form' => 0]);
+        dd($students);
 
 
         $result = PaymentStatus::where('approve_form', '>=' ,0)->where('level', '>=' ,0)->update(['approve_form' => 0]);
@@ -75,6 +93,9 @@ class PaymentStatusController extends BaseController
         else{
             return 0;
         }
+    }catch (QueryException $exception) {
+        return 0;
+    }
     }
 
 

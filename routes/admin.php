@@ -10,6 +10,7 @@ use App\Http\Controllers\ChangePasswordController;
 
 use App\Http\Controllers;
 
+
 Route::middleware(['adminlogin'])->group(function () {
 
     Route::group(['prefix'  =>  'admin'], function () {
@@ -45,6 +46,9 @@ Route::middleware(['adminlogin'])->group(function () {
     Route::post('/upload/paymentstatus', [PaymentController::class, 'uploadPaymentStatus'])->name('upload.paymentstatus');
     Route::post('/seenform', [FormDataController::class, 'seenForm'])->name('seenform');
     Route::get('/form/{id}/view', [FormDataController::class, 'viewstudentdata'])->name('view.studentdata');
+    Route::post('/changebarrier', [FormDataController::class, 'changeBarrier'])->name('admin.changebarrier');
+    Route::post('/addbacksubject', [FormDataController::class, 'addBack'])->name('admin.addback');
+    Route::post('/deletebacksubject', [FormDataController::class, 'removeBack'])->name('admin.removeback');
 
     Route::get('{title}/printdata', [FormDataController::class ,'printdata'])->name('printdata');
     Route::get('export', [FormDataController::class ,'export'])->name('export');

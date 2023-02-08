@@ -165,12 +165,15 @@ if($signature == 0){
         );
 
         DB::beginTransaction();
-        if($this->createFormData($request , $user_id , $filename , $signature)==0){
+        $createformdata = $this->createFormData($request , $user_id , $filename , $signature);
+        if($createformdata==0){
 
             return $this->responseRedirectBack('Error occurred while submiting the form. Please try again with fill all the field.', 'error', true, true)->withInput($request->input());
         }
+        // dd($createformdata);
 
-        $formId = FormData::where('user_id' , $user_id)->first();
+        $formId = FormData::find($createformdata);
+
 
 
        if($this->createRegularSubject($request , $formId['id'])==0){
@@ -298,7 +301,7 @@ if($signature == 0){
         $student-> save();
 
 
-        return 1;
+        return $student->id;
     } catch (QueryException $exception) {
 
         return 0;
@@ -324,19 +327,20 @@ if($signature == 0){
     }
     }
     private function createBackSubject($request , $formId){
+
         try{
-            $j=1;
+
         for($i=150;$i<250;$i++){
             if($request[$i] != null){
                 $backSubject = new FormDataBackSubject;
                 $backSubject->form_data_id = $formId;
                 $backSubject->subject_id = $request[$i];
                 $backSubject->save();
-                $j++;
+
 
             }
         }
-        return $j;
+        return 1;
     } catch (QueryException $exception) {
         return 0;
     }

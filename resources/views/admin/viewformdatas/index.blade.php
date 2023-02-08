@@ -285,7 +285,7 @@ input:checked + .slider:before {
 
                                         <th class="border w-1/4 px-4 py-2">Student Name</th>
                                         <th class="border w-1/6 px-4 py-2">College roll no</th>
-                                        <th class="border w-1/6 px-4 py-2">Fee Status</th>
+                                        <th class="border w-1/6 px-4 py-2">Form Fee Status</th>
                                         <th class="border w-1/6 px-4 py-2">Approve Form</th>
                                         <th class="border w-1/4 px-4 py-2">Image</th>
                                         <th class="border w-1/5 px-4 py-2">Actions</th>
@@ -323,9 +323,10 @@ input:checked + .slider:before {
                                             </td>
                                             <td class="border px-4 py-2"><img src ="{{asset('storage/'.$formdata->image)}}" style="height:100px;"></td>
                                             <td class="border px-4 py-2">
-                                                <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
-                                                        <i class="fas fa-eye"></i></a>
-                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="{{route('editdata',$formdata->id)}}">
+                                                <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank"  class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" style="padding:10px !important;">
+                                                        <i class="fas fa-eye"></i></a><br><br><br>
+                                                <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="{{route('editdata',$formdata->id)}}" style="padding:10px !important;">
+
                                                         <i class="fas fa-edit"></i></a>
 
                                             </td>
