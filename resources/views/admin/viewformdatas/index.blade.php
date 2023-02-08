@@ -238,7 +238,8 @@ input:checked + .slider:before {
                                                   </tr>
                                                   <tr>
                                                     <td class="border px-4 py-2">Print All Admit card</td>
-                                                    <td class="border px-4 py-2"><a  target="blank" href="{{route('printdata','all')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+                                                    {{-- href="{{route('printdata','all')}}" --}}
+                                                    <td class="border px-4 py-2"><a  target="blank"  href="{{route('printdata','all')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
                                                   </tr>
                                                   <tr>
                                                     <td class="border px-4 py-2">Print First year admit card</td>
@@ -622,29 +623,17 @@ function openedit(){
 openedit();
 
 
+
+
+
+
+
+
+
+
   </script>
 
 
-
-
-
-
-
-{{--
-Swal.fire({
-  title: 'Do you want to save the changes?',
-  showDenyButton: true,
-  showCancelButton: true,
-  confirmButtonText: 'Save',
-  denyButtonText: `Don't save`,
-}).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
-  if (result.isConfirmed) {
-    Swal.fire('Saved!', '', 'success')
-  } else if (result.isDenied) {
-    Swal.fire('Changes are not saved', '', 'info')
-  }
-}) --}}
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

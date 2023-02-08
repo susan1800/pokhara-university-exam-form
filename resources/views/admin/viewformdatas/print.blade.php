@@ -69,7 +69,7 @@
 <body>
 
     @foreach($formdatas as $formdata)
-    <div>
+    <div style="margin-top:10px; display:block;">
         <div class="row">
             <div class="column" style="float: left;margin-left:0.5%;">
                 <img src="{{asset('logo/logo.jpg')}}" alt="POKHARA UNIVERSITY" width="100" height="100">
@@ -294,5 +294,8 @@
     </div>
     @endforeach
 
+    <script>
+        window.print();
+        </script>
 </body>
 </html>
