@@ -84,9 +84,6 @@ class PaymentStatusController extends BaseController
         $students = PaymentStatus::where('roll_no', '>', $roll)->update(['approve_form' => 0]);
         $students = PaymentStatus::where('roll_no', '>', $roll1)->where('roll_no', '<', $rollarchitecture)->update(['approve_form' => 0]);
 
-
-
-
             return 1;
 
     }catch (QueryException $exception) {

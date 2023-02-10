@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\Admin\ExamDetailController;
 
 use App\Http\Controllers;
 
@@ -62,6 +63,7 @@ Route::middleware(['adminlogin'])->group(function () {
     Route::get('/formdata/delete', [FormDataController::class, 'deleteAllData'])->name('deletefoemdata');
 
 
+    Route::get('/examdetails', [ExamDetailController::class, 'index'])->name('exam.detail');
 
 
 });

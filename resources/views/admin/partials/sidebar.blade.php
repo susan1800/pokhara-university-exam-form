@@ -32,6 +32,27 @@
 
     </li>
     </a>
+    <a href="{{route('exam.detail')}}"
+    class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+<li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "Exam Details") bg-white @endif ">
+
+     <i class="fab fa-wpforms float-left mx-2"></i>
+     Exam Details
+     <span><i class="fas fa-angle-right float-right"></i></span>
+
+</li>
+</a>
+
+<a href="{{route('admin.paymentstatus.index')}}"
+class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+<li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == " Download Triplicate") bg-white @endif ">
+
+ <i class="fab fa-wpforms float-left mx-2"></i>
+ Download Triplicate
+ <span><i class="fas fa-angle-right float-right"></i></span>
+
+</li>
+</a>
 
 </ul>
 

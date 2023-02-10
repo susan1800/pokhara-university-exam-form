@@ -213,10 +213,12 @@ input:checked + .slider:before {
                                 <!-- Modal1 content -->
                                 <div class="modal2-content">
                                   <div class="modal2-header">
-                                    <span class="close close2">&times;</span>
                                     <h2 >
-                                        <br>
-                                    </h2>
+                                        Print Admit Card
+
+                                    <span class="close close2" style="float:right;">&times;</span>
+                                </h2>
+
                                   </div>
 
                                   <div class="modal2-body">

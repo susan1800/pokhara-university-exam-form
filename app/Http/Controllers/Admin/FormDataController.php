@@ -8,6 +8,7 @@ use App\Models\FormData;
 use Illuminate\Support\Facades\DB;
 use App\Models\FormDataBackSubject;
 use App\Models\FormDataSubject;
+use App\Models\Program;
 use Mail;
 use App\Models\KeyValue;
 use App\Models\Level;
@@ -15,6 +16,7 @@ use App\Models\Subject;
 use App\Models\User;
 use App\Models\Notification;
 use App\Exports\UsersExport;
+use App\Models\PaymentStatus;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -93,7 +95,24 @@ class FormDataController extends BaseController
 
     public function export()
     {
-        return Excel::download(new UsersExport, 'bulkData.xlsx');
+
+
+
+
+
+        // Excel::store('Filename', function($excel) {
+
+        //     $excel->setTitle('Our new awesome title');
+
+        //     // Chain the setters
+        //     $excel->setCreator('Maatwebsite')
+        //           ->setCompany('Maatwebsite');
+
+        //     // Call them separately
+        //     $excel->setDescription('A demonstration to change the file properties');
+
+        // });
+        return Excel::download(new UsersExport, 'triplicate.xlsx');
         // $code[0] = 'cvnvhbv';
         // $name[0] = 'dfgcf';
         // $user[0] = 'dfgcf';
@@ -186,6 +205,23 @@ class FormDataController extends BaseController
             $updatespring_fall->value = 'spring';
         }
         $updatespring_fall->save();
+
+
+
+        $expand = str_split((int)$current_year->value-4);
+
+        $roll = "$expand[2]"."$expand[3]"."0000";
+        $expand1 = str_split((int)$current_year->value-5);
+        $rollarchitecture = "$expand1[2]"."$expand1[3]"."0800";
+
+        $roll1 = "$expand1[2]"."$expand1[3]"."0700";
+
+        // dd($roll);
+        // PaymentStatus::where('roll_no', '<', $roll)->update(['approve_form' => 1]);;
+
+        $students = PaymentStatus::where('roll_no', '>', $roll)->update(['approve_form' => 0]);
+        $students = PaymentStatus::where('roll_no', '>', $roll1)->where('roll_no', '<', $rollarchitecture)->update(['approve_form' => 0]);
+
 
 
         DB::commit();

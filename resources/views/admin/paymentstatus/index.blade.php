@@ -202,9 +202,10 @@
         <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
             <div class="bg-gray-200 px-2 py-3 border-solid border-gray-200 border-b">
                 <nav class="navbar navbar-dark bg-dark">
-                    <button class="navbar-toggler" type="button" onclick="openmenu()">
+                    {{-- <button class="navbar-toggler" type="button" onclick="openmenu()">
                       <span class="navbar-toggler-icon"></span>
-                    </button>
+                    </button> --}}
+                    <div></div>
                     <div style="float: right; display:inline-flex">
                         <input type="text" id="search" name="search"
                             style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ..."

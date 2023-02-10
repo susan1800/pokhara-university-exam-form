@@ -68,7 +68,7 @@
         <div class="dropdown-content">
             <a href="{{route('user.changepassword.view')}}"><h6 >Change Password  <span style="float: right;"><i class="fa fa-key"></i></span></h5></a>
             <a href="{{route('userlogout')}}"><h6>Logout <span style="float: right;"><i class="fa fa-sign-out"></i><span></h5></a>
-            <a href=""><h6>View barrier and concurrent subject</h6></a>
+
 
           </div>
         </div>
@@ -167,8 +167,8 @@
                             <label for="program">
                                 Level
                             </label>
-                            <input type="text" value="{{$semester}}" class="form-control"  readonly>
-                            <div style="display: none;">
+                            {{-- <input type="text" value="{{$semester}}" class="form-control"  readonly> --}}
+
                                 <select id="level" name="level" class="form-control form-control aiz-selectpicker" onchange="selectexamrollno(); getSubject()" data-live-search="true" >
 
                                     @foreach ($levels as $level)
@@ -178,15 +178,13 @@
                                 </select>
 
 
-                            </div>
+
                             <p style="color: red; margin-top:0px;">@error('level') {{ $message }} @enderror</p>
 
                         </div>
 
 
                         <div class="form-group mb-3">
-
-
 
                             @foreach ($levels as $level)
 
@@ -211,7 +209,7 @@
 
                         <div class="form-group mb-3" >
                             <label for="year">
-                               Year
+                               Semester
                             </label>
                             <input type="text" value="{{$spring_fall->value}}" class="form-control" readonly>
                             <div style="display:none">
@@ -219,7 +217,6 @@
 
                                     <option value="Spring" @if($spring_fall->value=="spring") selected @endif>Spring</option>
                                     <option value="Fall" @if($spring_fall->value=="fall") selected @endif>Fall</option>
-
                             </select>
                             </div>
                             <p style="color: red; margin-top:0px;">@error('year') {{ $message }} @enderror</p>
