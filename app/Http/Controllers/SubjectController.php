@@ -17,9 +17,27 @@ class SubjectController extends Controller
         $user = User::find($user_id);
         if($user->roll_no >= 220000){
             $newbatch = 1;
+            $subjectBatch = 1;
         }
         else{
             $newbatch = 0;
+            $subjectBatch = 0;
+        }
+        $roll = str_split($user->roll_no);
+        if($roll[3]==7){
+            if($user->roll_no >= 200000){
+
+                $subjectBatch = 1;
+            }
+            elseif($user->roll_no >= 190000){
+                $subjectBatch = 01;
+            }
+            else{
+                $subjectBatch = 0;
+            }
+        }
+        if($roll[3]==4){
+            $subjectBatch =0;
         }
         $current_year = KeyValue::where('key','current_year')->first();
         $spring_fall = KeyValue::where('key','spring_fall')->first();
@@ -74,7 +92,7 @@ class SubjectController extends Controller
         }
         elseif($level->level == "second semester"){
             if($newbatch == 0){
-                $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , $first)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , $first)->where('newbatch' , $subjectBatch)->get();
             }else{
                 $allsubjects = [];
             }
@@ -83,78 +101,78 @@ class SubjectController extends Controller
         elseif($level->level == "third semester"){
             if($newbatch == 0){
 
-                $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , '<' , $third)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , '<' , $third)->where('newbatch' , $subjectBatch)->get();
             }else{
-                $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , $first)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->where('level_id' , $first)->where('newbatch' , $subjectBatch)->get();
             }
 
         }
         elseif($level->level == "fourth semester"){
             if($newbatch ==0){
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fourth)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fourth)->where('newbatch' , $subjectBatch)->get();
             }else{
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->where('newbatch' , $subjectBatch)->get();
                 // ->orWhere('d', '=', 1);
             }
         }
         elseif($level->level == "fifth semester"){
             if($newbatch ==0){
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fifth)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $fifth)->where('newbatch' , $subjectBatch)->get();
             }else{
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->where('newbatch' , $subjectBatch)->get();
             }
         }
         elseif($level->level == "sixth semester"){
             if($newbatch == 0){
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $sixth)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $sixth)->where('newbatch' , $subjectBatch)->get();
             }else{
 
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->where('newbatch' , $subjectBatch)->get();
             }
 
         }
         elseif($level->level == "seventh semester"){
             if($newbatch == 0){
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $seventh)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $seventh)->where('newbatch' , $subjectBatch)->get();
         }else{
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->orWhere('level_id',$fifth)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->orWhere('level_id',$fifth)->where('newbatch' , $subjectBatch)->get();
         }
         }
         elseif($level->level == "eighth semester"){
             if($newbatch == 0){
 
 
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $eighth)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $eighth)->where('newbatch' , $subjectBatch)->get();
             }else{
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->orWhere('level_id',$sixth)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->orWhere('level_id',$sixth)->where('newbatch' , $subjectBatch)->get();
             }
         }
         elseif($level->level == "ninth semester"){
             if($newbatch == 0){
 
 
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $ninth)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $ninth)->where('newbatch' , $subjectBatch)->get();
             }else{
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->orWhere('level_id',$fifth)->orWhere('level_id',$seventh)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->orWhere('level_id',$fifth)->orWhere('level_id',$seventh)->where('newbatch' , $subjectBatch)->get();
             }
         }
         elseif($level->level == "tenth semester"){
             if($newbatch == 0){
 
 
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $tenth)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id' , '<' , $tenth)->where('newbatch' , $subjectBatch)->get();
             }else{
-                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->orWhere('level_id',$sixth)->orWhere('level_id',$eighth)->where('newbatch' , $newbatch)->get();
+                $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->orWhere('level_id',$sixth)->orWhere('level_id',$eighth)->where('newbatch' , $subjectBatch)->get();
             }
         }
        else{
         if($newbatch == 0){
-            $allsubjects = Subject::where('program_id' , $request->programid)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->where('newbatch' , $subjectBatch)->get();
         }else{
             if($spring_fall =='fall'){
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->orWhere('level_id',$fifth)->orWhere('level_id',$seventh)->orWhere('level_id',$ninth)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $first)->orWhere('level_id', '=', $third)->orWhere('level_id',$fifth)->orWhere('level_id',$seventh)->orWhere('level_id',$ninth)->where('newbatch' , $subjectBatch)->get();
         }else{
-            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->orWhere('level_id',$sixth)->orWhere('level_id',$eighth)->orWhere('level_id',$tenth)->where('newbatch' , $newbatch)->get();
+            $allsubjects = Subject::where('program_id' , $request->programid)->Where('level_id'  , $second)->orWhere('level_id', '=', $fourth)->orWhere('level_id',$sixth)->orWhere('level_id',$eighth)->orWhere('level_id',$tenth)->where('newbatch' , $subjectBatch)->get();
         }
         }
         }
@@ -185,7 +203,7 @@ class SubjectController extends Controller
         }
 
 
-        $subjects = Subject::where('program_id' , $request->programid)->where('level_id' , $request->levelid)->where('newbatch' , $newbatch)->get();
+        $subjects = Subject::where('program_id' , $request->programid)->where('level_id' , $request->levelid)->where('newbatch' , $subjectBatch)->get();
         $backdatas = [];
         $regulardatas = [];
         foreach($subjects as $subject){

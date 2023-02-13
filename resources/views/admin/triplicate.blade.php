@@ -1,5 +1,5 @@
 @extends('admin.app')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 @section('style')
 @endsection
 
@@ -16,26 +16,72 @@
 
           </tr>
           <tr>
-            <th class="border w-1/4 px-4 py-2">add new student</th>
-            <th class="border w-1/6 px-4 py-2"><button class="btn btn-primary" onclick="selectexcel()">Upload excel <i class="fas fa-upload" style="padding:5px;"></i></button>
-                <input type="file" name="file" id="file" style="display:none;" onchange="submitexcel();">
+            <th class="border w-1/4 px-4 py-2"> IT before 2021 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Information Technology','old']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a>
+
+            </th>
+
+          </tr>
+
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> IT after 2022 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Information Technology','new']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a>
+
             </th>
 
           </tr>
           <tr>
-            <th class="border w-1/4 px-4 py-2">Reset Data for New Semester</th>
-            <th class="border w-1/6 px-4 py-2"><button class="btn btn-primary" onclick="ResetData()">Reset Data<i class="fa fa-refresh" style="padding:5px;"></i></button></th>
-          </tr>
-          <tr>
-            <th class="border w-1/4 px-4 py-2">@if($open->value == 1)Close Form for this Semester @else Open Form For New Semester @endif </th>
-            <th class="border w-1/6 px-4 py-2"><button class="btn btn-primary" onclick="openclose()">@if($open->value == 1)Close Form <i class="fas fa-close" style="padding:5px;"></i> @else Open Form <i class="fas fa-check" style="padding:5px;"></i> @endif </button></th>
-          </tr>
-          <tr>
+            <th class="border w-1/4 px-4 py-2"> Computer before 2021 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Computer','old']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a>
 
-            <th class="border w-1/4 px-4 py-2">Semester</th>
-            <th class="border w-1/6 px-4 py-2">
-               {{$spring_fall->value}}
             </th>
+
+          </tr>
+
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Computer after 2022 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Computer','new']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Civil before 2021 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Civil','old']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Civil after 2022 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Civil','new']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Electronics before 2021 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Electronics','old']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Electronics after 2022 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Electronics','new']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> BBA before 2021 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['BBA','old']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> BBA after 2022 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['BBA','new']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Architecture before 2018 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Architecture','old']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Architecture for 2019 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Architecture','new']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+          <tr>
+            <th class="border w-1/4 px-4 py-2"> Architecture after 2020 batch</th>
+            <th class="border w-1/6 px-4 py-2"><a href="{{ route('export',['Architecture','latest']) }}"><button class="btn btn-primary" >Download  <i class="fas fa-download"></i></button></a></th>
+          </tr>
+
+
+
+
 
           </tr>
         </thead>

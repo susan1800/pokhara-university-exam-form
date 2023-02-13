@@ -16,4 +16,15 @@ class ExamDetailController extends BaseController
     $this->setPageTitle('Exam Details', 'Exam Details');
         return view('admin.examdetail', compact('notification','open','spring_fall'));
     }
+
+
+
+
+
+    public function triplicate(){
+        $notification = KeyValue::where('key','notification_count')->first();
+    $this->setPageTitle('Download Triplicate', 'Download Triplicate');
+        return view('admin.triplicate', compact('notification'));
+
+    }
 }

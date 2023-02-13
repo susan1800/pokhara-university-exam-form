@@ -14,7 +14,7 @@
     </a>
     <a href="{{route('admin.formdata.index')}}"
            class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-    <li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "view form") bg-white @endif ">
+    <li class=" w-full h-full py-3 px-2 border-b border-light-border @if(($pageTitle == "view form")||($pageTitle == "Edit form")) bg-white @endif ">
 
             <i class="fab fa-wpforms float-left mx-2"></i>
             View Form
@@ -43,9 +43,9 @@
 </li>
 </a>
 
-<a href="{{route('admin.paymentstatus.index')}}"
+<a href="{{route('show.triplicate')}}"
 class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-<li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == " Download Triplicate") bg-white @endif ">
+<li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "Download Triplicate") bg-white @endif ">
 
  <i class="fab fa-wpforms float-left mx-2"></i>
  Download Triplicate

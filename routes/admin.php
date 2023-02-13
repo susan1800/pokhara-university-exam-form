@@ -52,7 +52,7 @@ Route::middleware(['adminlogin'])->group(function () {
     Route::post('/deletebacksubject', [FormDataController::class, 'removeBack'])->name('admin.removeback');
 
     Route::get('{title}/printdata', [FormDataController::class ,'printdata'])->name('printdata');
-    Route::get('export', [FormDataController::class ,'export'])->name('export');
+    Route::get('{program}/{batch}/export', [FormDataController::class ,'export'])->name('export');
     Route::get('{id}/editdata', [FormDataController::class ,'editdata'])->name('editdata');
     Route::post('import', 'ImportExportController@import')->name('import');
 
@@ -64,6 +64,7 @@ Route::middleware(['adminlogin'])->group(function () {
 
 
     Route::get('/examdetails', [ExamDetailController::class, 'index'])->name('exam.detail');
+    Route::get('/triplicate', [ExamDetailController::class, 'triplicate'])->name('show.triplicate');
 
 
 });

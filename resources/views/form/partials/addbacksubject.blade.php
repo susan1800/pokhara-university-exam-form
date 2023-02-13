@@ -17,17 +17,37 @@
         $user = App\Models\User::find($user_id);
         if($user->roll_no >= 220000){
             $newbatch = 1;
+            $subjectBatch =1;
+
         }
         else{
             $newbatch = 0;
+            $subjectBatch = 0;
         }
+        $roll = str_split($user->roll_no);
+        if($roll[3]==7){
+            if($user->roll_no >= 200000){
+                $subjectBatch = 1;
+            }
+            elseif($user->roll_no >= 190000){
+                $subjectBatch = 01;
+            }
+            else{
+                $subjectBatch =0;
+            }
+        }
+        if($roll[3]==4){
+            $subjectBatch =0;
+        }
+
+
 
 
 $backsubject = App\Models\Subject::find($back);
 
 
 @endphp
-    {{-- $backsubject = App\Models\Subject::where('id' , $back)->where('newbatch' , $newbatch)->first();
+    {{-- $backsubject = App\Models\Subject::where('id' , $back)->where('newbatch' , $subjectBatch)->first();
     @endphp --}}
 
     <tr style="padding:5px;" id="{{$backsubject->id}}" name="{{$backsubject->id}}">
@@ -38,7 +58,7 @@ $backsubject = App\Models\Subject::find($back);
                     <th>
                         @php
 
-                        $barrier = App\Models\Subject::where('id' , $backsubject->barrier_id)->where('newbatch' , $newbatch)->first();
+                        $barrier = App\Models\Subject::where('id' , $backsubject->barrier_id)->where('newbatch' , $subjectBatch)->first();
 
 
                         @endphp
@@ -67,7 +87,7 @@ $backsubject = App\Models\Subject::find($back);
         <th>
             @php
 
-            $barrier = App\Models\Subject::where('id' , $backsubject->hasbarrier)->where('newbatch' , $newbatch)->first();
+            $barrier = App\Models\Subject::where('id' , $backsubject->hasbarrier)->where('newbatch' , $subjectBatch)->first();
 
 
             @endphp

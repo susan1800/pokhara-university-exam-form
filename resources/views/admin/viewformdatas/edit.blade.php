@@ -90,7 +90,7 @@
                     @foreach ($regulardatas as $regular)
                     @php
 
-                            $subject = App\Models\Subject::where('id' , $regular)->where('newbatch' , $newbatch)->first();
+                            $subject = App\Models\Subject::where('id' , $regular)->where('newbatch' , $subjectBatch)->first();
 
 
                     @endphp
@@ -101,7 +101,7 @@
 
                             @php
 
-                            $barrier = App\Models\Subject::where('id' , $subject->barrier_id)->where('newbatch' , $newbatch)->first();
+                            $barrier = App\Models\Subject::where('id' , $subject->barrier_id)->where('newbatch' , $subjectBatch)->first();
 
 
                             @endphp
@@ -120,7 +120,7 @@
 
                             @php
 
-                            $barrier = App\Models\Subject::where('id' , $subject->is_barrier)->where('newbatch' , $newbatch)->first();
+                            $barrier = App\Models\Subject::where('id' , $subject->is_barrier)->where('newbatch' , $subjectBatch)->first();
 
 
                             @endphp
@@ -189,7 +189,7 @@
 
                         @php
 
-                            $concurrentsubject = App\Models\Subject::where('id' , $back)->where('newbatch' , $newbatch)->first();
+                            $concurrentsubject = App\Models\Subject::where('id' , $back)->where('newbatch' , $subjectBatch)->first();
 
 
                             @endphp
