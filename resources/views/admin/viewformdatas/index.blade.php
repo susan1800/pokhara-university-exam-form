@@ -199,9 +199,9 @@ input:checked + .slider:before {
                      <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                         <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
                             <nav class="navbar navbar-dark bg-dark">
-                                <button class="navbar-toggler" type="button" onclick="openmenu()">
+                                {{-- <button class="navbar-toggler" type="button" onclick="openmenu()">
                                   <span class="navbar-toggler-icon"></span>
-                                </button>
+                                </button> --}}
                                 <div style="float: right; display:inline-flex">
                                     <input type="search" onclick="search()" onkeyup="search()" onkeydown="search()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">
 
@@ -225,7 +225,7 @@ input:checked + .slider:before {
 
                                     <div style="padding:10px;">
                                         <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded"  onclick="deletealldata()">Reset for new Semester</a>
-                                        <a class="bg-orange-500 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded" href="{{ route('export') }}">Export triplicate  <i class="fas fa-download"></i></a>
+
                                     </div>
 
 
