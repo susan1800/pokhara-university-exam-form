@@ -21,7 +21,7 @@ class DashboardController extends BaseController
     //     $reviews=feedback::all();
         $notification = KeyValue::where('key','notification_count')->first();
     $this->setPageTitle('dashboard', 'dashboard');
-    $formfilled = count(FormData::get());
+    $formfilled = count(FormData::where('past_semester' , 0)->get());
 
     $formapproved = count(FormData::where('approve' , 1)->get());
     $formapprovedremaining = count(FormData::where('approve',0)->get());
