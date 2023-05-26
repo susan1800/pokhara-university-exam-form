@@ -18,7 +18,7 @@
                   @foreach ($searchdatas as $formdata)
 
                     <tr>
-                        <td class="border px-4 py-2">{{$formdata->name}}</td>
+                        <td class="border px-4 py-2">{{$formdata->user->name}}</td>
                         <td class="border px-4 py-2">{{$formdata->college_roll_no}}</td>
                         <td class="border px-4 py-2">
                           @if ($formdata->payment == 1)

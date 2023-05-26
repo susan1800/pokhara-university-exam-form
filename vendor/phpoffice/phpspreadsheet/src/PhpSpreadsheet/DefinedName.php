@@ -110,9 +110,8 @@ abstract class DefinedName
         $segMatcher = false;
         foreach (explode("'", $value) as $subVal) {
             //    Only test in alternate array entries (the non-quoted blocks)
-            $segMatcher = $segMatcher === false;
             if (
-                $segMatcher &&
+                ($segMatcher = !$segMatcher) &&
                 (preg_match('/' . self::REGEXP_IDENTIFY_FORMULA . '/miu', $subVal))
             ) {
                 return true;

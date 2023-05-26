@@ -469,7 +469,6 @@ class Parser
         'BAHTTEXT' => [368, 1, 0, 0],
     ];
 
-    /** @var Spreadsheet */
     private $spreadsheet;
 
     /**
@@ -753,8 +752,6 @@ class Parser
             throw new WriterException('Defined Name is too long');
         }
 
-        throw new WriterException('Cannot yet write formulae with defined names to Xls');
-        /*
         $nameReference = 1;
         foreach ($this->spreadsheet->getDefinedNames() as $definedName) {
             if ($name === $definedName->getName()) {
@@ -765,9 +762,9 @@ class Parser
 
         $ptgRef = pack('Cvxx', $this->ptg['ptgName'], $nameReference);
 
+        throw new WriterException('Cannot yet write formulae with defined names to Xls');
 
         return $ptgRef;
-        */
     }
 
     /**
@@ -968,7 +965,7 @@ class Parser
     /**
      * Advance to the next valid token.
      */
-    private function advance(): void
+    private function advance()
     {
         $token = '';
         $i = $this->currentCharacter;
@@ -998,7 +995,7 @@ class Parser
                 $this->currentCharacter = $i + 1;
                 $this->currentToken = $token;
 
-                return;
+                return 1;
             }
 
             if ($i < ($formula_length - 2)) {
@@ -1038,6 +1035,7 @@ class Parser
             case '%':
                 return $token;
 
+                break;
             case '>':
                 if ($this->lookAhead === '=') { // it's a GE token
                     break;
@@ -1045,6 +1043,7 @@ class Parser
 
                 return $token;
 
+                break;
             case '<':
                 // it's a LE or a NE token
                 if (($this->lookAhead === '=') || ($this->lookAhead === '>')) {
@@ -1053,6 +1052,7 @@ class Parser
 
                 return $token;
 
+                break;
             default:
                 // if it's a reference A1 or $A$1 or $A1 or A$1
                 if (preg_match('/^\$?[A-Ia-i]?[A-Za-z]\$?\d+$/', $token) && !preg_match('/\d/', $this->lookAhead) && ($this->lookAhead !== ':') && ($this->lookAhead !== '.') && ($this->lookAhead !== '!')) {
@@ -1278,8 +1278,7 @@ class Parser
      */
     private function fact()
     {
-        $currentToken = $this->currentToken;
-        if ($currentToken === '(') {
+        if ($this->currentToken === '(') {
             $this->advance(); // eat the "("
             $result = $this->parenthesizedExpression();
             if ($this->currentToken !== ')') {

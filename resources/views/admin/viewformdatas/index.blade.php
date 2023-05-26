@@ -199,6 +199,7 @@ input:checked + .slider:before {
                      <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                         <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
                             <nav class="navbar navbar-dark bg-dark">
+                                <div class="btn btn-primary" style="color:white;" onclick="openmenu()">Print Admit Card</div>
 
                                 <div style="float: right; display:inline-flex">
                                     <input type="search" onclick="search()" onkeyup="search()" onkeydown="search()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">

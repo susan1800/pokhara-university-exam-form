@@ -24,7 +24,7 @@ class SearchController extends Controller
     public function formSearch(Request $request){
         $query = $request->search;
 
-        $searchdatas = FormData::where('college_roll_no', 'like', '%' . $query . '%')->get();
+        $searchdatas = FormData::where('college_roll_no', 'like', '%' . $query . '%')->where('past_semester',0)->get();
 
         if(count($searchdatas)>0){
 

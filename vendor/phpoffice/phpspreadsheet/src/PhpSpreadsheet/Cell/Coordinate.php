@@ -24,13 +24,13 @@ abstract class Coordinate
     const DEFAULT_RANGE = 'A1:A1';
 
     /**
-     * Convert string coordinate to [0 => int column index, 1 => int row index].
+     * Coordinate from string.
      *
      * @param string $cellAddress eg: 'A1'
      *
      * @return array{0: string, 1: string} Array containing column and row (indexes 0 and 1)
      */
-    public static function coordinateFromString($cellAddress): array
+    public static function coordinateFromString($cellAddress)
     {
         if (preg_match(self::A1_COORDINATE_REGEX, $cellAddress, $matches)) {
             return [$matches['col'], $matches['row']];
@@ -44,7 +44,7 @@ abstract class Coordinate
     }
 
     /**
-     * Convert string coordinate to [0 => int column index, 1 => int row index, 2 => string column string].
+     * Get indexes from a string coordinates.
      *
      * @param string $coordinates eg: 'A1', '$B$12'
      *
@@ -411,10 +411,8 @@ abstract class Coordinate
         //    Sort the result by column and row
         $sortKeys = [];
         foreach ($cellList as $coordinate) {
-            $column = '';
-            $row = 0;
             sscanf($coordinate, '%[A-Z]%d', $column, $row);
-            $key = (--$row * 16384) + self::columnIndexFromString((string) $column);
+            $key = (--$row * 16384) + self::columnIndexFromString($column);
             $sortKeys[$key] = $coordinate;
         }
         ksort($sortKeys);

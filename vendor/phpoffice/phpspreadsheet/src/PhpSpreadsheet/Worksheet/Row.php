@@ -84,7 +84,6 @@ class Row
         $cellIterator = $this->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(true);
         foreach ($cellIterator as $cell) {
-            /** @scrutinizer ignore-call */
             $value = $cell->getValue();
             if ($value === null && $nullValueCellIsEmpty === true) {
                 continue;
