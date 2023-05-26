@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://examform.uttarpustika.com/public'),
+    'url' => env('APP_URL', env('MAIN_URL').'/public'),
 
-    'asset_url' => env('ASSET_URL', "https://examform.uttarpustika.com/public"),
+    'asset_url' => env('ASSET_URL', env('MAIN_URL').'/public'),
 
     /*
     |--------------------------------------------------------------------------
