@@ -23,10 +23,10 @@ class DashboardController extends BaseController
     $this->setPageTitle('dashboard', 'dashboard');
     $formfilled = count(FormData::where('past_semester' , 0)->get());
 
-    $formapproved = count(FormData::where('approve' , 1)->get());
-    $formapprovedremaining = count(FormData::where('approve',0)->get());
+    $formapproved = count(FormData::where('past_semester' , 0)->where('approve' , 1)->get());
+    $formapprovedremaining = count(FormData::where('past_semester' , 0)->where('approve',0)->get());
 
-    $newform = count(FormData::where('seen',0)->get());
+    $newform = count(FormData::where('past_semester' , 0)->where('seen',0)->get());
 
 
     $totalstudent = count(PaymentStatus::get());
