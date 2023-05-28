@@ -13,12 +13,6 @@ use Cache;
 class DashboardController extends BaseController
 {
     public function index(){
-    // $user = User::count();
-    //     $subject = subject::count();
-    //     $program = program::count();
-    //     $sociallinks=sociallink::whereNull('creator_id')->get();
-
-    //     $reviews=feedback::all();
         $notification = KeyValue::where('key','notification_count')->first();
     $this->setPageTitle('dashboard', 'dashboard');
     $formfilled = count(FormData::where('past_semester' , 0)->get());

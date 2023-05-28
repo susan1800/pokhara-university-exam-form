@@ -136,16 +136,31 @@ class FormDataController extends BaseController
 
         $roll = "$expand[2]"."$expand[3]"."0000";
         $expand1 = str_split((int)$current_year->value-5);
-        $rollarchitecture = "$expand1[2]"."$expand1[3]"."0800";
+        $rollarchitecture = "$expand1[2]"."$expand1[3]"."0900";
 
         $roll1 = "$expand1[2]"."$expand1[3]"."0700";
 
-        // dd($roll);
-        // PaymentStatus::where('roll_no', '<', $roll)->update(['approve_form' => 1]);;
+        $all = PaymentStatus::get();
 
-        $students = PaymentStatus::where('roll_no', '>', $roll)->update(['approve_form' => 0]);
-        $students = PaymentStatus::where('roll_no', '>', $roll1)->where('roll_no', '<', $rollarchitecture)->update(['approve_form' => 0]);
+        foreach($all as $allstudent){
+            $find = PaymentStatus::find($allstudent->id);
+            if($find->roll_no < $roll){
+            if($find->roll_no > $roll1 && $find->roll_no < $rollarchitecture){
+                $find['approve_form'] = '0';
 
+            }
+            else{
+                $find['approve_form'] = '1';
+            }
+
+            $find->save();
+        }
+        else{
+            $find['approve_form'] = '0';
+            $find->save();
+        }
+
+        }
 
 
         DB::commit();
