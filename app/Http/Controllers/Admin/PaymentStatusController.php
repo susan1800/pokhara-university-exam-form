@@ -39,6 +39,7 @@ class PaymentStatusController extends BaseController
             'roll_no'   => 'required',
             'registration_number' => 'required',
             'id'         =>'required',
+            'email'         =>'required',
         ]);
         try{
 
@@ -47,6 +48,7 @@ class PaymentStatusController extends BaseController
 
         $update->name = $request->name;
         $update->roll_no = $request->roll_no;
+        $update->email = $request->email;
         $update->registration_number = $request->registration_number;
         $update->save();
         $payments = User::latest()->paginate(50);
@@ -65,23 +67,12 @@ class PaymentStatusController extends BaseController
 
     public function updatePaymentStatus(){
         try{
+            dd("");
 
-        $current_year = KeyValue::where('key','current_year')->first();
 
 
-        $expand = str_split((int)$current_year->value-4);
-
-        $roll = "$expand[2]"."$expand[3]"."0000";
-        $expand1 = str_split((int)$current_year->value-5);
-        $rollarchitecture = "$expand1[2]"."$expand1[3]"."0800";
-
-        $roll1 = "$expand1[2]"."$expand1[3]"."0700";
-
-        // dd($roll);
-        // User::where('roll_no', '<', $roll)->update(['approve_form' => 1]);;
-
-        $students = User::where('roll_no', '>', $roll)->update(['approve_form' => 0]);
-        $students = User::where('roll_no', '>', $roll1)->where('roll_no', '<', $rollarchitecture)->update(['approve_form' => 0]);
+        $students = User::where('approve_form', '1')->update(['approve_form' => '0']);
+        // $students = User::where('roll_no', '>', $roll1)->where('roll_no', '<', $rollarchitecture)->update(['approve_form' => 0]);
 
             return 1;
 

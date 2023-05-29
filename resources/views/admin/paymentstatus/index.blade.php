@@ -329,7 +329,7 @@
                                 @if(session()->get('testadminlogin') == "yes")
                                 <td class="border px-4 py-2">
 
-                                  <a onclick="editdata('{{ $payment->id }}','{{$payment->name}}','{{$payment->registration_number}}','{{ $payment->roll_no }}')">  <i class="fas fa-edit"></i></a>
+                                  <a onclick="editdata('{{ $payment->id }}','{{$payment->name}}','{{$payment->registration_number}}','{{ $payment->roll_no }}','{{ $payment->email }}')">  <i class="fas fa-edit"></i></a>
                                 </td>
                                 @endif
 
@@ -371,6 +371,12 @@
                             <div class="form-group col-md-6">
                             <label for="inputEmail4">Registration number</label><br>
                                 <input type="text" class="form-control" name="registration_number" id="registration_number">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                            <label for="inputEmail4">Email</label><br>
+                                <input type="text" class="form-control" name="email" id="email">
                             </div>
                         </div>
                         <div class="form-row">
@@ -726,9 +732,10 @@ if (result.isConfirmed) {
 
 
 
-    function editdata(id,name,registration_number,roll_no){
+    function editdata(id,name,registration_number,roll_no,email){
         document.getElementById('id').value=id;
         document.getElementById('roll_no').value=roll_no;
+        document.getElementById('email').value=email;
         document.getElementById('name').value=name;
         document.getElementById('modelheader').innerHTML=name;
         document.getElementById('registration_number').value=registration_number;

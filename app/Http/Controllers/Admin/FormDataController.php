@@ -24,9 +24,16 @@ class FormDataController extends BaseController
     public function index(){
         $formDatas = FormData::latest()->where('past_semester','0')->paginate(30);
         $this->setPageTitle('view form', 'view form');
-        $notification = KeyValue::where('key','notification_count')->first();
-        return view('/admin/viewformdatas/index' , compact('formDatas' , 'notification'));
+        return view('/admin/viewformdatas/index' , compact('formDatas'));
     }
+
+    public function getolddata(){
+        $formDatas = FormData::latest()->where('past_semester','1')->paginate(30);
+        $this->setPageTitle('view old form', 'view old form');
+        return view('/admin/viewformdatas/index' , compact('formDatas'));
+    }
+
+
     public function changeFormStatus(Request $request){
         $status = FormData::find($request->rollno);
         if($status->approve != 1){
@@ -41,6 +48,10 @@ class FormDataController extends BaseController
         return 0;
 
     }
+
+
+
+
     public function changeFormPaymentStatus(Request $request){
         $id = $request->rollno;
         $status = FormData::find($id);
@@ -131,35 +142,13 @@ class FormDataController extends BaseController
 
 
 
-        $expand = str_split((int)$current_year->value-4);
+        $students = User::where('approve_form', '1')->update(['approve_form' => '0']);
 
-        $roll = "$expand[2]"."$expand[3]"."0000";
-        $expand1 = str_split((int)$current_year->value-5);
-        $rollarchitecture = "$expand1[2]"."$expand1[3]"."0900";
 
-        $roll1 = "$expand1[2]"."$expand1[3]"."0700";
 
-        $all = User::get();
 
-        foreach($all as $allstudent){
-            $find = User::find($allstudent->id);
-            if($find->roll_no < $roll){
-            if($find->roll_no > $roll1 && $find->roll_no < $rollarchitecture){
-                $find['approve_form'] = '0';
 
-            }
-            else{
-                $find['approve_form'] = '1';
-            }
 
-            $find->save();
-        }
-        else{
-            $find['approve_form'] = '0';
-            $find->save();
-        }
-
-        }
 
 
         DB::commit();

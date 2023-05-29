@@ -199,7 +199,12 @@ input:checked + .slider:before {
                      <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                         <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
                             <nav class="navbar navbar-dark bg-dark">
+                                @if($pageTitle == "view form")
                                 <div class="btn btn-primary" style="color:white;" onclick="openmenu()">Print Admit Card</div>
+                                @else
+                                <div></div>
+                                @endif
+
 
                                 <div style="float: right; display:inline-flex">
                                     <input type="search" onclick="search()" onkeyup="search()" onkeydown="search()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">
@@ -291,9 +296,12 @@ input:checked + .slider:before {
                                       @foreach ($formDatas as $formdata)
 
                                         <tr>
-                                            <td class="border px-4 py-2" style=" ">{{$formdata->userdetail->name}} @if($formdata->seen == 0)<p style="font-size:12px; padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px; margin-left:10px; color:white; background:#de7207; width:50px; border-radius:4px; display:inline-flex;">New</p>@endif</td>
+                                            <td class="border px-4 py-2" style=" ">{{$formdata->userdetail->name}} @if($formdata->seen == 0)<p style="font-size:12px; padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px; margin-left:10px; color:white; background:#de7207; width:50px; border-radius:4px; display:inline-flex;">New</p>@endif <br>
+                                                @if($pageTitle == "view old form") <b> {{$formdata->level->level}}</b> @endif</td>
                                             <td class="border px-4 py-2">{{$formdata->userdetail->roll_no}}</td>
                                             <td class="border px-4 py-2">
+
+                                                @if($pageTitle == "view form")
                                               @if ($formdata->payment == 1)
                                               <i class="fas fa-check text-green-500 mx-2"></i>
                                               @else
@@ -306,9 +314,17 @@ input:checked + .slider:before {
                                                 @endif value="{{$formdata->id}}" onchange="changeformpaymentstatus(this)" >
                                                 <span class="slider round"></span>
                                               </label>
+                                              @else
+                                              @if ($formdata->payment == 1)
+                                              <i class="fas fa-check text-green-500 mx-2"></i>
+                                              @else
+                                              <i class="fas fa-times text-red-500 mx-2"></i>
+                                              @endif
+                                              @endif
 
                                             </td>
                                             <td class="border px-4 py-2">
+                                                @if($pageTitle == "view form")
                                                 <label class="switch">
                                                     <input type="checkbox" @if ($formdata->approve == 1)
                                                       checked
@@ -316,14 +332,28 @@ input:checked + .slider:before {
                                                     @endif value="{{$formdata->id}}" onchange="changeformstatus(this)" >
                                                     <span class="slider round"></span>
                                                   </label>
+                                                  @else
+
+
+
+                                                  @if ($formdata->payment == 1)
+                                                  <i class="fas fa-check text-green-500 mx-2"></i>
+                                                  @else
+                                                  <i class="fas fa-times text-red-500 mx-2"></i>
+                                                  @endif
+                                                  @endif
+
+
                                             </td>
                                             <td class="border px-4 py-2"><img src ="{{asset('storage/'.$formdata->image)}}" style="height:100px;"></td>
                                             <td class="border px-4 py-2">
                                                 <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank"  class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" style="padding:10px !important;">
                                                         <i class="fas fa-eye"></i></a><br><br><br>
+                                                        @if($pageTitle == "view form")
                                                 <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="{{route('editdata',$formdata->id)}}" style="padding:10px !important;">
 
                                                         <i class="fas fa-edit"></i></a>
+                                                        @endif
 
                                             </td>
                                         </tr>

@@ -67,7 +67,7 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <ul class="nav navbar-nav">
-                                    <li><h3 style="color: white">Notice</h3></li>
+                                    <li><h3 style="color: white">Exam Notice</h3></li>
 
                                 </ul>
                             </div>

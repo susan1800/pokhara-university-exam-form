@@ -41,7 +41,7 @@
 <li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "Exam Details") bg-white @endif ">
 
      <i class="fab fa-wpforms float-left mx-2"></i>
-     Exam Details
+     Edit Details
      <span><i class="fas fa-angle-right float-right"></i></span>
 
 </li>
@@ -67,6 +67,20 @@ class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underl
 
  <i class="fab fa-wpforms float-left mx-2"></i>
  Notifications
+ <span><i class="fas fa-angle-right float-right"></i></span>
+
+</li>
+</a>
+@endif
+
+
+
+@if(session()->get('testadminlogin') == "yes")
+<a href="{{route('admin.oldform')}}"
+class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+<li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "view old form") bg-white @endif ">
+ <i class="fab fa-wpforms float-left mx-2"></i>
+ Old Form Data
  <span><i class="fas fa-angle-right float-right"></i></span>
 
 </li>
