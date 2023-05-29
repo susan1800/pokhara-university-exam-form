@@ -18,7 +18,7 @@ class UsersPaymentImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        $paymentstatus =new PaymentStatus();
+        $paymentstatus =new User();
         $paymentstatus['name']=$row['name'];
         $paymentstatus['registration_number']=$row['registration_number'];
         $paymentstatus['roll_no'] = $row['roll_no'];
