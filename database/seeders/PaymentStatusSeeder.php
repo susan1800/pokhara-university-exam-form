@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\PaymentStatus;
+use App\Models\User;
 class PaymentStatusSeeder extends Seeder
 {
     /**
@@ -30,7 +30,7 @@ class PaymentStatusSeeder extends Seeder
     {
         foreach ($this->payments as $index => $auth)
         {
-            $result = PaymentStatus::create($auth);
+            $result = User::create($auth);
             if (!$result) {
                 $this->command->info("Insert failed at record $index.");
                 return;

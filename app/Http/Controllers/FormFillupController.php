@@ -18,7 +18,6 @@ use App\Models\FormDataSubject;
 use App\Models\FormDataBackSubject;
 use App\Models\Subject;
 use App\Models\Notification;
-use App\Models\PaymentStatus;
 use App\Models\KeyValue;
 use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -32,7 +31,7 @@ class FormFillupController extends BaseController
         $levels = Level::get();
         $user_id=session()->get('sessionuseridcosmos');
         $user = User::find($user_id);
-        $data = PaymentStatus::where('roll_no',$user->roll_no)->first();
+        $data = User::where('roll_no',$user->roll_no)->first();
 
         $roll=str_split("$data->roll_no");
 
@@ -277,7 +276,7 @@ if($signature == 0){
         try{
             $user = User::find($user_id);
 
-            $detail = PaymentStatus::where('roll_no',$user->roll_no)->first();
+            $detail = User::where('roll_no',$user->roll_no)->first();
             $current_year = KeyValue::where('key', 'current_year')->first();
 
 

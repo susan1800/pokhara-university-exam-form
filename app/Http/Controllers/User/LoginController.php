@@ -11,7 +11,6 @@ use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Auth;
-use App\Models\PaymentStatus;
 use Hash;
 
 class LoginController extends BaseController
@@ -23,50 +22,65 @@ class LoginController extends BaseController
             'password' =>  'required',
         ]);
         try {
-        $user =User::where('email' , '=' , $request->email)->get();
-        
-        if(sizeof($user) < 1){
+        $user =User::where('email' , '=' , $request->email)->first();
+
+
+        if($user == null){
             return $this->responseRedirectBack('Email not found Please register first.', 'error', true, true);
         }
-        
+
 
         else{
-          
 
-            $returncheckpassword = $this->checkpassword($request->password , $user[0]->password);
+
+
+// dd($user);
+            if((string)$user->roll_no === $user->password){
+
+                if($request->password == $user->password){
+                    $request->session()->put('sessioninitialcosmos',$user->id);
+                    return $this->responseRedirect('initialsetup','Please change your password !', 'success', false, false);
+                }else{
+                    return $this->responseRedirectBack('Password not matched , Please enter valid password.', 'error', true, true);
+                }
+            }
+
+
+
+
+            $returncheckpassword = $this->checkpassword($request->password , $user->password);
 
             if($returncheckpassword == false){
                 return $this->responseRedirectBack('Password not matched , Please enter valid password.', 'error', true, true);
             }
 
 
-               $returbverify =  $this->checkverify($user[0]->email_verified_at , $user[0]->email);
-               if($returbverify == false){
-                return redirect()->route('sendotp' , $user[0]->email);
-                // return $this->responseRedirect('sendotp' , '', 'success', true, true);
-               }
-               
+               $returncheckrole = $this->checkrole($user->auth_id);
+            //    dd($returncheckrole);
 
 
-               $returncheckrole = $this->checkrole($user[0]->auth_id);
-               
-
-               if($returncheckrole == true){
+               if($returncheckrole == "admin"){
                 $request->session()->put('testadminlogin','yes');
-                $request->session()->put('sessionadminidcosmos',$user[0]->id);
+                $request->session()->put('sessionadminidcosmos',$user->id);
+                $request->session()->put('testexamlogin','no');
                 return redirect()->route('admin.dashboard');
-                
 
+
+               }
+               elseif($returncheckrole == "exam"){
+                $request->session()->put('testexamlogin','yes');
+                $request->session()->put('testadminlogin','no');
+                $request->session()->put('sessionadminidcosmos',$user->id);
+                return redirect()->route('admin.dashboard');
                }
                else{
 
-    
-                $returnPaymentStatus = $this->checkPaymentStatus($user[0]->roll_no);
-               
-                if($returnPaymentStatus == true){
+
+                // $returnUser = $this->checkUser($user[0]->roll_no);
+                if($user->approve_form == "1"){
 
                     $request->session()->put('testuserlogin','yes');
-                    $request->session()->put('sessionuseridcosmos',$user[0]->id);
+                    $request->session()->put('sessionuseridcosmos',$user->id);
                     return redirect()->route('user');
 
                 }
@@ -96,50 +110,21 @@ class LoginController extends BaseController
 
 
 
- 
-
-
-    private function checkverify($verified_at , $email){
-        if($verified_at == null){
-
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-
-
-
     private function checkrole($auth_id){
-        $auth = Auth::where('id' , '=' , $auth_id)->get();
-                if($auth[0]->title=="admin"){
+        $auth = Auth::find($auth_id);
+                if($auth->title=="admin"){
 
-                    return true;
+                    return "admin";
+                }
+                elseif($auth->title=="exam"){
+
+                    return "exam";
                 }
                 else{
 
-                    return false;
+                    return "student";
                 }
     }
-
-    private function checkPaymentStatus($roll_no){
-        $status = PaymentStatus::where('roll_no' , $roll_no)->first();
-       
-        if(!$status){
-            return false;
-        }
-        if($status->approve_form == 1){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-
-
 
 }
 

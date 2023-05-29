@@ -4,7 +4,7 @@
 <div class="login-container">
   <section class="login" id="login">
     <header>
-      
+
       <h3>Cosmos College</h3>
       <h4>Login</h4>
     </header>
@@ -22,7 +22,6 @@
 
       </div>
 	  <br>
-	  <p style="text-align:center">Dont Have an account ? <a href="{{route('signup')}}"> Sign Up </a></p>
     </form>
 
 	<p style="text-align:right"><a href="{{route('forgotpassword.email')}}">Forgot Password</a></p>

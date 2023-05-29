@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\Admin\ExamDetailController;
+use App\Http\Controllers\Admin\UserNotificationController;
 
 use App\Http\Controllers;
 
@@ -27,6 +28,17 @@ Route::middleware(['adminlogin'])->group(function () {
             Route::get('/', [PaymentStatusController::class, 'index'])->name('admin.paymentstatus.index');
             Route::post('/update', [PaymentStatusController::class, 'editStudent'])->name('admin.paymentstatus.update');
        });
+
+
+       Route::group(['prefix'  =>  'notifications'], function () {
+
+        Route::get('/', [UserNotificationController::class, 'index'])->name('admin.usernotification.index');
+        Route::get('{id}/edit', [UserNotificationController::class, 'edit'])->name('admin.usernotification.edit');
+        Route::post('/update', [UserNotificationController::class, 'update'])->name('admin.usernotification.update');
+        Route::get('{id}/disable', [UserNotificationController::class, 'disable'])->name('admin.usernotification.disable');
+        Route::get('/create', [UserNotificationController::class, 'create'])->name('admin.usernotification.create');
+        Route::post('/store', [UserNotificationController::class, 'store'])->name('admin.usernotification.store');
+   });
 
        Route::get('/changepassword',[ChangePasswordController::class , 'index'])->name('changepassword.view');
        Route::post('/changepassword',[ChangePasswordController::class , 'changePassword'])->name('changepassword');

@@ -14,6 +14,8 @@ use App\Http\Controllers\KhaltiController;
 use App\Http\Controllers\CashOnDeskController;
 use App\Http\Controllers\EsewaController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\InitialSetupController;
+use App\Http\Controllers\UserNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,11 @@ Route::get('/signup', function () {
 Route::get('/verifyotp', function () {
     return view('mail.verifyotp');
 })->name('verifyotp');
+
+
+Route::get('/initialsetup', [InitialSetupController::class, 'index'])->name('initialsetup');
+Route::post('/initialchangepassword', [InitialSetupController::class, 'changepassword'])->name('initialchangepassword');
+
 
 
 
@@ -68,9 +75,13 @@ Route::get('/password/verify/otp', [ForgotPasswordController::class, 'forgotPass
 Route::post('change/forgotpassword', [ForgotPasswordController::class, 'forgotPasswordChange'])->name('forgotpassword.change');
 Route::post('/password/verify/otp', [VerificationController::class, 'checkotpforgotpassord'])->name('forgotpassword.verify.otp');
 
+
+Route::get('/', [UserNotificationController::class, 'index'])->name('user.notification');
+
+
 Route::middleware(['userlogin'])->group(function () {
     // Route:: view('/' , 'form.fillupform')->name('user');
-    Route::get('/', [FormFillupController::class, 'index'])->name('user');
+    Route::get('/examform', [FormFillupController::class, 'index'])->name('user');
     Route::post('/getsubject', [SubjectController::class, 'getSubject'])->name('getsubject');
     // Route::post('/store', [FormFillupController::class, 'store'])->name('store');
     Route::post('/store', [FormFillupController::class, 'store'])->name('store');

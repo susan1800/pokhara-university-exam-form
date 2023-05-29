@@ -89,7 +89,7 @@
                                     {{$formapproved}}
                                 </a>
                                 <a href="#" class="no-underline text-white text-lg">
-                                    Approved Form 
+                                    Approved Form
                                 </a>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                     {{$formapprovedremaining}}
                                 </a>
                                 <a href="#" class="no-underline text-white text-lg">
-                                    Approval Remaining 
+                                    Approval Remaining
                                 </a>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                       <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2">
                           <div class="p-4 flex flex-col">
                               <a href="#" class="no-underline text-white text-2xl">
-                                  {{$totalstudent}}
+                                  {{$totalstudent -2}}
                               </a>
                               <a href="#" class="no-underline text-white text-lg">
                                   Total Students
@@ -134,7 +134,7 @@
                       <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
                           <div class="p-4 flex flex-col">
                               <a href="#" class="no-underline text-white text-2xl">
-                                  {{$totalstudent-$approvelogin}}
+                                  {{$totalstudent-$approvelogin -2}}
                               </a>
                               <a href="#" class="no-underline text-white text-lg">
                                   Remaining to approve
@@ -145,7 +145,7 @@
                       <!--<div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">-->
                       <!--    <div class="p-4 flex flex-col">-->
                       <!--        <a href="#" class="no-underline text-white text-2xl">-->
-                                  
+
                       <!--        </a>-->
                       <!--        <a href="#" class="no-underline text-white text-lg">-->
                       <!--            Payments Remaining -->
@@ -159,12 +159,12 @@
                                 {{$approvelogin}}
                             </a>
                             <a href="#" class="no-underline text-white text-lg">
-                                Approved  Login 
+                                Approved  Login
                             </a>
                         </div>
                     </div>
 
-                      
+
                   </div>
 
 

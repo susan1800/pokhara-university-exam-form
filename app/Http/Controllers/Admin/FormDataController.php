@@ -16,7 +16,6 @@ use App\Models\Subject;
 use App\Models\User;
 use App\Models\Notification;
 use App\Exports\UsersExport;
-use App\Models\PaymentStatus;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -140,10 +139,10 @@ class FormDataController extends BaseController
 
         $roll1 = "$expand1[2]"."$expand1[3]"."0700";
 
-        $all = PaymentStatus::get();
+        $all = User::get();
 
         foreach($all as $allstudent){
-            $find = PaymentStatus::find($allstudent->id);
+            $find = User::find($allstudent->id);
             if($find->roll_no < $roll){
             if($find->roll_no > $roll1 && $find->roll_no < $rollarchitecture){
                 $find['approve_form'] = '0';

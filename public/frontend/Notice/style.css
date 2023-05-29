@@ -1,0 +1,97 @@
+.logo{
+    padding-top:15px;
+    text-align: center;
+}
+
+.title{
+	margin-left:254px;
+}
+#body{
+	background-color: #cbd2fe;
+}
+
+.heading{
+	padding-top: 0px;
+    color: green;
+    font-size: 24px;
+    /*margin-left:1;*/
+    /*margin-top:30px;*/
+} 
+.navbar{
+    margin-top: 20px;	
+    background-color: green;
+	display: block;
+}
+.navbar-item{
+padding: 0;
+    position: relative;
+    height: 34px;
+    z-index: 400;
+    background-color: green;
+}
+
+.content{
+	    padding: 15px;
+    background: #fff;
+}
+
+.navbar-list{
+	margin: 0;
+    padding: 0;
+    list-style: none;
+    list-style-type: none;
+    line-height: 1.0;
+}
+
+.navbar-list li{
+    float: left;
+    position: relative;
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-lists{
+	color: white;
+	background-color: green;
+}
+.footer{
+	height:60px;
+    background: green;
+	margin-bottom: 0px;
+	width: 100%;	
+}
+
+.copyrights{
+    color: white;
+    float: left;
+    padding-left: 25px;
+    padding-top: 20px;
+}
+a.ym {
+   color: white;
+}
+a.ym:hover{
+   color: white;
+}
+.sidebar{
+	    overflow: hidden;
+    float: left;
+    width: 200px;
+    margin-right: 15px;
+}
+.header{
+	background-color: green;
+	height: 5px;
+}
+.register{
+	 float: right;
+    padding-right: 100px;
+    padding-top: 50px;
+}
+.studentLogin {
+    padding-top: 10px;
+    color: green;
+}
+.studentLogin.hover {
+    color: green;
+}

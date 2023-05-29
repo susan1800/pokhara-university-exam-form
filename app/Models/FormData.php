@@ -36,7 +36,7 @@ class FormData extends Model
     	return $this->hasMany(FormDataSubject::class);
     }
     public function userdetail(){
-    	return $this->belongsTo(PaymentStatus::class , 'student_details');
+    	return $this->belongsTo(User::class , 'student_details');
     }
     public function backSubject(){
     	return $this->hasMany(FormDataBackSubject::class);

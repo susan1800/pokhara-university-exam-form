@@ -33,7 +33,7 @@
           display: none;
           position: absolute;
           background-color: #f1f1f1;
-          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          box-shadow: 0px 8px 16px 0px rgba(53, 52, 52, 0.2);
           z-index: 1;
           width:300px;
           padding: 5px;
@@ -42,7 +42,7 @@
         .dropdown-content a {
         background-color: #f1f1f1;
           box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-          color: black;
+          color: rgb(43, 42, 42);
           text-decoration: none;
           display: block;
           padding:5px;

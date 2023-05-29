@@ -46,7 +46,7 @@ class VerificationController extends BaseController
 
 
     public function sendotpforgotpassword($email){
-     
+
 
         try{
             $user = User::where('email' , $email)->first();
@@ -163,7 +163,7 @@ class VerificationController extends BaseController
         if($request->inputotp == Crypt::decryptString($request->otp)){
               $email = $request->email;
         return view('login.forgotpassword.changepassword' , compact('email'));
-                
+
         }
         else{
             return $this->responseRedirectBack('Otp not matched. please enter valid otp.', 'error', true, true);
@@ -189,7 +189,7 @@ class VerificationController extends BaseController
                 }
     }
     private function checkPaymentStatus($roll_no){
-        $status = PaymentStatus::where('roll_no' , $roll_no)->get();
+        $status = User::where('roll_no' , $roll_no)->get();
         if($status[0]->status == 1){
             return true;
         }

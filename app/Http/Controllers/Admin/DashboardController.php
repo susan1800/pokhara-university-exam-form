@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\KeyValue;
 use App\Models\FormData;
-use App\Models\PaymentStatus;
+use App\Models\User;
 use Artisan;
 use Cache;
 
@@ -23,9 +23,9 @@ class DashboardController extends BaseController
     $newform = count(FormData::where('past_semester' , 0)->where('seen',0)->get());
 
 
-    $totalstudent = count(PaymentStatus::get());
+    $totalstudent = count(User::get());
 
-    $approvelogin = count(PaymentStatus::where('approve_form' , 1)->get());
+    $approvelogin = count(User::where('approve_form' , 1)->get());
         return view('/admin/dashboard/index' , compact('approvelogin','totalstudent' ,'notification' , 'formfilled' , 'formapproved' , 'formapprovedremaining' , 'newform'));
         }
 

@@ -293,7 +293,9 @@
                         <tr>
                             <th class="border w-1/4 px-4 py-2">Student Name</th>
                             <th class="border w-1/7 px-4 py-2">Payment Approvel</th>
+                            @if(session()->get('testadminlogin') == "yes")
                             <th class="border w-1/5 px-4 py-2">Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -304,15 +306,32 @@
 
 
                                 <td class="border px-4 py-2">
+                                    @if(session()->get('testexamlogin') == "yes")
                                     <label class="switch">
+
+
                                         <input type="checkbox" @if ($payment->approve_form == 1) checked @endif
-                                            onchange="changeformstatus(this)" value="{{ $payment->id }}">
+                                            onchange="changeformstatus(this)" value="{{ $payment->id }}" readonly>
                                         <span class="slider round"></span>
                                     </label>
+                                    @endif
+                                    @if(session()->get('testadminlogin') == "yes")
+                                    <label class="switch">
+
+
+                                        @if($payment->approve_form == 1)
+                                        <i class="fas fa-check text-green-500 mx-2"></i>
+                                        @else
+                                        <i class="fas fa-times text-red-500 mx-2"></i>
+                                        @endif
+                                    @endif
                                 </td>
+                                @if(session()->get('testadminlogin') == "yes")
                                 <td class="border px-4 py-2">
+
                                   <a onclick="editdata('{{ $payment->id }}','{{$payment->name}}','{{$payment->registration_number}}','{{ $payment->roll_no }}')">  <i class="fas fa-edit"></i></a>
                                 </td>
+                                @endif
 
 
                             </tr>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 // use App\Exports\UsersPaymentImport;
-use App\Models\PaymentStatus;
+use App\Models\User;
 use App\Imports\UsersPaymentImport;
 use Maatwebsite\Excel\Facades\Excel;
 
