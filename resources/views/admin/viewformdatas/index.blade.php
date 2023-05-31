@@ -239,7 +239,12 @@ input:checked + .slider:before {
                                                   <tr>
                                                     <td class="border px-4 py-2">Print All Admit card</td>
                                                     {{-- href="{{route('printdata','all')}}" --}}
-                                                    <td class="border px-4 py-2"><a  target="blank"  href="{{route('printdata','all')}}" class="btn btn-primary"><i class="fas fa-print"></i></a></td>
+
+                                                    <td class="border px-4 py-2">
+                                                        <a  target="blank"  href="{{route('printdata','all')}}" class="btn btn-primary"><i class="fas fa-print"></i></a>
+                                                        <a  onclick="downloadPdfFromUrl('<?= route('printdata','all') ?>', 'alladmitcard.pdf')" class="btn btn-primary"><i class="fas fa-download"></i></a>
+                                                    </td>
+
                                                   </tr>
                                                   <tr>
                                                     <td class="border px-4 py-2">Print First year admit card</td>
@@ -277,6 +282,29 @@ input:checked + .slider:before {
                               </div>
 
 
+                              <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+                              <script>
+                                  function downloadPdfFromUrl(url, filename) {
+                                    alert(url);
+                                    fetch(url)
+                                        .then(response => response.blob())
+                                        .then(blob => {
+                                        const reader = new FileReader();
+                                        reader.onloadend = () => {
+                                            const pdfData = reader.result;
+                                            const doc = new jsPDF();
+                                            doc.addPage();
+                                            doc.addImage(pdfData, 'JPEG', 0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight());
+                                            doc.save(filename);
+                                        };
+                                        reader.readAsDataURL(blob);
+                                        })
+                                        .catch(error => {
+                                        console.error('Error:', error);
+                                        });
+                                    }
+                              </script>
                                     <br>
 
                             <div class="p-3">

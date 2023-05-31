@@ -182,17 +182,17 @@ if($signature == 0){
 
 
        $backSubject = $this->createBackSubject($request , $formId['id']);
+       $totalBack = 1;
+       for($i=150;$i<250;$i++){
+        if($request[$i] != null){
+            $totalBack++;
+        }
+    }
        if($backSubject==0){
 
         return $this->responseRedirectBack('Error occurred while creating Back subject. Please try again.', 'error', true, true)->withInput($request->input());
        }
 
-       if($this->createNotification($formId['id'])==0){
-
-       }
-       if($this->incrementNotificationCount()==0){
-
-       }
        $userdetails = User::find($user_id);
 
     $split = str_split($userdetails->roll_no);
@@ -206,28 +206,35 @@ if($signature == 0){
     if($year > 16){
         $level = Level::where('id' , $formId['level_id'])->first();
         if($level->level == "Passover"){
-            if($backSubject > 5){
-                $totalfee = 2500 + ($backSubject-6)*300;
+            if($totalBack > 5){
+                $totalfee = 2500 + ($totalBack-6)*300;
+                // dd("c");
             }
             else{
                 $totalfee = 2500;
+                // dd("b");
             }
         }else{
-            $totalfee = 2500 + ($backSubject-1)*300;
+            $totalfee = 2500 + ($totalBack-1)*300;
+            // dd($totalBack);
+            // dd($totalfee);
         }
     }else{
         $level = Level::where('id' , $formId['level_id'])->first();
         if($level->level == "Passover"){
-            if($backSubject > 5){
-                $totalfee = 1500 + ($backSubject-6)*300;
+            if($totalBack > 5){
+                $totalfee = 1500 + ($totalBack-6)*300;
             }
             else{
                 $totalfee = 1500;
             }
         }else{
-            $totalfee = 1500 + ($backSubject-1)*300;
+            $totalfee = 1500 + ($totalBack-1)*300;
         }
+
     }
+
+    $backSubject = $totalBack;
 
        DB::commit();
 
@@ -275,8 +282,6 @@ if($signature == 0){
     private function createFormData($request , $user_id , $filename , $signature){
         try{
             $user = User::find($user_id);
-
-            $detail = User::where('roll_no',$user->roll_no)->first();
             $current_year = KeyValue::where('key', 'current_year')->first();
 
 
@@ -285,7 +290,7 @@ if($signature == 0){
 
         $student->year=$request->year;
         $student-> exam_roll_no= $request->examrollno;
-        $student-> student_details= $detail->id;
+        $student-> student_details= $user->id;
         $student-> user_id= $user_id;
         $student-> program_id= $request->program;
         $student-> level_id= $request->level;
@@ -298,7 +303,6 @@ if($signature == 0){
 
 
         $student-> save();
-
 
         return $student->id;
     } catch (QueryException $exception) {
@@ -335,20 +339,8 @@ if($signature == 0){
                 $backSubject->form_data_id = $formId;
                 $backSubject->subject_id = $request[$i];
                 $backSubject->save();
-
-
             }
         }
-        return 1;
-    } catch (QueryException $exception) {
-        return 0;
-    }
-    }
-    private function createNotification($formId){
-        try{
-        $notification = new Notification;
-        $notification->form_id = $formId;
-        $notification->save();
         return 1;
     } catch (QueryException $exception) {
         return 0;
