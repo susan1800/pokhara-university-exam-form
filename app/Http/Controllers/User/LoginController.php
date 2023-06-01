@@ -35,13 +35,7 @@ class LoginController extends BaseController
 
 
 
-            $current_year = KeyValue::where('key','current_year')->first();
-            $split= str_split($current_year->value);
-           $checkroll = ($split[2].$split[3]-8).'0000';
-        //    dd($checkroll);
-           if($user->roll_no < $checkroll){
-            return $this->responseRedirectBack("Sorry, You can't login to the system!", 'error', true, true);
-           }
+
 
 
 
@@ -86,6 +80,14 @@ class LoginController extends BaseController
                 return redirect()->route('admin.dashboard');
                }
                else{
+
+                $current_year = KeyValue::where('key','current_year')->first();
+                $split= str_split($current_year->value);
+               $checkroll = ($split[2].$split[3]-8).'0000';
+            //    dd($checkroll);
+               if($user->roll_no < $checkroll){
+                return $this->responseRedirectBack("Sorry, You can't login to the system!", 'error', true, true);
+               }
 
 
                 // $returnUser = $this->checkUser($user[0]->roll_no);
