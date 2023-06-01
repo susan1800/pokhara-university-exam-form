@@ -10,6 +10,8 @@ use App\Models\FormDataBackSubject;
 use App\Models\FormDataSubject;
 use App\Models\Program;
 use Mail;
+use PDF;
+
 use App\Models\KeyValue;
 use App\Models\Level;
 use App\Models\Subject;
@@ -21,6 +23,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class FormDataController extends BaseController
 {
+
     public function index(){
         $formDatas = FormData::latest()->where('past_semester','0')->paginate(30);
         $this->setPageTitle('view form', 'view form');
@@ -228,6 +231,84 @@ class FormDataController extends BaseController
         return view('admin.viewformdatas.print' , compact('formdatas'));
 
 
+    }
+
+
+
+
+    public function downloaddata(Request $request ,$title){
+        $name = $title.'admitcard.pdf';
+        $url = $request->get(route('printdata',$title));
+        $filename = $request->get($name);
+
+
+
+        $levels = Level::get();
+        foreach($levels as $level){
+            if($level->level == "first semester"){
+                $first = $level->id;
+            }
+            if($level->level == "second semester"){
+                $second = $level->id;
+            }
+            if($level->level == "third semester"){
+                $third = $level->id;
+            }
+            if($level->level == "fourth semester"){
+                $fourth = $level->id;
+            }
+            if($level->level == "fifth semester"){
+                $fifth = $level->id;
+            }
+            if($level->level == "sixth semester"){
+                $sixth = $level->id;
+            }
+            if($level->level == "seventh semester"){
+                $seventh = $level->id;
+            }
+            if($level->level == "eighth semester"){
+                $eighth = $level->id;
+            }
+            if($level->level == "ninth semester"){
+                $ninth = $level->id;
+            }
+            if($level->level == "tenth semester"){
+                $tenth = $level->id;
+            }
+            if($level->level == "Passover"){
+                $passover = $level->id;
+            }
+        }
+        if($title == "first_year"){
+            $formdatas = FormData::where('past_semester','0')->where('approve','1')->where('level_id',$first)->orWhere('level_id',$second)->get();
+        }
+        elseif($title == "second_year"){
+            $formdatas = FormData::where('past_semester','0')->where('approve','1')->where('level_id',$third)->orWhere('level_id',$fourth)->get();
+        }
+        elseif($title == "third_year"){
+            $formdatas = FormData::where('past_semester','0')->where('approve','1')->where('level_id',$fifth)->orWhere('level_id',$sixth)->get();
+        }
+        elseif($title == "forth_year"){
+            $formdatas = FormData::where('past_semester','0')->where('approve','1')->where('level_id',$seventh)->orWhere('level_id',$eighth)->get();
+        }
+        elseif($title == "fifth_year"){
+            $formdatas = FormData::where('past_semester','0')->where('approve','1')->where('level_id',$ninth)->orWhere('level_id',$tenth)->get();
+        }
+        elseif($title=="passover"){
+
+
+                $formdatas = FormData::where('past_semester','0')->where('approve','1')->where('level_id',$passover)->get();
+
+        }
+        else{
+
+                $formdatas = FormData::where('past_semester','0')->where('approve','1')->get();
+
+        }
+
+        return view('admin.pdfpreview', compact('formdatas'));
+        // $pdf = PDF::loadView('admin.viewformdatas.print', compact('formdatas'));
+        // return $pdf->download($name);
     }
 
 

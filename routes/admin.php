@@ -68,6 +68,7 @@ Route::middleware(['adminlogin'])->group(function () {
 
 
     Route::get('{title}/printdata', [FormDataController::class ,'printdata'])->name('printdata');
+    Route::get('{title}/downloaddata', [FormDataController::class ,'downloaddata'])->name('downloaddata');
     Route::get('{program}/{batch}/export', [FormDataController::class ,'export'])->name('export');
     Route::get('{id}/editdata', [FormDataController::class ,'editdata'])->name('editdata');
     Route::post('import', 'ImportExportController@import')->name('import');

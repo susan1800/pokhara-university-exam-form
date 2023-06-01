@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\KeyValue;
 use App\Models\Auth;
 use Hash;
 
@@ -31,6 +32,17 @@ class LoginController extends BaseController
 
 
         else{
+
+
+
+            $current_year = KeyValue::where('key','current_year')->first();
+            $split= str_split($current_year->value);
+           $checkroll = ($split[2].$split[3]-8).'0000';
+        //    dd($checkroll);
+           if($user->roll_no < $checkroll){
+            return $this->responseRedirectBack("Sorry, You can't login to the system!", 'error', true, true);
+           }
+
 
 
 

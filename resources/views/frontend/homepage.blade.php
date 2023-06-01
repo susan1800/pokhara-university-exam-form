@@ -132,10 +132,11 @@
                     <div class="pagination-container">
                          <div class="pagination-wrapper centred">
         <div class="d-flex justify-content-center">
-            {{ $notifications->links() }}<br>
+            {{ $notifications->links() }}
         </div>
     </div>
                      </div>
+                     <br><br>
 
 
 

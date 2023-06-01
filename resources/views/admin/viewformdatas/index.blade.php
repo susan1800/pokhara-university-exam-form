@@ -242,9 +242,26 @@ input:checked + .slider:before {
 
                                                     <td class="border px-4 py-2">
                                                         <a  target="blank"  href="{{route('printdata','all')}}" class="btn btn-primary"><i class="fas fa-print"></i></a>
-                                                        <a  onclick="downloadPdfFromUrl('<?= route('printdata','all') ?>', 'alladmitcard.pdf')" class="btn btn-primary"><i class="fas fa-download"></i></a>
-                                                    </td>
+                                                        {{-- <a    onclick="downloadadmitcard('<?=route('downloaddata','all')?>','all')" download="alladmitcard.pdf" class="btn btn-primary"><i class="fas fa-download"></i></a> --}}
 
+                                                    </td>
+                                                        <script>
+                                                            function downloadadmitcard(url,type){
+
+                                                                var path= url;
+                                                                name=type+'admitcard';
+
+                                                                var save = document.createElement('a');
+
+                                                                save.href = path;
+                                                                save.download = name;
+                                                                save.target = '_blank';
+                                                                document.body.appendChild(save);
+                                                                save.click();
+
+                                                                document.body.removeChild(save);
+                                                            }
+                                                        </script>
                                                   </tr>
                                                   <tr>
                                                     <td class="border px-4 py-2">Print First year admit card</td>
@@ -280,31 +297,6 @@ input:checked + .slider:before {
                                   </div>
                                 </div>
                               </div>
-
-
-                              <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-
-                              <script>
-                                  function downloadPdfFromUrl(url, filename) {
-                                    alert(url);
-                                    fetch(url)
-                                        .then(response => response.blob())
-                                        .then(blob => {
-                                        const reader = new FileReader();
-                                        reader.onloadend = () => {
-                                            const pdfData = reader.result;
-                                            const doc = new jsPDF();
-                                            doc.addPage();
-                                            doc.addImage(pdfData, 'JPEG', 0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight());
-                                            doc.save(filename);
-                                        };
-                                        reader.readAsDataURL(blob);
-                                        })
-                                        .catch(error => {
-                                        console.error('Error:', error);
-                                        });
-                                    }
-                              </script>
                                     <br>
 
                             <div class="p-3">
