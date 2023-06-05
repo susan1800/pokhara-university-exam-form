@@ -35,4 +35,18 @@ class SearchController extends Controller
             return 1;
         }
     }
+    public function formSearchOld(Request $request){
+        $query = $request->search;
+
+        $searchdatas = FormData::where('college_roll_no', 'like', '%' . $query . '%')->where('past_semester',1)->get();
+
+        if(count($searchdatas)>0){
+
+
+        return view('admin.partials.formsearch' , compact('searchdatas'));
+        }
+        else{
+            return 1;
+        }
+    }
 }

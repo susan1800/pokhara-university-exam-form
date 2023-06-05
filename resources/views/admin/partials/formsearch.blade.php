@@ -9,7 +9,9 @@
                     <th class="border w-1/4 px-4 py-2">Student Name</th>
                     <th class="border w-1/6 px-4 py-2">College roll no</th>
                     <th class="border w-1/6 px-4 py-2">Form Fee Status</th>
+                    @if(session()->get('testadminlogin') == "yes")
                     <th class="border w-1/6 px-4 py-2">Approve Form</th>
+                    @endif
 
                     <th class="border w-1/5 px-4 py-2">Actions</th>
                   </tr>
@@ -26,6 +28,7 @@
                           @else
                           <i class="fas fa-times text-red-500 mx-2"></i>
                           @endif
+                          @if(session()->get('testexamlogin') == "yes")
                           <label class="switch" style="float: right;">
                             <input type="checkbox" @if ($formdata->payment == 1)
                               checked
@@ -33,9 +36,12 @@
                             @endif value="{{$formdata->id}}" onchange="changeformpaymentstatus(this)" >
                             <span class="slider round"></span>
                           </label>
+                          @endif
 
                         </td>
+                        @if(session()->get('testadminlogin') == "yes")
                         <td class="border px-4 py-2">
+
                             <label class="switch">
                                 <input type="checkbox" @if ($formdata->approve == 1)
                                   checked
@@ -43,12 +49,18 @@
                                 @endif value="{{$formdata->id}}" onchange="changeformstatus(this)" >
                                 <span class="slider round"></span>
                               </label>
+
                         </td>
+                        @endif
                         <td class="border px-4 py-2">
-                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+
+                            <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                     <i class="fas fa-eye"></i></a>
-                            <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+
+                                    @if(session()->get('testadminlogin') == "yes")
+                            <a href="{{route('editdata',$formdata->id)}}" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
                                     <i class="fas fa-edit"></i></a>
+                                    @endif
 
                         </td>
                     </tr>

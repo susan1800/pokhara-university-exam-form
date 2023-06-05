@@ -12,7 +12,7 @@
 
     </li>
     </a>
-    @if(session()->get('testadminlogin') == "yes")
+
     <a href="{{route('admin.formdata.index')}}"
            class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
     <li class=" w-full h-full py-3 px-2 border-b border-light-border @if(($pageTitle == "view form")||($pageTitle == "Edit form")) bg-white @endif ">
@@ -23,7 +23,7 @@
 
     </li>
     </a>
-   @endif
+
     <a href="{{route('admin.paymentstatus.index')}}"
            class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
     <li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "Student Status") bg-white @endif ">
@@ -75,7 +75,6 @@ class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underl
 
 
 
-@if(session()->get('testadminlogin') == "yes")
 <a href="{{route('admin.oldform')}}"
 class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
 <li class=" w-full h-full py-3 px-2 border-b border-light-border @if($pageTitle == "view old form") bg-white @endif ">
@@ -85,7 +84,7 @@ class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underl
 
 </li>
 </a>
-@endif
+
 
 
 </ul>

@@ -109,7 +109,7 @@ input:checked + .slider:before {
                                             </td>
                                             @if(session()->get('testadminlogin') == "yes")
                                             <td class="border px-4 py-2">
-                                                <a onclick="editdata('{{ $payment->id }}','{{$payment->name}}','{{$payment->registration_number}}','{{ $payment->roll_no }}')">  <i class="fas fa-edit"></i></a>
+                                                <a onclick="editdata('{{ $payment->id }}','{{$payment->name}}','{{$payment->registration_number}}','{{ $payment->roll_no }}','{{ $payment->email }}')">  <i class="fas fa-edit"></i></a>
                                               </td>
                                               @endif
 

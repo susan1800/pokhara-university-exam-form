@@ -97,10 +97,38 @@ class FormDataController extends BaseController
     }
 
 
+    public function viewstudentdataexam($id){
+
+        $formdata = FormData::find($id);
+        if($formdata->subject == "[]"){
+            $formdata->subject->empty = "empty";
+        }
+        else{
+            $formdata->subject->empty = "notempty";
+        }
+        if($formdata->backsubject =="[]"){
+            $formdata->backsubject->empty = "empty";
+        }else{
+            $formdata->backsubject->empty = "empty";
+        }
+
+
+        return view('admin.viewformdatas.examview' , compact('formdata'));
+    }
+
+
 
     public function seenForm(Request $request){
         $formdata = FormData::find($request->formid);
         $formdata['seen'] = '1';
+        $formdata->save();
+        return 1;
+    }
+
+
+    public function seenexamForm(Request $request){
+        $formdata = FormData::find($request->formid);
+        $formdata['seen_exam'] = '1';
         $formdata->save();
         return 1;
     }
@@ -310,6 +338,9 @@ class FormDataController extends BaseController
         // $pdf = PDF::loadView('admin.viewformdatas.print', compact('formdatas'));
         // return $pdf->download($name);
     }
+
+
+
 
 
 

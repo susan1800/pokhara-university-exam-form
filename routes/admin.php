@@ -45,6 +45,7 @@ Route::middleware(['adminlogin'])->group(function () {
     });
 
     Route::post('searchajaxform', [SearchController::class, 'formSearch'])->name('searchajaxform');
+    Route::post('searchform', [SearchController::class, 'formSearchOld'])->name('searchform');
     Route::post('search', [SearchController::class, 'search'])->name('searchajax');
     Route::post('/changepaymentformstatus', [PaymentStatusController::class, 'changeFormStatus'])->name('changepaymentformstatus');
     Route::post('/changeapproveformstatus', [FormDataController::class, 'changeFormStatus'])->name('changeapproveformstatus');
@@ -58,6 +59,8 @@ Route::middleware(['adminlogin'])->group(function () {
 
     Route::post('/upload/paymentstatus', [PaymentController::class, 'uploadPaymentStatus'])->name('upload.paymentstatus');
     Route::post('/seenform', [FormDataController::class, 'seenForm'])->name('seenform');
+    Route::post('/seenexamform', [FormDataController::class, 'seenexamForm'])->name('seenexamform');
+    Route::get('/form/view{id}', [FormDataController::class, 'viewstudentdataexam'])->name('view.studentdata.exam');
     Route::get('/form/{id}/view', [FormDataController::class, 'viewstudentdata'])->name('view.studentdata');
     Route::post('/changebarrier', [FormDataController::class, 'changeBarrier'])->name('admin.changebarrier');
     Route::post('/addbacksubject', [FormDataController::class, 'addBack'])->name('admin.addback');

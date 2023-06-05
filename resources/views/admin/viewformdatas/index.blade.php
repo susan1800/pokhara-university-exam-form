@@ -199,15 +199,26 @@ input:checked + .slider:before {
                      <div class="flex flex-1  flex-col md:flex-row lg:flex-row mx-2">
                         <div class="mb-2 border-solid border-gray-300 rounded border shadow-sm w-full">
                             <nav class="navbar navbar-dark bg-dark">
+
                                 @if($pageTitle == "view form")
+                                @if(session()->get('testadminlogin') == "yes")
                                 <div class="btn btn-primary" style="color:white;" onclick="openmenu()">Print Admit Card</div>
                                 @else
+                                <div></div>
+                                @endif
+                                @else
+
                                 <div></div>
                                 @endif
 
 
                                 <div style="float: right; display:inline-flex">
+                                    @if($pageTitle == "view form")
                                     <input type="search" onclick="search()" onkeyup="search()" onkeydown="search()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">
+
+                                    @else
+                                    <input type="search" onclick="searchold()" onkeyup="searchold()" onkeydown="searchold()" id="search" name="search" style=" border-radius: 20px; box-shadow: 2px 2px #888888; padding:5px;" placeholder="Search ...">
+                                    @endif
 
                                 </div>
 
@@ -307,7 +318,9 @@ input:checked + .slider:before {
                                         <th class="border w-1/4 px-4 py-2">Student Name</th>
                                         <th class="border w-1/6 px-4 py-2">College roll no</th>
                                         <th class="border w-1/6 px-4 py-2">Form Fee Status</th>
+                                        @if(session()->get('testadminlogin') == "yes")
                                         <th class="border w-1/6 px-4 py-2">Approve Form</th>
+                                        @endif
                                         <th class="border w-1/4 px-4 py-2">Image</th>
                                         <th class="border w-1/5 px-4 py-2">Actions</th>
                                       </tr>
@@ -316,7 +329,14 @@ input:checked + .slider:before {
                                       @foreach ($formDatas as $formdata)
 
                                         <tr>
-                                            <td class="border px-4 py-2" style=" ">{{$formdata->userdetail->name}} @if($formdata->seen == 0)<p style="font-size:12px; padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px; margin-left:10px; color:white; background:#de7207; width:50px; border-radius:4px; display:inline-flex;">New</p>@endif <br>
+                                            <td class="border px-4 py-2" style=" ">{{$formdata->userdetail->name}}
+                                                @if(session()->get('testexamlogin') == "yes")
+                                                @if($formdata->seen_exam == 0)<p style="font-size:12px; padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px; margin-left:10px; color:white; background:#de7207; width:50px; border-radius:4px; display:inline-flex;">New</p>@endif
+                                                @else
+                                                @if($formdata->seen == 0)<p style="font-size:12px; padding-left:10px; padding-right:10px; padding-top:2px; padding-bottom:2px; margin-left:10px; color:white; background:#de7207; width:50px; border-radius:4px; display:inline-flex;">New</p>@endif
+                                                @endif
+
+                                                 <br>
                                                 @if($pageTitle == "view old form") <b> {{$formdata->level->level}}</b> @endif</td>
                                             <td class="border px-4 py-2">{{$formdata->userdetail->roll_no}}</td>
                                             <td class="border px-4 py-2">
@@ -327,6 +347,7 @@ input:checked + .slider:before {
                                               @else
                                               <i class="fas fa-times text-red-500 mx-2"></i>
                                               @endif
+                                              @if(session()->get('testexamlogin') == "yes")
                                               <label class="switch" style="float: right;">
                                                 <input type="checkbox" @if ($formdata->payment == 1)
                                                   checked
@@ -334,6 +355,7 @@ input:checked + .slider:before {
                                                 @endif value="{{$formdata->id}}" onchange="changeformpaymentstatus(this)" >
                                                 <span class="slider round"></span>
                                               </label>
+                                              @endif
                                               @else
                                               @if ($formdata->payment == 1)
                                               <i class="fas fa-check text-green-500 mx-2"></i>
@@ -343,8 +365,10 @@ input:checked + .slider:before {
                                               @endif
 
                                             </td>
+                                            @if(session()->get('testadminlogin') == "yes")
                                             <td class="border px-4 py-2">
                                                 @if($pageTitle == "view form")
+
                                                 <label class="switch">
                                                     <input type="checkbox" @if ($formdata->approve == 1)
                                                       checked
@@ -365,14 +389,19 @@ input:checked + .slider:before {
 
 
                                             </td>
+
+                                            @endif
                                             <td class="border px-4 py-2"><img src ="{{asset('storage/'.$formdata->image)}}" style="height:100px;"></td>
                                             <td class="border px-4 py-2">
-                                                <a href="{{route('view.studentdata' , $formdata->id)}}" target="blank"  class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" style="padding:10px !important;">
+
+                                                <a href="  @if(session()->get('testadminlogin') == "yes") {{route('view.studentdata' , $formdata->id)}} @else {{route('view.studentdata.exam',$formdata->id)}} @endif " target="blank"  class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" style="padding:10px !important;">
                                                         <i class="fas fa-eye"></i></a><br><br><br>
                                                         @if($pageTitle == "view form")
+                                                        @if(session()->get('testadminlogin') == "yes")
                                                 <a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white" href="{{route('editdata',$formdata->id)}}" style="padding:10px !important;">
 
                                                         <i class="fas fa-edit"></i></a>
+                                                        @endif
                                                         @endif
 
                                             </td>
@@ -459,6 +488,50 @@ $('#search').on('keyup', function(){
             }
 
         }
+
+
+        function searchold(){
+
+
+// var searchKey = $('#search').val();
+var searchKey = document.getElementById('search').value;
+
+var modal = document.getElementById("myModal");
+
+if(searchKey.length > 2){
+    // Get the modal
+
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close00")[0];
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+      modal.style.display = "block";
+
+      $.post('{{ route('searchform') }}', {_token:'{{ csrf_token() }}',  search:searchKey}, function(data)
+    {
+      console.log(data);
+      if(data == 1){
+        $('#search-content').html('Sorry, nothing found for Roll No : <b>"'+searchKey+'"</b>');
+
+      }
+      else{
+        $('#search-content').html(data);
+      }
+  });
+}
+else {
+
+  modal.style.display = "none";
+
+
+}
+
+}
+
 
     $(document).ready(function() {
      var modal = document.getElementById("myModal00");
