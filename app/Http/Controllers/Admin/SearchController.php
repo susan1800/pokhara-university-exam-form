@@ -43,7 +43,7 @@ class SearchController extends Controller
         if(count($searchdatas)>0){
 
 
-        return view('admin.partials.formsearch' , compact('searchdatas'));
+        return view('admin.partials.oldformsearch' , compact('searchdatas'));
         }
         else{
             return 1;
