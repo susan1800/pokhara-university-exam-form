@@ -47,8 +47,8 @@
                                     <i class="fas fa-eye"></i></a>
 
                                     @if(session()->get('testadminlogin') == "yes")
-                            <a href="{{route('editdata',$formdata->id)}}" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
-                                    <i class="fas fa-edit"></i></a>
+                            {{-- <a href="{{route('editdata',$formdata->id)}}" class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white">
+                                    <i class="fas fa-edit"></i></a> --}}
                                     @endif
 
                         </td>
