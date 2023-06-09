@@ -3,7 +3,6 @@
 <head>
     <title>Form</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
             box-sizing: border-box;
@@ -13,7 +12,7 @@
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         }
         /* Create three equal columns that floats next to each other */
-        
+
         .column {
             float: left;
             /*width: 33.33%;
@@ -26,39 +25,39 @@
             /*background-color:#bbb; /* Should be removed. Only for demonstration */
         }
         /*Clear floats after the columns */
-        
+
         .row:after {
             content: "";
             display: table;
             clear: both;
             width: 100%
         }
-        
+
         .detail:after {
             content: "";
             display: table;
             clear: both;
         }
-        
+
         .year:after {
             content: "";
             display: table;
             clear: both;
         }
-        
+
         .signature:after {
             content: "";
             display: table;
             clear: both;
         }
-        
+
         table,
         th,
         td {
             border: 1px solid;
             border-collapse: collapse;
         }
-        
+
         .container {
             width: 70%;
             text-align: center;
@@ -134,11 +133,11 @@
                     @php
                          $i=1;
                     @endphp
-                     
+
                     @foreach ($formdata->subject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
-                       
+
                     @endphp
                     <tr>
                         <td>{{$i}}</td>
@@ -149,12 +148,12 @@
                     </tr>
                         @php
                             $i++;
-                            
+
                         @endphp
                     @endforeach
-                    
-                    
-                    
+
+
+
                     @if($i==1)
                     @for ($j=1;$j<7;$j++)
                     <tr>
@@ -174,7 +173,7 @@
                         <td> </td>
                     </tr>
                     @endif
-                   
+
 
 
                 </table>
@@ -193,11 +192,11 @@
                     @php
                          $i=1;
                     @endphp
-                    
+
                     @foreach ($formdata->backsubject as $subject)
                     @php
                         $regularsubject = App\Models\Subject::where('id' , $subject->subject_id)->first();
-                       
+
                     @endphp
                     <tr>
                         <td>{{$i}}</td>
@@ -208,12 +207,12 @@
                     </tr>
                         @php
                             $i++;
-                            
+
                         @endphp
                     @endforeach
-                  
-                    
-                    
+
+
+
                     @if($i==1)
                     @for ($j=1;$j<7;$j++)
                     <tr>
@@ -267,9 +266,9 @@
                         <td> </td>
                         <td> </td>
                         <td> </td>
-                    </tr> 
+                    </tr>
                     @endif
-                   
+
 
 
                 </table>
