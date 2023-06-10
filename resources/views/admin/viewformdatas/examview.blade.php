@@ -279,10 +279,10 @@
             <div class="signature" style="margin-top:2%; margin-right:0%;">
 
                 <div class="col1" style="float: left;;width: 60%; ">
-                    <p>signature of the student : <img src="{{asset('upload/'.$formdata->signature)}}" width="120" height="40"></p>
+                    <p>signature of the student : <img src="@if(($formdata->signature != "")&&($formdata->signature != null)){{asset('upload/'.$formdata->signature)}}@endif  @if(($formdata->signature_image != "") && ($formdata->signature_image != null)){{asset('storage/signatureimage/'.$formdata->signature_image)}}@endif" width="120" height="60"></p>
 
                 </div>
-                <div class="col1" style="float:left; margin-left:10% ;  margin-top:20px;">
+                <div class="col1" style="float:left; margin-left:10% ;  margin-top:40px;">
                     <p>Date : {{$formdata->created_at->format('Y-m-d')}}</p>
 
                 </div>
@@ -561,7 +561,7 @@
             <div class="signature" style="margin-top:2%; margin-right:0%; margin-left:0%;">
 
                 <div class="col1" style="float: left;;width: 250px;margin-right:0%; margin-left:0%; ">
-                    <p style="font-size:13px;">signature of the student : <img src="{{asset('upload/'.$formdata->signature)}}" width="80" height="30"></p>
+                    <p style="font-size:13px;">signature of the student : <img src="@if(($formdata->signature != "")&&($formdata->signature != null)){{asset('upload/'.$formdata->signature)}}@endif  @if(($formdata->signature_image != "") && ($formdata->signature_image != null)){{asset('storage/signatureimage/'.$formdata->signature_image)}}@endif" width="80" height="40"></p>
 
                 </div>
                 <div class="col1" style="float: left;width: 240px; margin-top:20px; margin-right:0%; margin-left:0%;">
@@ -787,7 +787,7 @@
             <div class="signature" style="margin-top:-20px; margin-right:0%; margin-left:0%;">
 
                 <div class="col1" style="float: left;;width: 60%;margin-right:0%; margin-left:0%; ">
-                    <p style="font-size:13px;">signature of the student : <img src="{{asset('upload/'.$formdata->signature)}}" width="80" height="30"></p>
+                    <p style="font-size:13px;">signature of the student : <img src="@if(($formdata->signature != "")&&($formdata->signature != null)){{asset('upload/'.$formdata->signature)}}@endif  @if(($formdata->signature_image != "") && ($formdata->signature_image != null)){{asset('storage/signatureimage/'.$formdata->signature_image)}}@endif" width="80" height="40"></p>
 
                 </div>
 
@@ -1005,7 +1005,7 @@
         <br>
         <div>
             <div style="text-decoration: overline; float:left; text-align:left;">Signature of Principal</div>
-            <div style="text-decoration: overline; float:right; text-align:right;">Signature of Principal</div>
+            <div style="text-decoration: overline; float:right; text-align:right;">Seal of College</div>
         </div>
         <br><br>
         <div>Date : ................................................. </div>

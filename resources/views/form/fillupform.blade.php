@@ -107,7 +107,11 @@
                         <div class="card-body">
 
 
-
+                            <div class="form-group mb-3">
+                                <label for="name">
+                                    Select a photo
+                                </label>
+                                <br>
 
                             <label for="changeprofilepic" class="custom-file-upload">
                                 <div class="form-group row">
@@ -123,10 +127,15 @@
                                     </div>
                                 </div>
                             </label>
-                            <input id="changeprofilepic" name="formimage" type="file" accept=".jpg, .png, .jpeg" value="{{old('formimage')}}" style="display:none;" onchange="showimage()" onclick="showimage()" />
+                            <br>
+                            <label style="color:#04AA6D; font-size:12px;">
+                                (please choose a passport size photo)
+                            </label>
+                            <input id="changeprofilepic" name="formimage" type="file" accept=".jpg, .png, .jpeg" value="{{old('formimage')}}" style="display:none;" onchange="showimage()" onclick="showimage()"  required/>
                             <p style="color: red; margin-top:0px;">@error('formimage') {{ $message }} @enderror  </p>
 
 
+                        </div>
                         </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
@@ -203,7 +212,7 @@
                             <label for="examrollno">
                                 Exam Roll Number
                             </label>
-                            <input type="text" name="examrollno" class="form-control" placeholder="Eg: 18120050" value="{{old('examrollno')}}" autofocus>
+                            <input type="text" id="examrollnoinput" name="examrollno" class="form-control" placeholder="Eg: 18120050" value="{{old('examrollno')}}" autofocus required>
                             <p style="color: red; margin-top:0px;">@error('examrollno') {{ $message }} @enderror</p>
                         </div>
 
@@ -223,6 +232,42 @@
                         </div>
 
 
+
+                        <div class="card-body">
+
+
+                            <div class="form-group mb-3">
+                                <label for="name">
+                                    Signature
+                                </label>
+                                <br>
+
+                            <label for="signatureimage" class="custom-file-upload">
+                                <div class="form-group row">
+                                    <img src="" id="targetsignature" style="width:200px;height:auto;display:none; border-radius:10px; margin-buttom:10px;"><br>
+                                    <div class="input-group" data-toggle="aizuploader">
+
+                                        <div class="input-group-prepend">
+                                            <br>
+                                            <div for="signatureselect" class="input-group-text bg-soft-secondary font-weight-medium " >Browse</div>
+                                        </div>
+                                        <div id="showimagename" for="signatureselect" class="form-control ">Choose File  </div>
+
+                                    </div>
+                                </div>
+                            </label>
+                            <br>
+                            <label style="color:#04AA6D; font-size:12px;">
+                                (please upload a signature or draw signature in signature pad below)
+                            </label>
+                            <input id="signatureimage" name="signatureimage" type="file" accept=".jpg, .png, .jpeg" value="{{old('signatureimage')}}" style="display:none;" onchange="showsignatureimage()" onclick="showsignatureimage()" />
+                            <p style="color: red; margin-top:0px;">@error('signatureimage') {{ $message }} @enderror  </p>
+
+
+                        </div>
+                        </div>
+
+
                         <!-- signature -->
                         <div class="form-group mb-3" >
                             <a class="button-text" id="clear_button">CLEAR</a>
@@ -234,6 +279,9 @@
 
                          </div>
                          <p style="color: red; margin-top:0px;">@error('signature') {{ $message }} @enderror</p>
+                         <div>
+                            <div id="captureimageresults"></div>
+                        </div>
 
                     </div>
                 </div>
@@ -305,6 +353,89 @@
 
 
 
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <style type="text/css">
+        #results { padding:20px; border:1px solid; background:#ccc; }
+    </style>
+
+
+
+{{-- <button type="button" onclick="webcam()" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+  </button> --}}
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <form method="POST" action="">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="my_camera"></div>
+                            <br/>
+                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                            <input type="hidden" name="image" class="image-tag">
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            <br/>
+                            <button class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <script language="JavaScript">
+                function webcam(){
+                Webcam.set({
+                    width: 490,
+                    height: 350,
+                    image_format: 'jpeg',
+                    jpeg_quality: 90
+                });
+
+                Webcam.attach( '#my_camera' );
+
+
+            }
+            function take_snapshot() {
+                    Webcam.snap( function(data_uri) {
+                        $(".image-tag").val(data_uri);
+                        document.getElementById('captureimageresults').innerHTML = '<img src="'+data_uri+'" style="width:200px;height:200px;"/>';
+                    } );
+                }
+            </script>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
     </body>
 </html>
 
@@ -329,9 +460,28 @@
     if((levelid != levelselect)&&(levelselect!="")){
 
         document.getElementById('examrollno').style.display="block";
+
+        const input = document.getElementById('examrollnoinput');
+
+// ✅ Set required attribute
+input.setAttribute('required', '');
+
+// ✅ Remove required attribute
+// input.removeAttribute('required');
     }
     else{
         document.getElementById('examrollno').style.display="none";
+        //  document.getElementById('examrollno').style.display="block";
+
+        const input = document.getElementById('examrollnoinput');
+
+
+// ✅ Set required attribute
+// input.setAttribute('required', '');
+
+// ✅ Remove required attribute
+input.removeAttribute('required','');
+
     }
   }
   selectexamrollno();
@@ -381,6 +531,22 @@ function showimage(){
 
 }
 
+
+function showsignatureimage(){
+    var src = document.getElementById("signatureimage");
+    var target = document.getElementById("targetsignature");
+    if(src.value != ""){
+        target.style.display = "block";
+    }
+
+    var fr=new FileReader();
+  // when image is loaded, set the src of the image where you want to display it
+  fr.onload = function(e) { target.src = this.result; };
+
+    fr.readAsDataURL(src.files[0]);
+
+}
+
 showimage();
 
  function showsubmitalert(){
@@ -395,16 +561,34 @@ Swal.fire({
 
   if (result.isConfirmed) {
 
-    showsignature();
     if (signaturePad.isEmpty()) {
-        Swal.fire({
-                icon: 'warning',
-                title: 'empty field',
-                text: 'Please enter signature field !',
-                footer: ''
-                });
-                return false;
+        const input = document.getElementById('signatureimage');
+
+// ✅ Set required attribute
+input.setAttribute('required', '');
+
+// ✅ Remove required attribute
+// input.removeAttribute('required');
+
+
+                }else{
+                    showsignature();
+                    const input = document.getElementById('signatureimage');
+
+// ✅ Set required attribute
+input.removeAttribute('required','');
+
+signaturePad = null;
                 }
+
+
+                const input = document.getElementById('signatureimage');
+
+// ✅ Set required attribute
+// input.setAttribute('required', '');
+
+// ✅ Remove required attribute
+
 
     var level = document.getElementById("level").value;
     var table = document.getElementById('backtable').rows.length;

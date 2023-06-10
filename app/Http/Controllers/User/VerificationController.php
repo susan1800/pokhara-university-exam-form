@@ -110,39 +110,13 @@ class VerificationController extends BaseController
         ]);
         try{
         if($request->inputotp == Crypt::decryptString($request->otp)){
-            $users = User::where('email' , '=' , Crypt::decryptString($request->email))->get();
-            $user =User::find($users[0]->id);
-            $user['email_verified_at'] = Carbon::now()->toDateTimeString();
-            $user->save();
-            if($user){
 
-                $returncheckrole = $this->checkrole($users[0]->auth_id);
+                return $this->responseRedirect('initialsetup','Please change your password !', 'success', false, false);
 
-               if($returncheckrole == true){
-                $request->session()->put('testadminlogin','yes');
-                // echo "user is admin";
-                return redirect()->route('admin' );
-               }
-               else{
-                $returnPaymentStatus = $this->checkPaymentStatus($users[0]->roll_no);
-                if($returnPaymentStatus == true){
-                $request->session()->put('testuserlogin','yes');
-                $request->session()->put('sessionuseridcosmos',$users[0]->id);
-                // echo "user is user";
-                return redirect()->route('user' );
-                }
-                else{
-                    return $this->responseRedirect('signin' , 'Payment not cleared ! Please contact to administrator.');
-                }
-            }
 
-            }
-            else{
-                return redirect()->route('verifyotp',['makeotp' => $request->otp , 'email'=> $request->email]);
-            }
         }
         else{
-            return redirect()->route('verifyotp',['makeotp' => $request->otp , 'email'=> $request->email]);
+            return redirect()->route('verifyotp',['makeotp' => $request->otp , 'email'=> $request->email])->with('error','wrong otp code please enter valid otp code!');
         }
     }catch (ModelNotFoundException $e) {
 

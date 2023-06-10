@@ -3,6 +3,7 @@
 <head>
     <title>Form</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
             box-sizing: border-box;
@@ -277,7 +278,7 @@
             <div class="signature" style="margin-top:2%; margin-right:0%;">
 
                 <div class="col1" style="float: left;;width: 60%; ">
-                    <p>signature of the student : <img src="{{asset('upload/'.$formdata->signature)}}" width="120" height="40"></p>
+                    <p>signature of the student : <img src=" @if(($formdata->signature != "")||($formdata->signature != null)){{asset('upload/'.$formdata->signature)}}@endif  @if(($formdata->signature_imag != "")||($formdata->signature_image != null)){{asset('storage/'.$formdata->signature_image)}}@endif" width="120" height="40"></p>
 
                 </div>
                 <div class="col1" style="float:left; margin-left:10% ;">

@@ -44,7 +44,11 @@ class LoginController extends BaseController
             if((string)$user->roll_no === $user->password){
 
                 if($request->password == $user->password){
+                    // return route()
                     $request->session()->put('sessioninitialcosmos',$user->id);
+
+
+                    return redirect()->route('sendotp',$request->email);
                     return $this->responseRedirect('initialsetup','Please change your password !', 'success', false, false);
                 }else{
                     return $this->responseRedirectBack('Password not matched , Please enter valid password.', 'error', true, true);

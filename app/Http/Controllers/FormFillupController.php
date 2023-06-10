@@ -127,19 +127,44 @@ class FormFillupController extends BaseController
             'program'      =>  'required',
             'level' =>'required',
             'formimage' =>  'required|mimes:jpg,jpeg,png',
-            'signature'  => 'required',
+            'signatureimage' =>  'mimes:jpg,jpeg,png',
 
         ]);
 
 
     try {
 
+if($request->file('signatureimage')){
+    $this->validate($request, [
+        'signatureimage' =>  'required|mimes:jpg,jpeg,png',
+    ]);
+    $filename0 = null;
+        $uploadedFile = $request->file('signatureimage');
+        $filename0 = time().Str::random(25).'.'. $uploadedFile->getClientOriginalExtension();
+        Storage::disk('public')->putFileAs(
+            'signatureimage',
+            $uploadedFile,
+            $filename0
+        );
+        $signature = "";
+}
+else{
 
-
+    $this->validate($request, [
+        'signature'  => 'required',
+    ]);
     if($request->signature == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS4AAACYCAYAAABapASfAAAAAXNSR0IArs4c6QAABHBJREFUeF7t1AEJAAAMAsHZv/RyPNwSyDncOQIECMQEFssrLgECBM5weQICBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMgYLj8AAECOQHDlatMYAIEDJcfIEAgJ2C4cpUJTICA4fIDBAjkBAxXrjKBCRAwXH6AAIGcgOHKVSYwAQKGyw8QIJATMFy5ygQmQMBw+QECBHIChitXmcAECBguP0CAQE7AcOUqE5gAAcPlBwgQyAkYrlxlAhMg8F2bAJlDULv5AAAAAElFTkSuQmCC"){
-        Alert::warning('Congrats', 'Please fill the signature');
+        Alert::warning('warning', 'Please fill the signature');
         return $this->responseRedirectBack('Please fill all the details including signature .', 'error', true, true)->withInput($request->input());
     }
+    $signature = $this->uploadsignature($request->signature);
+    if($signature == 0){
+        return $this->responseRedirectBack('Error occurred while creating form. Please try again .', 'error', true, true)->withInput($request->input());
+    }
+    $filename0= "";
+}
+
+
     $user_id = $request->session()->get('sessionuseridcosmos');
     $user = User::find($user_id);
 
@@ -150,10 +175,7 @@ class FormFillupController extends BaseController
         return $this->responseRedirectBack('You Already submitted Your Form Please contact to administrator for any query !', 'error', true, true)->withInput($request->input());
     }
 
-    $signature = $this->uploadsignature($request->signature);
-if($signature == 0){
-    return $this->responseRedirectBack('Error occurred while creating form. Please try again .', 'error', true, true)->withInput($request->input());
-}
+
         $filename = null;
         $uploadedFile = $request->file('formimage');
         $filename = time().Str::random(25).'.'. $uploadedFile->getClientOriginalExtension();
@@ -164,7 +186,7 @@ if($signature == 0){
         );
 
         DB::beginTransaction();
-        $createformdata = $this->createFormData($request , $user_id , $filename , $signature);
+        $createformdata = $this->createFormData($request , $user_id , $filename , $signature, $filename0);
         if($createformdata==0){
 
             return $this->responseRedirectBack('Error occurred while submiting the form. Please try again with fill all the field.', 'error', true, true)->withInput($request->input());
@@ -279,7 +301,7 @@ if($signature == 0){
 }
     }
 
-    private function createFormData($request , $user_id , $filename , $signature){
+    private function createFormData($request , $user_id , $filename , $signature , $filename0){
         try{
             $user = User::find($user_id);
             $current_year = KeyValue::where('key', 'current_year')->first();
@@ -297,12 +319,16 @@ if($signature == 0){
         $student->image = 'formimage/'.$filename;
         $student->date = Carbon::now()->format('Y-m-d');
         $student->signature = $signature;
+        $student->signature_image = $filename0;
         $student->credit_hours = 0;
         $student->college_roll_no = $user->roll_no;
         $student->exam_year = $current_year->value;
 
 
         $student-> save();
+
+        session()->put('userformid',$student->id);
+
 
         return $student->id;
     } catch (QueryException $exception) {
@@ -424,7 +450,8 @@ if($signature == 0){
 
 
     public function submitComplete(){
-        $formdata = FormData::where('user_id' , session()->get('sessionuseridcosmos'))->first();
+        $formdata = FormData::find( session()->get('userformid'));
+
         return view('frontend.completeformsubmit.formsubmitcomplete' , compact('formdata'));
     }
 
