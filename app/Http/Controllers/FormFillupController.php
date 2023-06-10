@@ -158,7 +158,10 @@ else{
         return $this->responseRedirectBack('Please fill all the details including signature .', 'error', true, true)->withInput($request->input());
     }
     $signature = $this->uploadsignature($request->signature);
-    if($signature == 0){
+
+    // dd("");
+    if($signature === 0){
+        dd($signature);
         return $this->responseRedirectBack('Error occurred while creating form. Please try again .', 'error', true, true)->withInput($request->input());
     }
     $filename0= "";
@@ -280,22 +283,35 @@ else{
     private function uploadsignature($signature){
         try{
 
-    $folderPath = public_path('upload/');
+    $folderPath = public_path('storage\upload');
+    if(!Storage::exists('upload')) {
+        Storage::disk('public')->makeDirectory('upload');
+    }
 
-    $image_parts = explode(";base64,", $signature);
 
-    $image_type_aux = explode("image/", $image_parts[0]);
+    $signatureImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signature));
 
-    $image_type = $image_type_aux[1];
+    // Generate a unique filename for the image
+    $filename = 'upload/signature_' . time() . '.png';
 
-    $image_base64 = base64_decode($image_parts[1]);
+    // Store the image in the storage directory
+    Storage::disk('public')->put($filename, $signatureImage);
 
-    $signature = uniqid() . '.'.$image_type;
 
-    $file = $folderPath . $signature;
+    // $image_parts = explode(";base64,", $signature);
 
-    file_put_contents($file, $image_base64);
-    return $signature;
+    // $image_type_aux = explode("image/", $image_parts[0]);
+
+    // $image_type = $image_type_aux[1];
+
+    // $image_base64 = base64_decode($image_parts[1]);
+
+    // $signature = uniqid() . '.'.$image_type;
+
+    // $file = $folderPath . $signature;
+
+    // file_put_contents($file, $image_base64);
+    return $filename;
 } catch (QueryException $exception) {
     return 0;
 }
