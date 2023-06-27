@@ -337,7 +337,7 @@
                                 <td class="border px-4 py-2">
 
                                   <a href="{{route('admin.subject.edit',$subject->id)}}">  <i class="fas fa-edit"></i></a>
-                                  <a href="{{route('admin.subject.delete',$subject->id)}}">  <i class="fas fa-trash"></i></a>
+                                  <a onclick="deletefunction('{{route('admin.subject.delete',$subject->id)}}')">  <i class="fas fa-trash"></i></a>
                                 </td>
 
 
@@ -633,6 +633,25 @@ if (result.isConfirmed) {
 
         });
     });
+
+
+   function  deletefunction(url){
+    Swal.fire({
+  title: 'Do you want to Delete?',
+  showDenyButton: true,
+  confirmButtonText: 'Yes',
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    $.get(url, function(data) {
+                console.log(data);
+                location.reload();
+
+            });
+  }
+})
+   }
+
 
     function search() {
 
