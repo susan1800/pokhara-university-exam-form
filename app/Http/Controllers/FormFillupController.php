@@ -276,7 +276,7 @@ else{
 
        return $this->responseRedirectBack('Form submit successfully.', 'success', true, true);
     } catch (QueryException $exception) {
-        return $this->responseRedirectBack('Error occurred while creating form.  Please tyy again.', 'error', true, true)->withInput($request->input());
+        return $this->responseRedirectBack('Error occurred while creating form.  Please try again.', 'error', true, true)->withInput($request->input());
     }
     }
 

@@ -12,11 +12,14 @@ class Subject extends Model
     protected $fillable =[
         'subject',
         'subject_code',
+        'is_barrier',
         'barrier_id',
         'concurrent_id',
         'credit_hours',
         'level_id',
         'program_id',
+        'newbatch',
+
     ];
 
 

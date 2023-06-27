@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\Admin\ExamDetailController;
 use App\Http\Controllers\Admin\UserNotificationController;
+use App\Http\Controllers\Admin\SubjectController;
 
 use App\Http\Controllers;
 
@@ -28,6 +29,17 @@ Route::middleware(['adminlogin'])->group(function () {
             Route::get('/', [PaymentStatusController::class, 'index'])->name('admin.paymentstatus.index');
             Route::post('/update', [PaymentStatusController::class, 'editStudent'])->name('admin.paymentstatus.update');
        });
+
+
+       Route::group(['prefix'  =>  'subjects'], function () {
+
+        Route::get('/', [SubjectController::class, 'index'])->name('admin.subject.index');
+        Route::get('{id}/edit', [SubjectController::class, 'edit'])->name('admin.subject.edit');
+        Route::post('/update', [SubjectController::class, 'update'])->name('admin.subject.update');
+        Route::get('{id}/delete', [SubjectController::class, 'delete'])->name('admin.subject.delete');
+        Route::get('/create', [SubjectController::class, 'create'])->name('admin.subject.create');
+        Route::post('/store', [SubjectController::class, 'store'])->name('admin.subject.store');
+   });
 
 
        Route::group(['prefix'  =>  'notifications'], function () {
